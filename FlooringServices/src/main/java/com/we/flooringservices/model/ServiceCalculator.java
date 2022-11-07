@@ -26,15 +26,16 @@ public class ServiceCalculator {
     final private static RoundingMode HALF_UP_ROUNDING_MODE = RoundingMode.HALF_UP;
     final private static BigDecimal BIG_DECIMAL_100 = new BigDecimal("100");
     private BigDecimal materialCost, laborCost, tax, totalCost;
+    
     public ServiceCalculator(BigDecimal area, BigDecimal costPerSquareFoot,
-            BigDecimal laborCostPerSquareFoot, BigDecimal materialCost,
-            BigDecimal laborCost, BigDecimal taxRate) {
+            BigDecimal laborCostPerSquareFoot, BigDecimal taxRate) {
         materialCost = calculateMaterialCost(area, costPerSquareFoot);
         laborCost = calculateLaborCost(area, laborCostPerSquareFoot);
         tax = calculateTax(materialCost, laborCost, taxRate);
         totalCost = calculateTotalCost(materialCost, laborCost, tax);
         
     }
+    
     public void updateCalculations(BigDecimal area, BigDecimal costPerSquareFoot,
             BigDecimal laborCostPerSquareFoot, BigDecimal materialCost,
             BigDecimal laborCost, BigDecimal taxRate) {
@@ -43,14 +44,17 @@ public class ServiceCalculator {
         tax = calculateTax(materialCost, laborCost, taxRate);
         totalCost = calculateTotalCost(materialCost, laborCost, tax);
     }
+    
     public static BigDecimal calculateMaterialCost(BigDecimal area, BigDecimal costPerSquareFoot) {
         final BigDecimal materialCost = area.multiply(costPerSquareFoot);
         return materialCost;
     }
+    
     public static BigDecimal calculateLaborCost(BigDecimal area, BigDecimal laborCostPerSquareFoot) {
         final BigDecimal laborCost = area.multiply(laborCostPerSquareFoot);
         return laborCost;
     }
+    
     public static BigDecimal calculateTax(BigDecimal materialCost, BigDecimal laborCost, BigDecimal taxRate) {
         final BigDecimal totalTax = materialCost.add(laborCost)
                 .multiply(taxRate.divide(
@@ -59,6 +63,7 @@ public class ServiceCalculator {
                                 HALF_UP_ROUNDING_MODE));
         return totalTax;
     }
+    
     public static BigDecimal calculateTotalCost(BigDecimal materialCost, BigDecimal laborCost, BigDecimal tax) {
         final BigDecimal totalCost = materialCost.add(laborCost).add(tax);
         return totalCost;

@@ -13,30 +13,34 @@ import java.math.BigDecimal;
  * @project Assessment: Flooring Mastery Project with Spring DI
  * 
  * @description This class represents the orders within this application
+ * 
+ * TO DO: Update fields logic!
  */
 public class Order {
-    private static int totalOrders = 0;
     final private static int ONE_ORDER = 1;
+    private ServiceCalculator serviceCalculator;
     private int orderNumber;
     private String customerName, state, productType;
     private BigDecimal taxRate, area, costPerSquareFoot, laborCostPerSquareFoot,
             materialCost, laborCost, tax, total;
     
-    public Order() {
-        totalOrders += ONE_ORDER;
-        orderNumber = totalOrders;
-    }
-    
-    public Order(String customerName, String state, String productType,
-            BigDecimal area) {
-        totalOrders += ONE_ORDER;
-        orderNumber = totalOrders;
+    public Order(Product product, String customerName, String state,
+            BigDecimal area, BigDecimal taxRate, int totalOrders) {
+        orderNumber = totalOrders + ONE_ORDER;
+        this.productType = product.getProductType();
+        this.costPerSquareFoot = product.getCostPerSquareFoot();
+        this.laborCostPerSquareFoot = product.getLaborCostPerSquareFoot();
         this.customerName = customerName;
         this.state = state;
-        this.productType = productType;
         this.area = area;
+        this.taxRate = taxRate;
+        this.serviceCalculator = new ServiceCalculator(area, costPerSquareFoot,
+            laborCostPerSquareFoot, taxRate);
+        this.materialCost = serviceCalculator.getMaterialCost();
+        this.laborCost = serviceCalculator.getLaborCost();
+        this.total = serviceCalculator.getTotalCost();
     }
-            
+ 
     public int getOrderNumber() {
         return orderNumber;
     }
