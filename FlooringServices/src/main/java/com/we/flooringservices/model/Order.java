@@ -15,6 +15,8 @@ import java.math.BigDecimal;
  * @description This class represents the orders within this application
  * 
  * TO DO: Update fields logic!
+ * Added serviceClaculator.updateClaculations method now add
+ * updated field to class
  */
 public class Order {
     final private static int ONE_ORDER = 1;
@@ -72,6 +74,13 @@ public class Order {
     public BigDecimal getTaxRate() {
         return taxRate;
     }
+    
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
+        serviceCalculator.updateCalculations(area, 
+                costPerSquareFoot, laborCostPerSquareFoot, 
+                this.taxRate);
+    }
 
     public BigDecimal getArea() {
         return area;
@@ -79,14 +88,29 @@ public class Order {
     
     public void setArea(BigDecimal area) {
         this.area = area;
+        serviceCalculator.updateCalculations(this.area, 
+                costPerSquareFoot, laborCostPerSquareFoot, 
+                taxRate);
     }
-    public 
-        BigDecimal getCostPerSquareFoot() {
+    public BigDecimal getCostPerSquareFoot() {
         return costPerSquareFoot;
     }
 
+    public void setCostPerSquareFoot(BigDecimal costPerSquareFoot) {
+        this.costPerSquareFoot = costPerSquareFoot;
+        serviceCalculator.updateCalculations(area, 
+                this.costPerSquareFoot, laborCostPerSquareFoot, 
+                taxRate);
+    }
     public BigDecimal getLaborCostPerSquareFoot() {
         return laborCostPerSquareFoot;
+    }
+    
+    public void setLaborCostPerSquareFoot(BigDecimal laborCostPerSquareFoot) {
+        this.laborCostPerSquareFoot = laborCostPerSquareFoot;
+        serviceCalculator.updateCalculations(area, 
+                costPerSquareFoot, this.laborCostPerSquareFoot, 
+                taxRate);
     }
 
     public BigDecimal getMaterialCost() {
