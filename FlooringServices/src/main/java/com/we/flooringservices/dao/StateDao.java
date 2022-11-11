@@ -44,5 +44,5 @@ public interface StateDao {
      * 
      * @return void
      */
-    public void addState(int stateId);
+    public void addState(State state);
 }

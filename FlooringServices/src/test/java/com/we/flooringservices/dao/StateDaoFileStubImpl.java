@@ -17,32 +17,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
 
 /**
  *
- * @author Cirũ Franklin (she/they), Software Engineer
- * @course DI002 Full Stack Development Using Java and React (2210)
- * @project Assessment: Flooring Mastery Project with Spring DI
- * 
- * @description This class represents a file implementation of the 
- * StateDao interface and provides the methods needed to read and 
- * write information to and from the Taxes file
+ * @author ciruf
  */
-
-@Component
-@Primary
-public class StateDaoFileImpl implements StateDao {
+public class StateDaoFileStubImpl implements StateDao {
     final private static String DELIMITTER = ",";
     private static String taxesFileName;
     private Map<Integer, State> allStates = new HashMap<>();
     
-    public StateDaoFileImpl() {
+    public StateDaoFileStubImpl() {
         taxesFileName  = "Data/Taxes.txt";
     }
     
-    public StateDaoFileImpl(String taxesFileName) {
+    public StateDaoFileStubImpl(@Value("TestDate/Test-Taxes.txt") String taxesFileName) {
         this.taxesFileName = taxesFileName;
     }
     
@@ -115,3 +104,4 @@ public class StateDaoFileImpl implements StateDao {
     }  
     
 }
+
