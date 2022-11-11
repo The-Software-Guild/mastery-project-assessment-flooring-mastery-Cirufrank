@@ -19,6 +19,14 @@ public class State {
     private String stateAbbrv, stateName;
     private BigDecimal taxRate;
     
+    public State(int stateId, String stateAbbrv, 
+            String stateName, BigDecimal taxRate) {
+        this.stateId = stateId;
+        this.stateAbbrv = stateAbbrv;
+        this.stateName = stateName;
+        this.taxRate = taxRate;
+    }
+    
     public int getStateId() {
         return stateId;
     }

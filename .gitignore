@@ -99,3 +99,10 @@ nb-configuration.xml
 /HappyLlammas/nbproject/private/
 /Week2Day5Stateless/nbproject/
 /ClassRoster/nbproject/
+
+##############################
+## Data
+##############################
+Data/*
+FullData/*
+SampleData/*
