@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  * @course DI002 Full Stack Development Using Java and React (2210)
  * @project Assessment: Flooring Mastery Project with Spring DI
  * 
- * @description 
+ * @description This class acts of the model for a state within the application
  */
 public class State {
     private int stateId;

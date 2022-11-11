@@ -37,8 +37,7 @@ public class ServiceCalculator {
     }
     
     public void updateCalculations(BigDecimal area, BigDecimal costPerSquareFoot,
-            BigDecimal laborCostPerSquareFoot, BigDecimal materialCost,
-            BigDecimal laborCost, BigDecimal taxRate) {
+            BigDecimal laborCostPerSquareFoot, BigDecimal taxRate) {
         materialCost = calculateMaterialCost(area, costPerSquareFoot);
         laborCost = calculateLaborCost(area, laborCostPerSquareFoot);
         tax = calculateTax(materialCost, laborCost, taxRate);

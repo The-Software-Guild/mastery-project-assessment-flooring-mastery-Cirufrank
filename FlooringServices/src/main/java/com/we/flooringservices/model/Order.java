@@ -14,9 +14,7 @@ import java.math.BigDecimal;
  * 
  * @description This class represents the orders within this application
  * 
- * TO DO: Update fields logic!
- * Added serviceClaculator.updateClaculations method now add
- * updated field to class
+ * TO DO: Update fields logic
  */
 public class Order {
     final private static int ONE_ORDER = 1;
@@ -41,6 +39,14 @@ public class Order {
         this.materialCost = serviceCalculator.getMaterialCost();
         this.laborCost = serviceCalculator.getLaborCost();
         this.total = serviceCalculator.getTotalCost();
+    }
+    
+    public void recalculateOrderCost() {
+            serviceCalculator.updateCalculations(area, costPerSquareFoot,
+            laborCostPerSquareFoot, taxRate);
+            this.materialCost = serviceCalculator.getMaterialCost();
+            this.laborCost = serviceCalculator.getLaborCost();
+            this.total = serviceCalculator.getTotalCost();
     }
  
     public int getOrderNumber() {
@@ -77,9 +83,6 @@ public class Order {
     
     public void setTaxRate(BigDecimal taxRate) {
         this.taxRate = taxRate;
-        serviceCalculator.updateCalculations(area, 
-                costPerSquareFoot, laborCostPerSquareFoot, 
-                this.taxRate);
     }
 
     public BigDecimal getArea() {
@@ -88,29 +91,21 @@ public class Order {
     
     public void setArea(BigDecimal area) {
         this.area = area;
-        serviceCalculator.updateCalculations(this.area, 
-                costPerSquareFoot, laborCostPerSquareFoot, 
-                taxRate);
     }
     public BigDecimal getCostPerSquareFoot() {
         return costPerSquareFoot;
     }
-
-    public void setCostPerSquareFoot(BigDecimal costPerSquareFoot) {
+    
+    public void setCostPerSquareFoor(BigDecimal costPerSquareFoot) {
         this.costPerSquareFoot = costPerSquareFoot;
-        serviceCalculator.updateCalculations(area, 
-                this.costPerSquareFoot, laborCostPerSquareFoot, 
-                taxRate);
-    }
+    } 
+
     public BigDecimal getLaborCostPerSquareFoot() {
         return laborCostPerSquareFoot;
     }
     
     public void setLaborCostPerSquareFoot(BigDecimal laborCostPerSquareFoot) {
         this.laborCostPerSquareFoot = laborCostPerSquareFoot;
-        serviceCalculator.updateCalculations(area, 
-                costPerSquareFoot, this.laborCostPerSquareFoot, 
-                taxRate);
     }
 
     public BigDecimal getMaterialCost() {
