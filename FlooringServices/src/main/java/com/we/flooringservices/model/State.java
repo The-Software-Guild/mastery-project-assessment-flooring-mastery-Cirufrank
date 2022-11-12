@@ -5,6 +5,7 @@
 package com.we.flooringservices.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  *
@@ -39,6 +40,45 @@ public class State {
     }
     public BigDecimal getTaxRate() {
         return taxRate;
+    }
+
+    @Override
+    public String toString() {
+        return "State{" + "stateId=" + stateId + ", stateAbbrv=" + stateAbbrv + ", stateName=" + stateName + ", taxRate=" + taxRate + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.stateId;
+        hash = 71 * hash + Objects.hashCode(this.stateAbbrv);
+        hash = 71 * hash + Objects.hashCode(this.stateName);
+        hash = 71 * hash + Objects.hashCode(this.taxRate);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final State other = (State) obj;
+        if (this.stateId != other.stateId) {
+            return false;
+        }
+        if (!Objects.equals(this.stateAbbrv, other.stateAbbrv)) {
+            return false;
+        }
+        if (!Objects.equals(this.stateName, other.stateName)) {
+            return false;
+        }
+        return Objects.equals(this.taxRate, other.taxRate);
     }
     
 }

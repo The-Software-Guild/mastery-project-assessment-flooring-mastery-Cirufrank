@@ -6,6 +6,8 @@ package com.we.flooringservices.dao;
 
 import com.we.flooringservices.model.State;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,13 +19,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author ciruf
  */
+
+@Component
 public class StateDaoFileStubImpl implements StateDao {
-    final private static String DELIMITTER = ",";
+    final private static String DELIMITTER = ",", 
+            STATE_ID_HEADER = "stateId",
+            STATE_ABBRV_HEADER = "stateAbbrv",
+            STATE_NAME_HEADER = "stateName",
+            STATE_TAXES_HEADER = "taxRate",
+            stateHeadersLine = STATE_ID_HEADER +
+            DELIMITTER + STATE_ABBRV_HEADER +
+            DELIMITTER + STATE_NAME_HEADER
+            + DELIMITTER + STATE_TAXES_HEADER;
     private static String taxesFileName;
     private Map<Integer, State> allStates = new HashMap<>();
     
@@ -31,7 +46,8 @@ public class StateDaoFileStubImpl implements StateDao {
         taxesFileName  = "Data/Taxes.txt";
     }
     
-    public StateDaoFileStubImpl(@Value("TestDate/Test-Taxes.txt") String taxesFileName) {
+    @Autowired
+    public StateDaoFileStubImpl(@Value("TestData/Test-Taxes.txt") String taxesFileName) {
         this.taxesFileName = taxesFileName;
     }
     
@@ -55,13 +71,21 @@ public class StateDaoFileStubImpl implements StateDao {
         allStates.put(state.getStateId(), state);
         writeStates();
     }
+    //For testing and for availability if we are to create
+    //an admin role for the application
+    public void removeState(int stateId) {
+        loadStates();
+        allStates.remove(stateId);
+        writeStates();
+    }
     
     private State unMarshallState(String stringOfState) {
         final State currentState;
         final int ID_INDEX = 0, ABBRV_INDEX = 1, NAME_INDEX = 2, 
                 TAX_RATE_INDEX = 3;
         final String[] stateTokens = stringOfState.split(DELIMITTER);
-        final int stateId = Integer.valueOf(stateTokens[ID_INDEX]);
+        String test = stateTokens[ID_INDEX];
+        final int stateId = Integer.parseInt(stateTokens[ID_INDEX]);
         final String stateAbbrv = stateTokens[ABBRV_INDEX];
         final String stateName = stateTokens[NAME_INDEX];
         final BigDecimal taxRate = new BigDecimal(stateTokens[TAX_RATE_INDEX]);
@@ -79,10 +103,14 @@ public class StateDaoFileStubImpl implements StateDao {
     }
     
     private void loadStates() {
+        
         try {
             Scanner scanner = new Scanner(
                                 new BufferedReader(
                                     new FileReader(taxesFileName)));
+            //Ensures we don't include the header cells in 
+            //our results
+            scanner.nextLine();
             while(scanner.hasNextLine()) {
                 final State currentState = unMarshallState(scanner.nextLine()); 
                 allStates.put(currentState.getStateId(), currentState);
@@ -90,18 +118,29 @@ public class StateDaoFileStubImpl implements StateDao {
             scanner.close();
         } catch(FileNotFoundException error) {
             System.out.println("-_- Could not load states from file");
+            System.out.println(error.getMessage());
         }
         
     }
     
     private void writeStates() {
+        final ArrayList<State> currentStates = new ArrayList<>(allStates.values());
         try {
             PrintWriter output = new PrintWriter(
                                     new FileWriter(taxesFileName));
+            //Write the first line as the headers to the columns
+            output.println(stateHeadersLine);
+            for (State currentState : currentStates) {
+                final String stateAsText = marshallState(currentState);
+                output.println(stateAsText);
+                output.flush();
+            }
+            output.close();
         } catch(IOException error) {
             System.out.println("-_- Could not write states to file");
         }
-    }  
+    }      
+    
     
 }
 

@@ -4,6 +4,8 @@
  */
 package com.we.flooringservices.dao;
 
+import com.we.flooringservices.model.State;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolver;
@@ -13,18 +15,21 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  *
  * @author ciruf
  */
-public class StateDaoFileImplParameterResolver implements ParameterResolver {
+public class StateParameterResolver implements ParameterResolver {
+    final static int MONTANA_ID = 27;
+    private State stateToAdd = new State(MONTANA_ID, 
+            "MT", "Montana", 
+            new BigDecimal("4.75"));
+    
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
-       return parameterContext.getParameter().getType() == StateDaoFileStubImpl.class;
+       return parameterContext.getParameter().getType() == State.class;
     }
     
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
-        AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext();
-        appContext.scan("com.we.flooringservices");
-        appContext.refresh();
-        StateDao testStateDao = appContext.getBean("stateDaoFileStubImpl", StateDaoFileStubImpl.class);
-        return testStateDao;
+        return stateToAdd;
     }
 }
+
+

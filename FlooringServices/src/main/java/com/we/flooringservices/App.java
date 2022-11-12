@@ -5,6 +5,8 @@
 
 package com.we.flooringservices;
 
+import java.io.File;
+
 /**
  *
  * @author Cirũ Franklin (she/they), Software Engineer
@@ -32,5 +34,6 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        System.out.println(new File(".").getAbsolutePath());
     }
 }

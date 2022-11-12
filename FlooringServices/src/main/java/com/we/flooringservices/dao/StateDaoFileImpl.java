@@ -90,10 +90,14 @@ public class StateDaoFileImpl implements StateDao {
     }
     
     private void loadStates() {
+        
         try {
             Scanner scanner = new Scanner(
                                 new BufferedReader(
                                     new FileReader(taxesFileName)));
+            //Ensures we don't include the header cells in 
+            //our results
+            scanner.nextLine();
             while(scanner.hasNextLine()) {
                 final State currentState = unMarshallState(scanner.nextLine()); 
                 allStates.put(currentState.getStateId(), currentState);
@@ -101,6 +105,7 @@ public class StateDaoFileImpl implements StateDao {
             scanner.close();
         } catch(FileNotFoundException error) {
             System.out.println("-_- Could not load states from file");
+            System.out.println(error.getMessage());
         }
         
     }
