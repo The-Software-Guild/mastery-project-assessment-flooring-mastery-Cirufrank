@@ -34,7 +34,15 @@ import org.springframework.stereotype.Component;
 @Component
 @Primary
 public class StateDaoFileImpl implements StateDao {
-    final private static String DELIMITTER = ",";
+    final private static String DELIMITTER = ",", 
+            STATE_ID_HEADER = "stateId",
+            STATE_ABBRV_HEADER = "stateAbbrv",
+            STATE_NAME_HEADER = "stateName",
+            STATE_TAXES_HEADER = "taxRate",
+            stateHeadersLine = STATE_ID_HEADER +
+            DELIMITTER + STATE_ABBRV_HEADER +
+            DELIMITTER + STATE_NAME_HEADER
+            + DELIMITTER + STATE_TAXES_HEADER;
     private static String taxesFileName;
     private Map<Integer, State> allStates = new HashMap<>();
     
@@ -111,9 +119,18 @@ public class StateDaoFileImpl implements StateDao {
     }
     
     private void writeStates() {
+        final ArrayList<State> currentStates = new ArrayList<>(allStates.values());
         try {
             PrintWriter output = new PrintWriter(
                                     new FileWriter(taxesFileName));
+            //Write the first line as the headers to the columns
+            output.println(stateHeadersLine);
+            for (State currentState : currentStates) {
+                final String stateAsText = marshallState(currentState);
+                output.println(stateAsText);
+                output.flush();
+            }
+            output.close();
         } catch(IOException error) {
             System.out.println("-_- Could not write states to file");
         }
