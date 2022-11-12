@@ -25,7 +25,13 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author ciruf
+ * @author Cirũ Franklin (she/they), Software Engineer
+ * @course DI002 Full Stack Development Using Java and React (2210)
+ * @project Assessment: Flooring Mastery Project with Spring DI
+ * 
+ * @description STUB FILE FOR TESTING: This class represents a file implementation of the 
+ * StateDao interface and provides the methods needed to read and 
+ * write information to and from the Taxes file
  */
 
 @Component

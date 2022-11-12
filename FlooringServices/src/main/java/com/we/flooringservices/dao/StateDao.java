@@ -20,8 +20,8 @@ public interface StateDao {
      * Returns a state object filled with the state's current
      * tax and id information from the database
      *
-     * @param stateAbbrv String of the state's abbreviation
-     * @return the State object associated with the given abbreviation if
+     * @param stateId int of the state's id within the Taxes file
+     * @return the State object associated with the given id if
      * it exists within the Taxes file, null otherwise
      */
     public State getState(int StateId);
@@ -30,6 +30,7 @@ public interface StateDao {
      * Returns a List of all the states available to order flooring 
      * services and product from
      *
+     * @param N/A
      * @return a List of State objects constructed from their information
      * within the Taxes file
      */
@@ -38,9 +39,10 @@ public interface StateDao {
     /**
      * Writes a new state to the Taxes file
      *
-     * @param stateId int representing the id of the state
-     * (the id is passed in since it must be consistent with
-     * the StateRequest id of the state
+     * @param State state object of the state to add,
+     * thus providing us all of the needed information to 
+     * add the state due to the State object's public 
+     * interface
      * 
      * @return void
      */
