@@ -13,9 +13,10 @@ import java.util.List;
  * @course DI002 Full Stack Development Using Java and React (2210)
  * @project Assessment: Flooring Mastery Project with Spring DI
  * 
- * @description
+ * @description This interface defines the methods publicly available
+ * to retrieve and add products to the "Data/Products.txt" file
  */
-public interface ProductsDao {
+public interface ProductDao {
     /**
      * Returns a product from the database that matches the 
      * id specified

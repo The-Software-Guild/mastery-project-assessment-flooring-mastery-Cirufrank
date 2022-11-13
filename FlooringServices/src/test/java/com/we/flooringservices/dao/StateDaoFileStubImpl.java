@@ -6,8 +6,6 @@ package com.we.flooringservices.dao;
 
 import com.we.flooringservices.model.State;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -36,15 +34,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StateDaoFileStubImpl implements StateDao {
-    final private static String DELIMITTER = ",", 
+    final private static String DELIMITER = ",", 
             STATE_ID_HEADER = "stateId",
             STATE_ABBRV_HEADER = "stateAbbrv",
             STATE_NAME_HEADER = "stateName",
             STATE_TAXES_HEADER = "taxRate",
             stateHeadersLine = STATE_ID_HEADER +
-            DELIMITTER + STATE_ABBRV_HEADER +
-            DELIMITTER + STATE_NAME_HEADER
-            + DELIMITTER + STATE_TAXES_HEADER;
+            DELIMITER + STATE_ABBRV_HEADER +
+            DELIMITER + STATE_NAME_HEADER
+            + DELIMITER + STATE_TAXES_HEADER;
     private static String taxesFileName;
     private Map<Integer, State> allStates = new HashMap<>();
     
@@ -89,7 +87,7 @@ public class StateDaoFileStubImpl implements StateDao {
         final State currentState;
         final int ID_INDEX = 0, ABBRV_INDEX = 1, NAME_INDEX = 2, 
                 TAX_RATE_INDEX = 3;
-        final String[] stateTokens = stringOfState.split(DELIMITTER);
+        final String[] stateTokens = stringOfState.split(DELIMITER);
         String test = stateTokens[ID_INDEX];
         final int stateId = Integer.parseInt(stateTokens[ID_INDEX]);
         final String stateAbbrv = stateTokens[ABBRV_INDEX];
@@ -100,11 +98,11 @@ public class StateDaoFileStubImpl implements StateDao {
     }
     
     private String marshallState(State state) {
-        String stateAsText = ""; 
-        stateAsText += state.getStateId() + DELIMITTER;
-        stateAsText += state.getStateAbbrv() + DELIMITTER;
-        stateAsText += state.getStateName() + DELIMITTER;
-        stateAsText += state.getTaxRate();
+        final String stateAsText = DaoHelper.createDelimiterSeparatedString(DELIMITER,
+                Integer.toString(state.getStateId()), 
+                state.getStateAbbrv(),
+                state.getStateName(),
+                state.getTaxRate().toString());
         return stateAsText;
     }
     
