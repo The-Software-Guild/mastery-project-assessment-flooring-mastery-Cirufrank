@@ -4,6 +4,7 @@
  */
 package com.we.flooringservices.dao;
 
+import com.we.flooringservices.model.Availability;
 import com.we.flooringservices.model.Product;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -93,7 +94,8 @@ public class ProductDaoFileStubImpl implements ProductDao {
                         Integer.toString(product.getProductId()),
                         product.getProductType(), 
                         product.getCostPerSquareFoot().toString(),
-                        product.getLaborCostPerSquareFoot().toString());
+                        product.getLaborCostPerSquareFoot().toString(),
+                        product.getProductStatus().toString());
         return productAsText;
     }
     
@@ -102,17 +104,18 @@ public class ProductDaoFileStubImpl implements ProductDao {
         final int ID_INDEX = 0, PRODUCT_TYPE_INDEX = 1,
                 PRODUCT_SQUARE_FOOT_COST_INDEX = 2,
                 PRODUCT_LABOR_SQUARE_FOOT_COST_INDEX = 3,
-                productId = Integer.parseInt(productTokens[ID_INDEX]),
-                TOTAL_PRODUCTS = allProducts.size();
-        
+                STATUS_INDEX = 4,
+                productId = Integer.parseInt(productTokens[ID_INDEX]);
         final String productType = productTokens[PRODUCT_TYPE_INDEX];
         final BigDecimal costPerSquareFoot = new BigDecimal(productTokens[
                 PRODUCT_SQUARE_FOOT_COST_INDEX]),
                 laborCostPerSquareFoot = new BigDecimal(productTokens[
                         PRODUCT_LABOR_SQUARE_FOOT_COST_INDEX]);
+        final Availability status = Availability.valueOf(productTokens[
+                STATUS_INDEX]);
         
         Product product = new Product(productId, productType,
-        costPerSquareFoot, laborCostPerSquareFoot, TOTAL_PRODUCTS);
+        costPerSquareFoot, laborCostPerSquareFoot, status);
         return product;
         
     }

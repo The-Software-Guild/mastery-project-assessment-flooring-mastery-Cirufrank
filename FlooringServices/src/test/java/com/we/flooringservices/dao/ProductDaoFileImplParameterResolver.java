@@ -11,7 +11,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 /**
  *
- * @author ciruf
+ * @author Cirũ Franklin (she/they), Software Engineer
+ * @course DI002 Full Stack Development Using Java and React (2210)
+ * @project Assessment: Vending Machine with Spring DI
+ * 
+ * @description This class is our parameter resolver for the 
+ * ProductDaoStubFileImpl class, and it allows us to use dependency injection within our unit tests so that we
+ * do not have to continuously instantiate a ProductDaoStubFileImpl
+ * object before each test is ran
  */
 
 public class ProductDaoFileImplParameterResolver implements ParameterResolver {

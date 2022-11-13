@@ -19,15 +19,32 @@ import java.math.BigDecimal;
 
 public class Product {
     final private static int ONE_PRODUCT = 1;
+    private Availability status;
     private int productId, totalProducts;
     private String productType;
     private BigDecimal costPerSquareFoot, laborCostPerSquareFoot;
-    public Product(int productId, String productType, BigDecimal costPerSquareFoot,
-            BigDecimal laborCostPerSquareFoot, int totalProducts) {
+    
+    //This constructor assigns an ID to nelwy added products by passsing in
+    //an argument of total products for the id to be calculated through
+    public Product(String productType, BigDecimal costPerSquareFoot,
+            BigDecimal laborCostPerSquareFoot, int totalProducts,
+            Availability status) {
         this.productId = totalProducts + ONE_PRODUCT;
         this.productType = productType;
         this.costPerSquareFoot = costPerSquareFoot;
         this.laborCostPerSquareFoot = laborCostPerSquareFoot;
+        this.status = status;
+    }
+    
+    //This constructor insantiates products that already exist in storage 
+    //and therefore does not need to a a product id to them
+    public Product(int productId, String productType, BigDecimal costPerSquareFoot,
+            BigDecimal laborCostPerSquareFoot, Availability status) {
+        this.productId = productId;
+        this.productType = productType;
+        this.costPerSquareFoot = costPerSquareFoot;
+        this.laborCostPerSquareFoot = laborCostPerSquareFoot;
+        this.status = status;
     }
 
     public int getProductId() {
@@ -44,6 +61,10 @@ public class Product {
 
     public BigDecimal getLaborCostPerSquareFoot() {
         return laborCostPerSquareFoot;
+    }
+    
+    public Availability getProductStatus() {
+        return status;
     }
     
 }
