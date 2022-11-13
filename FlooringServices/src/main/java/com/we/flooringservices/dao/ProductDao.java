@@ -48,4 +48,16 @@ public interface ProductDao {
      * @return void
      */
     public void addProduct (Product product);
+    /**
+     * Edits a product to our inventory list by saving its
+     * new changes to the Data/Products.txt file
+     *
+     * @param Produce Product object representing the 
+     * product we'd like to edit, and thus providing us 
+     * an interface to get, and update all of the product's needed
+     * information
+     * 
+     * @return void
+     */
+    public void editProduct(Product product);
 }

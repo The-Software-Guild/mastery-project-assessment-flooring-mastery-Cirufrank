@@ -79,6 +79,13 @@ public class ProductDaoFileStubImpl implements ProductDao {
         writeProducts();
     }
     
+    @Override
+    public void editProduct(Product product) {
+        loadProducts();
+        allProducts.put(product.getProductId(), product);
+        writeProducts();
+    }
+    
     //Here for the prupose of testing adding the 
     //same product then removing it so future
     //tests continue to pass

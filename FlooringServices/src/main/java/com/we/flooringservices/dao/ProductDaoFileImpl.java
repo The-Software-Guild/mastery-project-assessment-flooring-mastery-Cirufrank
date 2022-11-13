@@ -80,6 +80,13 @@ public class ProductDaoFileImpl implements ProductDao {
         writeProducts();
     }
     
+    @Override
+    public void editProduct(Product product) {
+        loadProducts();
+        allProducts.put(product.getProductId(), product);
+        writeProducts();
+    } 
+    
     private String marshallProduct(Product product) {
         final String productAsText = DaoHelper
                 .createDelimiterSeparatedString(DELIMITER,
