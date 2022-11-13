@@ -19,10 +19,10 @@ import java.math.BigDecimal;
 
 public class Product {
     final private static int ONE_PRODUCT = 1;
-    private int productId;
+    private int productId, totalProducts;
     private String productType;
     private BigDecimal costPerSquareFoot, laborCostPerSquareFoot;
-    public Product(String productType, BigDecimal costPerSquareFoot,
+    public Product(int productId, String productType, BigDecimal costPerSquareFoot,
             BigDecimal laborCostPerSquareFoot, int totalProducts) {
         this.productId = totalProducts + ONE_PRODUCT;
         this.productType = productType;
