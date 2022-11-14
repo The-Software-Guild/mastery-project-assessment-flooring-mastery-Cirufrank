@@ -5,6 +5,7 @@
 package com.we.flooringservices.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -23,9 +24,11 @@ public class Order {
     private String customerName, state, productType;
     private BigDecimal taxRate, area, costPerSquareFoot, laborCostPerSquareFoot,
             materialCost, laborCost, tax, total;
+    private LocalDateTime orderDate;
+    private Availability orderStatus;
     
     public Order(Product product, String customerName, String state,
-            BigDecimal area, BigDecimal taxRate, int totalOrders) {
+            BigDecimal area, BigDecimal taxRate, LocalDateTime orderDate, Availability orderStatus, int totalOrders) {
         orderNumber = totalOrders + ONE_ORDER;
         this.productType = product.getProductType();
         this.costPerSquareFoot = product.getCostPerSquareFoot();
@@ -34,6 +37,8 @@ public class Order {
         this.state = state;
         this.area = area;
         this.taxRate = taxRate;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
         this.serviceCalculator = new ServiceCalculator(area, costPerSquareFoot,
             laborCostPerSquareFoot, taxRate);
         this.materialCost = serviceCalculator.getMaterialCost();
