@@ -37,16 +37,15 @@ import org.springframework.stereotype.Component;
 @Primary
 public class ProductDaoFileImpl implements ProductDao {
     final private Map<Integer, Product> allProducts= new HashMap<>();
-    final private static String DELIMITER = ",",
-            PRODUCT_ID_HEADER = "productId",
+    final private static String PRODUCT_ID_HEADER = "productId",
             PRODUCT_TYPE_HEADER = "productType",
             SQUARE_FOOT_COST_HEADER = "costPerSquareFoot",
             STATUS_HEADER = "status",
             SQUARE_FOOT_LABOR_COST_HEADER = "laborCostPerSquareFoot",
-            productHeadersLine = PRODUCT_ID_HEADER + DELIMITER
-            + PRODUCT_TYPE_HEADER + DELIMITER + SQUARE_FOOT_COST_HEADER
-            + DELIMITER + SQUARE_FOOT_LABOR_COST_HEADER + DELIMITER
-            + STATUS_HEADER;
+            productHeadersLine = DaoHelper.createDelimiterSeparatedString(
+                    DaoHelper.DELIMITER,PRODUCT_ID_HEADER,PRODUCT_TYPE_HEADER,
+                    SQUARE_FOOT_COST_HEADER,SQUARE_FOOT_LABOR_COST_HEADER,
+                    STATUS_HEADER);
     private String productsFileName;
     
     public ProductDaoFileImpl() {
@@ -89,7 +88,7 @@ public class ProductDaoFileImpl implements ProductDao {
     
     private String marshallProduct(Product product) {
         final String productAsText = DaoHelper
-                .createDelimiterSeparatedString(DELIMITER,
+                .createDelimiterSeparatedString(DaoHelper.DELIMITER,
                         Integer.toString(product.getProductId()),
                         product.getProductType(), 
                         product.getCostPerSquareFoot().toString(),
@@ -99,7 +98,7 @@ public class ProductDaoFileImpl implements ProductDao {
     }
     
     private Product unMarshallProduct(String productAsText) {
-        final String[] productTokens = productAsText.split(DELIMITER);
+        final String[] productTokens = productAsText.split(DaoHelper.DELIMITER);
         final int ID_INDEX = 0, PRODUCT_TYPE_INDEX = 1,
                 PRODUCT_SQUARE_FOOT_COST_INDEX = 2,
                 PRODUCT_LABOR_SQUARE_FOOT_COST_INDEX = 3,

@@ -4,6 +4,9 @@
  */
 package com.we.flooringservices.dao;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  *
  * @author Cirũ Franklin (she/they), Software Engineer
@@ -16,6 +19,10 @@ package com.we.flooringservices.dao;
  */
 
 public interface DaoHelper {
+    final public static String DELIMITER = ",",
+            FILE_DATE_FORMAT = "ddMMyyyy",
+            EXPORT_DATE_FORMAT = "dd-MM-yyyy";
+    final static int DATE_SUBSTRING_BEGINNING_INDEX = 7;
     public static String createDelimiterSeparatedString(String delimiter, String... items) {
         final int ONE_ITEM = 1, ENDING_STRING_INDEX = items.length - ONE_ITEM;
         String delimiterSeparatedString = "";
@@ -28,5 +35,33 @@ public interface DaoHelper {
             delimiterSeparatedString += currentItem + delimiter;
         }
         return delimiterSeparatedString;
+    }
+    
+    public static LocalDateTime parseFileDateString(String dateString) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FILE_DATE_FORMAT);
+        final LocalDateTime localDateTime = LocalDateTime.parse(dateString, formatter);
+        return localDateTime;
+    }
+    
+    public static LocalDateTime parseExportDateString(String dateString) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EXPORT_DATE_FORMAT);
+        final LocalDateTime localDateTime = LocalDateTime.parse(dateString, formatter);
+        return localDateTime;
+    }
+    
+    public static String formatFileDate(LocalDateTime localDateTime) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FILE_DATE_FORMAT);
+        final String formattedDate = localDateTime.format(formatter);
+        return formattedDate;
+    }
+    public static String formatExportDate(LocalDateTime localDateTime) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EXPORT_DATE_FORMAT);
+        final String formattedDate = localDateTime.format(formatter);
+        return formattedDate;
+    }
+    
+    public static String extractDateFromFileName(String fileName) {
+        final String dateFromFileName = fileName.substring(DATE_SUBSTRING_BEGINNING_INDEX).trim();
+        return dateFromFileName;
     }
 }

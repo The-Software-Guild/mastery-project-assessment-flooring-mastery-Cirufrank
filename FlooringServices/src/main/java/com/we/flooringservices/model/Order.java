@@ -27,7 +27,7 @@ public class Order {
     private LocalDateTime orderDate;
     
     public Order(Product product, String customerName, String state,
-            BigDecimal area, BigDecimal taxRate, LocalDateTime orderDate, Availability orderStatus, int totalOrders) {
+            BigDecimal area, BigDecimal taxRate, LocalDateTime orderDate, int totalOrders) {
         orderNumber = totalOrders + ONE_ORDER;
         this.productType = product.getProductType();
         this.costPerSquareFoot = product.getCostPerSquareFoot();
@@ -42,6 +42,26 @@ public class Order {
         this.materialCost = serviceCalculator.getMaterialCost();
         this.laborCost = serviceCalculator.getLaborCost();
         this.total = serviceCalculator.getTotalCost();
+    }
+    
+    public Order(int orderNumber, String customerName, String state,
+                    BigDecimal taxRate, String productType, BigDecimal area,
+                    BigDecimal costPerSquareFoot, BigDecimal laborCostPerSquareFoot,
+                    BigDecimal materialCost, BigDecimal laborCost, BigDecimal tax,
+                    BigDecimal total, LocalDateTime orderDate) {
+        this.orderNumber = orderNumber;
+        this.customerName = customerName;
+        this.state = state;
+        this.taxRate = taxRate;
+        this.productType = productType;
+        this.area = area;
+        this.costPerSquareFoot = costPerSquareFoot;
+        this.laborCostPerSquareFoot = laborCostPerSquareFoot;
+        this.materialCost = materialCost;
+        this.laborCost = laborCost;
+        this.tax = tax;
+        this.total = total;
+        this.orderDate = orderDate;
     }
     
     public void recalculateOrderCost() {
@@ -125,6 +145,10 @@ public class Order {
 
     public BigDecimal getTotal() {
         return total;
+    }
+    
+    public LocalDateTime getOrderDate() {
+        return orderDate;
     }
     
 }

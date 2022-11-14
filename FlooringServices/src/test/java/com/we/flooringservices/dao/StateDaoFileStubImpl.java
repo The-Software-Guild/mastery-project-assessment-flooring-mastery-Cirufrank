@@ -34,15 +34,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StateDaoFileStubImpl implements StateDao {
-    final private static String DELIMITER = ",", 
-            STATE_ID_HEADER = "stateId",
+    final private static String STATE_ID_HEADER = "stateId",
             STATE_ABBRV_HEADER = "stateAbbrv",
             STATE_NAME_HEADER = "stateName",
             STATE_TAXES_HEADER = "taxRate",
-            stateHeadersLine = STATE_ID_HEADER +
-            DELIMITER + STATE_ABBRV_HEADER +
-            DELIMITER + STATE_NAME_HEADER
-            + DELIMITER + STATE_TAXES_HEADER;
+            stateHeadersLine = DaoHelper.createDelimiterSeparatedString(
+                    DaoHelper.DELIMITER,STATE_ID_HEADER,
+                    STATE_ABBRV_HEADER,STATE_NAME_HEADER,
+                    STATE_TAXES_HEADER);
     private static String taxesFileName;
     private Map<Integer, State> allStates = new HashMap<>();
     
@@ -87,8 +86,7 @@ public class StateDaoFileStubImpl implements StateDao {
         final State currentState;
         final int ID_INDEX = 0, ABBRV_INDEX = 1, NAME_INDEX = 2, 
                 TAX_RATE_INDEX = 3;
-        final String[] stateTokens = stringOfState.split(DELIMITER);
-        String test = stateTokens[ID_INDEX];
+        final String[] stateTokens = stringOfState.split(DaoHelper.DELIMITER);
         final int stateId = Integer.parseInt(stateTokens[ID_INDEX]);
         final String stateAbbrv = stateTokens[ABBRV_INDEX];
         final String stateName = stateTokens[NAME_INDEX];
@@ -98,7 +96,8 @@ public class StateDaoFileStubImpl implements StateDao {
     }
     
     private String marshallState(State state) {
-        final String stateAsText = DaoHelper.createDelimiterSeparatedString(DELIMITER,
+        final String stateAsText = DaoHelper.createDelimiterSeparatedString(
+                DaoHelper.DELIMITER,
                 Integer.toString(state.getStateId()), 
                 state.getStateAbbrv(),
                 state.getStateName(),

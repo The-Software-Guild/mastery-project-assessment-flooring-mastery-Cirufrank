@@ -23,7 +23,7 @@ import java.util.List;
  * all been saved to the current export
  * 
  * The audit file will keep track of all changes so the orders date 
- * appropriate file will be responsbile for maintaining all order 
+ * appropriate file will be responsible for maintaining all order 
  * information and the Backup/DataExport.txt file will be 
  * created based on the order's information
  * 
@@ -43,24 +43,24 @@ public interface OrderDao {
     public List<Order> getAllOrders();
     /**
      * Returns all currently active orders that have been successfully
-     * saved an were placed on the date specified
+     * saved
      *
      * @param None
-     * @return A list of all currently active orders ever created successfully
+     * @return A list of all currently active orders created successfully
      */
     public List<Order> getAllOrdersForDate(LocalDateTime orderDate);
     /**
      * Returns an order that matches the specified id
      *
      * @param int The id of the order that the user would like to retrieve
-     * @return An order matching the id of the order specified if found, mull
+     * @return An order matching the id of the order specified if found, null
      * otherwise
      */
     public Order getOrder(int orderId);
     /**
      * Removes an order from its file within the appropriate
      * Data/Orders_MMDDYYYY.txt file (the date is added to the unMarshalled
-     * order by taking the last 8 characters from the file it was loaded from
+     * order by taking the last 8 characters from the file it was loaded from)
      *
      * @param Order An Order object that represents the order to remove 
      * permanently from the appropriate Data/Orders_MMDDYYYY.txt file
@@ -86,7 +86,7 @@ public interface OrderDao {
      */
     public void addOrder(Order order);
     /**
-     * Save's all active orders' information to the Backup/ExportData.txt 
+     * Saves all active orders' information to the Backup/ExportData.txt 
      * file
      *
      * @param None
