@@ -16,13 +16,26 @@ import java.util.List;
  * 
  * @description This interface defines the methods publicly available
  * to retrieve and add products to the "Data/Orders.txt" file
+ * 
+ * NOTE: We can use the java.io.File class' file/directoryInstance.list()
+ * method to return an array of strings for the directory specified
+ * an continue to load all orders from that file until the orders have 
+ * all been saved to the current export
+ * 
+ * The audit file will keep track of all changes so the orders date 
+ * appropriate file will be responsbile for maintaining all order 
+ * information and the Backup/DataExport.txt file will be 
+ * created based on the order's information
+ * 
+ * An order's date will be found by getting the last 8 characters from
+ * its .txt file's name (since these will represent the date the order
+ * was added in MMDDYYYY format)
  */
 public interface OrderDao {
     /**
-     * Returns all orders ever created regardless of status (UNAVAILABLE
-     * orders have been removed from its date file, but its information
-     * is retained in the backup file for business purposes such as if 
-     * an order was deleted in error
+     * Returns all currently active orders that have been successfully
+     * saved by continuing to unMarshall order objects from all files 
+     * within the Data/Orders directory that begin with "Orders_"
      *
      * @param None
      * @return A list of all orders ever created successfully
@@ -30,18 +43,10 @@ public interface OrderDao {
     public List<Order> getAllOrders();
     /**
      * Returns all currently active orders that have been successfully
-     * saved
+     * saved an were placed on the date specified
      *
      * @param None
      * @return A list of all currently active orders ever created successfully
-     */
-    public List<Order> getAllActiveOrders();
-    /**
-     * Returns all orders placed on a specified date
-     *
-     * @param None
-     * @return A list of all orders ever created successfully for the 
-     * date specified
      */
     public List<Order> getAllOrdersForDate(LocalDateTime orderDate);
     /**
@@ -54,65 +59,32 @@ public interface OrderDao {
     public Order getOrder(int orderId);
     /**
      * Removes an order from its file within the appropriate
-     * Data/Orders_MMDDYYY.txt file
+     * Data/Orders_MMDDYYYY.txt file (the date is added to the unMarshalled
+     * order by taking the last 8 characters from the file it was loaded from
      *
-     * @param Order An Order object that represents the order to remove perannetly
-     * from the appropriate Data/Orders_MMDDYYY.txt file
+     * @param Order An Order object that represents the order to remove 
+     * permanently from the appropriate Data/Orders_MMDDYYYY.txt file
      * @return void
      */
-    public void removeOrderFromDateFile(Order order);
+    public void removeOrder(Order order);
     /**
      * Updates an order's information from its file within the appropriate
-     * Data/Orders_MMDDYYY.txt file
+     * Data/Orders_MMDDYYYY.txt file
      *
      * @param Order An Order object that represents the order to update
-     * within the appropriate Data/Orders_MMDDYYY.txt file
+     * within the appropriate Data/Orders_MMDDYYYY.txt file
      * @return void
      */
-    public void updateOrderInDateFile(Order order);
+    public void updateOrder(Order order);
     /**
-     * Updates an order's information from its file within the 
-     * Backup/AllOrders.txt file
-     *
-     * @param Order An Order object that represents the order to update
-     * within the Backup/AllOrders.txt file
-     * @return void
-     */
-    public void updateOrderInBackupFile(Order order);
-    /**
-     * Updates an order's information from its file within the 
-     * Backup/DataExport.txt file
-     *
-     * @param Order An Order object that represents the order to update
-     * within the Backup/DataExport.txt file
-     * @return void
-     */
-    public void updateOrderInActiveOrdersFile(Order order);
-    /**
-     * Adds an order's information the appropriate its file within the 
-     * appropriate Data/Orders_MMDDYY.txt file
+     * Adds an order's information the appropriate file within the 
+     * appropriate Data/Orders_MMDDYYYY.txt file
      *
      * @param Order An Order object that represents the order to add
-     * to the Data/Orders_MMDDYY.txt file
+     * to the Data/Orders_MMDDYYYY.txt file
      * @return void
      */
-    public void addOrderToDateFile(Order order);
-    /**
-     * Adds an order's information the Backup/AllOrders.txt file
-     *
-     * @param Order An Order object that represents the order to add
-     * to the Backup/AllOrders.txt file
-     * @return void
-     */
-    public void addOrderToBackupFile(Order order);
-    /**
-     * Adds an order's information the Backup/DataExport.txt file
-     *
-     * @param Order An Order object that represents the order to add
-     * to the Backup/DataExport.txt file
-     * @return void
-     */
-    public void addOrderToActiveOrdersFile(Order order);
+    public void addOrder(Order order);
     /**
      * Save's all active orders' information to the Backup/ExportData.txt 
      * file

@@ -25,7 +25,6 @@ public class Order {
     private BigDecimal taxRate, area, costPerSquareFoot, laborCostPerSquareFoot,
             materialCost, laborCost, tax, total;
     private LocalDateTime orderDate;
-    private Availability orderStatus;
     
     public Order(Product product, String customerName, String state,
             BigDecimal area, BigDecimal taxRate, LocalDateTime orderDate, Availability orderStatus, int totalOrders) {
@@ -38,7 +37,6 @@ public class Order {
         this.area = area;
         this.taxRate = taxRate;
         this.orderDate = orderDate;
-        this.orderStatus = orderStatus;
         this.serviceCalculator = new ServiceCalculator(area, costPerSquareFoot,
             laborCostPerSquareFoot, taxRate);
         this.materialCost = serviceCalculator.getMaterialCost();
