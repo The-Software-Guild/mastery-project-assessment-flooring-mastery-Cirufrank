@@ -53,7 +53,7 @@ public interface DaoHelper {
     
     public static String formatFileDate(LocalDateTime localDateTime) {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FILE_DATE_FORMAT);
-        final String formattedDate = localDateTime.format(formatter);
+        final String formattedDate = localDateTime.format(formatter).intern();
         return formattedDate;
     }
     public static String formatExportDate(LocalDateTime localDateTime) {
@@ -63,7 +63,7 @@ public interface DaoHelper {
     }
     
     public static String extractDateFromFileName(String fileName) {
-        final String dateFromFileName = fileName.substring(DATE_SUBSTRING_BEGINNING_INDEX).trim();
+        final String dateFromFileName = fileName.substring(DATE_SUBSTRING_BEGINNING_INDEX).trim().intern();
         return dateFromFileName;
     }
     
@@ -79,5 +79,14 @@ public interface DaoHelper {
             System.out.println("-_- File " + fileName + " "
                     + "could not be created");
         }
+    }
+    public static String createOrderDateFileName(String beginningText,
+            LocalDateTime date, String endingText) {
+        final String stringDateFormatted = 
+                    DaoHelper.formatFileDate(date);
+        final String orderFileName = 
+                    beginningText + stringDateFormatted
+                    + endingText;
+         return orderFileName;
     }
 }

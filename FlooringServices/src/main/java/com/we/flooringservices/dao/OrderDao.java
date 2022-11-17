@@ -5,6 +5,7 @@
 package com.we.flooringservices.dao;
 
 import com.we.flooringservices.model.Order;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,10 +44,11 @@ public interface OrderDao {
     public List<Order> getAllOrders();
     /**
      * Returns all currently active orders that have been successfully
-     * saved
+     * saved for the date specified
      *
-     * @param None
+     * @param LocalDateTime Date of the orders to retreive
      * @return A list of all currently active orders created successfully
+     * on the date specified
      */
     public List<Order> getAllOrdersForDate(LocalDateTime orderDate);
     /**
@@ -62,11 +64,12 @@ public interface OrderDao {
      * Data/Orders_MMDDYYYY.txt file (the date is added to the unMarshalled
      * order by taking the last 8 characters from the file it was loaded from)
      *
-     * @param Order An Order object that represents the order to remove 
+     * @param int ID of the order to remove 
      * permanently from the appropriate Data/Orders_MMDDYYYY.txt file
-     * @return void
+     * @return Order order object instance representing the order removed, and 
+     * null if no order matching the ID specified was found
      */
-    public void removeOrder(Order order);
+    public Order removeOrder(int orderId);
     /**
      * Updates an order's information from its file within the appropriate
      * Data/Orders_MMDDYYYY.txt file
@@ -84,7 +87,7 @@ public interface OrderDao {
      * to the Data/Orders_MMDDYYYY.txt file
      * @return void
      */
-    public void addOrder(Order order);
+    public void addOrder(Order order) throws IOException;
     /**
      * Saves all active orders' information to the Backup/ExportData.txt 
      * file
