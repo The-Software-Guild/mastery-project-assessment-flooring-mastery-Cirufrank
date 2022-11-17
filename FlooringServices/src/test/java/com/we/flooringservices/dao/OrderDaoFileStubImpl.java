@@ -114,7 +114,6 @@ public class OrderDaoFileStubImpl implements OrderDao {
     
     @Override
     public Order removeOrder(Order order) throws IOException {
-        final int NO_ORDERS = 0;
         final String orderFileName = 
                 DaoHelper.createOrderDateFileName(
                    dataDirectoryName + "/" + ORDER_FILE_BEGINNING_STRING, 
