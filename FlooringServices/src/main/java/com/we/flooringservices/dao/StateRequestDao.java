@@ -10,8 +10,17 @@ package com.we.flooringservices.dao;
  * @course DI002 Full Stack Development Using Java and React (2210)
  * @project Assessment: Flooring Mastery Project with Spring DI
  * 
- * @description
+ * @description This interface provides the methods needed to log 
+ * that services have been requested from a state not currently available
+ * to purchase services from
  */
 public interface StateRequestDao {
-    
+    /**
+     * Log a request to the state specified
+     *
+     * @param String Abbreviation of the state to log the 
+     * request to
+     * @return void
+     */
+    public void logStateRequest(String stateAbbrv);
 }

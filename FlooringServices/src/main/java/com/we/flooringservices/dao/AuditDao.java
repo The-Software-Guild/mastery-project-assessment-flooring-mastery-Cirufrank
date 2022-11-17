@@ -10,7 +10,8 @@ package com.we.flooringservices.dao;
  * @course DI002 Full Stack Development Using Java and React (2210)
  * @project Assessment: Flooring Mastery Project with Spring DI
  * 
- * @description
+ * @description This interface declares the method responsible for
+ * auditing the services purchased within our flooring services application
  */
 public interface AuditDao {
     /**
