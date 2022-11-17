@@ -6,8 +6,10 @@ package com.we.flooringservices.dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /**
  *
@@ -22,9 +24,12 @@ import java.time.format.DateTimeFormatter;
 
 public interface DaoHelper {
     final public static String DELIMITER = ",",
-            FILE_DATE_FORMAT = "ddMMyyyy",
-            EXPORT_DATE_FORMAT = "dd-MM-yyyy";
-    final static int DATE_SUBSTRING_BEGINNING_INDEX = 7;
+            FILE_DATE_FORMAT = "MMddyyyy",
+            EXPORT_DATE_FORMAT = "MM-dd-yyyy";
+    final static int DATE_SUBSTRING_BEGINNING_INDEX = 16,
+            DATE_SUBSTRING_ENDING_INDEX = 24,
+            EXPORT_DATE_BEGINNING_INDEX = 0,
+            EXPORT_DATE_ENDING_INDEX = 10;
     public static String createDelimiterSeparatedString(String delimiter, String... items) {
         final int ONE_ITEM = 1, ENDING_STRING_INDEX = items.length - ONE_ITEM;
         String delimiterSeparatedString = "";
@@ -40,14 +45,15 @@ public interface DaoHelper {
     }
     
     public static LocalDateTime parseFileDateString(String dateString) {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FILE_DATE_FORMAT);
-        final LocalDateTime localDateTime = LocalDateTime.parse(dateString, formatter);
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FILE_DATE_FORMAT, Locale.US);
+        final LocalDateTime localDateTime = LocalDate.parse(dateString, formatter).atStartOfDay();
         return localDateTime;
     }
     
     public static LocalDateTime parseExportDateString(String dateString) {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EXPORT_DATE_FORMAT);
-        final LocalDateTime localDateTime = LocalDateTime.parse(dateString, formatter);
+        dateString = dateString.substring(EXPORT_DATE_BEGINNING_INDEX, EXPORT_DATE_ENDING_INDEX);
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EXPORT_DATE_FORMAT, Locale.US);
+        final LocalDateTime localDateTime = LocalDate.parse(dateString, formatter).atStartOfDay();
         return localDateTime;
     }
     
@@ -63,7 +69,8 @@ public interface DaoHelper {
     }
     
     public static String extractDateFromFileName(String fileName) {
-        final String dateFromFileName = fileName.substring(DATE_SUBSTRING_BEGINNING_INDEX).trim().intern();
+        final String dateFromFileName = fileName.substring(DATE_SUBSTRING_BEGINNING_INDEX,
+                DATE_SUBSTRING_ENDING_INDEX).trim().intern();
         return dateFromFileName;
     }
     
@@ -89,4 +96,5 @@ public interface DaoHelper {
                     + endingText;
          return orderFileName;
     }
+    
 }

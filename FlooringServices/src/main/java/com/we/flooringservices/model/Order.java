@@ -6,6 +6,7 @@ package com.we.flooringservices.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  *
@@ -50,6 +51,26 @@ public class Order {
                     BigDecimal materialCost, BigDecimal laborCost, BigDecimal tax,
                     BigDecimal total, LocalDateTime orderDate) {
         this.orderNumber = orderNumber;
+        this.customerName = customerName;
+        this.state = state;
+        this.taxRate = taxRate;
+        this.productType = productType;
+        this.area = area;
+        this.costPerSquareFoot = costPerSquareFoot;
+        this.laborCostPerSquareFoot = laborCostPerSquareFoot;
+        this.materialCost = materialCost;
+        this.laborCost = laborCost;
+        this.tax = tax;
+        this.total = total;
+        this.orderDate = orderDate;
+    }
+    
+    public Order(String customerName, String state,
+                    BigDecimal taxRate, String productType, BigDecimal area,
+                    BigDecimal costPerSquareFoot, BigDecimal laborCostPerSquareFoot,
+                    BigDecimal materialCost, BigDecimal laborCost, BigDecimal tax,
+                    BigDecimal total, LocalDateTime orderDate, int totalOrders) {
+        this.orderNumber = totalOrders + ONE_ORDER;
         this.customerName = customerName;
         this.state = state;
         this.taxRate = taxRate;
@@ -149,6 +170,85 @@ public class Order {
     
     public LocalDateTime getOrderDate() {
         return orderDate;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.serviceCalculator);
+        hash = 97 * hash + this.orderNumber;
+        hash = 97 * hash + Objects.hashCode(this.customerName);
+        hash = 97 * hash + Objects.hashCode(this.state);
+        hash = 97 * hash + Objects.hashCode(this.productType);
+        hash = 97 * hash + Objects.hashCode(this.taxRate);
+        hash = 97 * hash + Objects.hashCode(this.area);
+        hash = 97 * hash + Objects.hashCode(this.costPerSquareFoot);
+        hash = 97 * hash + Objects.hashCode(this.laborCostPerSquareFoot);
+        hash = 97 * hash + Objects.hashCode(this.materialCost);
+        hash = 97 * hash + Objects.hashCode(this.laborCost);
+        hash = 97 * hash + Objects.hashCode(this.tax);
+        hash = 97 * hash + Objects.hashCode(this.total);
+        hash = 97 * hash + Objects.hashCode(this.orderDate);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Order other = (Order) obj;
+        if (this.orderNumber != other.orderNumber) {
+            return false;
+        }
+        if (!Objects.equals(this.customerName, other.customerName)) {
+            return false;
+        }
+        if (!Objects.equals(this.state, other.state)) {
+            return false;
+        }
+        if (!Objects.equals(this.productType, other.productType)) {
+            return false;
+        }
+        if (!Objects.equals(this.serviceCalculator, other.serviceCalculator)) {
+            return false;
+        }
+        if (!Objects.equals(this.taxRate, other.taxRate)) {
+            return false;
+        }
+        if (!Objects.equals(this.area, other.area)) {
+            return false;
+        }
+        if (!Objects.equals(this.costPerSquareFoot, other.costPerSquareFoot)) {
+            return false;
+        }
+        if (!Objects.equals(this.laborCostPerSquareFoot, other.laborCostPerSquareFoot)) {
+            return false;
+        }
+        if (!Objects.equals(this.materialCost, other.materialCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.laborCost, other.laborCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.tax, other.tax)) {
+            return false;
+        }
+        if (!Objects.equals(this.total, other.total)) {
+            return false;
+        }
+        return Objects.equals(this.orderDate, other.orderDate);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "serviceCalculator=" + serviceCalculator + ", orderNumber=" + orderNumber + ", customerName=" + customerName + ", state=" + state + ", productType=" + productType + ", taxRate=" + taxRate + ", area=" + area + ", costPerSquareFoot=" + costPerSquareFoot + ", laborCostPerSquareFoot=" + laborCostPerSquareFoot + ", materialCost=" + materialCost + ", laborCost=" + laborCost + ", tax=" + tax + ", total=" + total + ", orderDate=" + orderDate + '}';
     }
     
 }

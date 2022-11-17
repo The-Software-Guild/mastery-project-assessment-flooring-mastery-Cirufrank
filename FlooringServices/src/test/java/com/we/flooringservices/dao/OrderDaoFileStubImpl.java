@@ -21,7 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,15 +31,14 @@ import org.springframework.stereotype.Component;
  * @course DI002 Full Stack Development Using Java and React (2210)
  * @project Assessment: Flooring Mastery Project with Spring DI
  * 
- * @description This class represents the file implementation of the
+ * @description TEST STUB: This class represents the file implementation of the
  * OrderDao interface and defines the properties and methods needed
  * to write and read Order information from the "Data/Orders_MMDDYYY.txt"
  * file as well as the "Backup/DataExport.txt" file
  */
 
 @Component
-@Primary
-public class OrderDaoFileImpl implements OrderDao {
+public class OrderDaoFileStubImpl implements OrderDao {
     final private Map<Integer, Order> orders = new HashMap<>();
     final private List<LocalDateTime> allDates = new ArrayList<>();
     final private static String ORDER_NUMBER_HEADER = "orderNumber",
@@ -73,12 +73,14 @@ public class OrderDaoFileImpl implements OrderDao {
     
     private String dataDirectoryName, exportAllDataFileName;
     
-    public OrderDaoFileImpl() {
+    public OrderDaoFileStubImpl() {
         dataDirectoryName = "Data";
         exportAllDataFileName = "Backup/DataExport.txt";
     }
     
-    public OrderDaoFileImpl(String dataDirectoryName, String exportAllDataFileName) {
+    @Autowired
+    public OrderDaoFileStubImpl(@Value("TestData")String dataDirectoryName, 
+            @Value("TestBackup/DataExport-Test.txt")String exportAllDataFileName) {
         this.dataDirectoryName = dataDirectoryName;
         this.exportAllDataFileName = exportAllDataFileName;
     }
@@ -111,10 +113,18 @@ public class OrderDaoFileImpl implements OrderDao {
     }
     
     @Override
-    public Order removeOrder(int orderId) {
-        loadAllOrders();
-        final Order removedOrder = orders.remove(orderId);
-        writeAllOrders();
+    public Order removeOrder(Order order) throws IOException {
+        final int NO_ORDERS = 0;
+        final String orderFileName = 
+                DaoHelper.createOrderDateFileName(
+                   dataDirectoryName + "/" + ORDER_FILE_BEGINNING_STRING, 
+                          order.getOrderDate(),
+                     TXT_STRING);
+        loadOrdersForDate(orderFileName);
+        final Order removedOrder = orders.remove(order.getOrderNumber());
+        final List<Order> remainingOrders = new ArrayList<>(orders.values());
+        writeOrdersForDate(orderFileName, remainingOrders);
+        cleanFiles(orderFileName, order.getOrderDate());
         return removedOrder;
     }
     
@@ -135,7 +145,7 @@ public class OrderDaoFileImpl implements OrderDao {
         loadOrdersForDate(orderFileName);
         orders.put(order.getOrderNumber(), order);
         final List<Order> allOrdersForDate = new ArrayList<>(orders.values());
-        writeOrderForDate(orderFileName, allOrdersForDate);
+        writeOrdersForDate(orderFileName, allOrdersForDate);
     }
     
     @Override
@@ -143,7 +153,21 @@ public class OrderDaoFileImpl implements OrderDao {
         loadAllOrders();
         exportAllOrders();
     }
+    public List getAllExportedOrders() {
+        loadExportedOrders();
+        final List<Order> exportedOrders = new ArrayList<>(orders.values());
+        return exportedOrders;
+    }
     
+    private void cleanFiles(String orderFileName, LocalDateTime orderDate) {
+        final int NO_ORDERS = 0;
+        final List<Order> ordersForDate = getAllOrdersForDate(orderDate);
+        if (ordersForDate.size() == NO_ORDERS) {
+            final File orderFile = new File(orderFileName);
+            orderFile.delete();
+        }
+
+    }
     private String marshallOrderNoDate(Order order) {
         final String orderAsText = DaoHelper.createDelimiterSeparatedString(
             DaoHelper.DELIMITER,
@@ -167,7 +191,7 @@ public class OrderDaoFileImpl implements OrderDao {
                 order.getLaborCostPerSquareFoot().toString(), 
                 order.getMaterialCost().toString(), order.getLaborCost().toString(), 
                 order.getTax().toString(), order.getTotal().toString(),
-                order.getOrderDate().toString());
+                DaoHelper.formatExportDate(order.getOrderDate()));
         
         return orderAsText;
     }
@@ -263,7 +287,26 @@ public class OrderDaoFileImpl implements OrderDao {
         
     }
     
-    private void writeOrderForDate(String ordersFileName, List<Order> orders) throws IOException {
+    private void loadExportedOrders() {
+        try {
+            Scanner scanner = 
+                    new Scanner(
+                        new BufferedReader(
+                            new FileReader(exportAllDataFileName)));
+            //Here so we don't try to parse headers
+            scanner.nextLine();
+            while (scanner.hasNextLine()) {
+                final String orderAsText = scanner.nextLine();
+                final Order currentOrder = unMarshallOrderWithDate(orderAsText);
+                orders.put(currentOrder.getOrderNumber(), currentOrder);
+            }
+            scanner.close();
+        } catch(FileNotFoundException error) {
+            System.out.println("-_- Unable to find Backups file");
+        }
+    }
+    
+    private void writeOrdersForDate(String ordersFileName, List<Order> orders) throws IOException {
         try {
             if (DaoHelper.fileExists(ordersFileName))
                 DaoHelper.createNewFile(ordersFileName);
@@ -295,7 +338,7 @@ public class OrderDaoFileImpl implements OrderDao {
                 order -> order.getOrderDate().compareTo(orderDate) == SAME_DATE)
                     .collect(Collectors.toList());
             try {
-                writeOrderForDate(currentOrderFileName, ordersForDate);
+                writeOrdersForDate(currentOrderFileName, ordersForDate);
                 
             } catch(IOException error) {
                 System.out.println("-_- Orders could not be saved");

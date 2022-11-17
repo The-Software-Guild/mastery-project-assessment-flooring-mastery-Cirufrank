@@ -64,12 +64,12 @@ public interface OrderDao {
      * Data/Orders_MMDDYYYY.txt file (the date is added to the unMarshalled
      * order by taking the last 8 characters from the file it was loaded from)
      *
-     * @param int ID of the order to remove 
+     * @param Order Instance of order object representing order to remove
      * permanently from the appropriate Data/Orders_MMDDYYYY.txt file
      * @return Order order object instance representing the order removed, and 
      * null if no order matching the ID specified was found
      */
-    public Order removeOrder(int orderId);
+    public Order removeOrder(Order order) throws IOException;
     /**
      * Updates an order's information from its file within the appropriate
      * Data/Orders_MMDDYYYY.txt file
