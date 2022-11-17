@@ -13,5 +13,11 @@ package com.we.flooringservices.dao;
  * @description
  */
 public interface AuditDao {
-    
+    /**
+     * Write an entry to the audit log for the application
+     *
+     * @param String entry to write to the audit log
+     * @return void
+     */
+    public void writeAuditEntry(String entry);
 }

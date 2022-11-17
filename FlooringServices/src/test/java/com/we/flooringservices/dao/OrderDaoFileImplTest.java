@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * @course DI002 Full Stack Development Using Java and React (2210)
  * @project Assessment: Flooring Mastery Project with Spring DI
  * 
- * @description This class tests the OrdertDaoFileImpl class which 
+ * @description This class tests the OrderDaoFileImpl class which 
  * provides the methods needed to read and 
  * write information to and from the Orders files
  */
@@ -120,6 +120,10 @@ public class OrderDaoFileImplTest {
      */
     @Test
     public void testRemoveOrder(Order testOrder, OrderDaoFileStubImpl testOrderDao) throws IOException {
+        final Order orderToRemove = testOrderDao.getOrder(testOrder.getOrderNumber());
+        if (orderToRemove == null) {
+            testOrderDao.addOrder(testOrder);
+        }
         final Order removedOrder = testOrderDao.removeOrder(testOrder);
         assertNotNull(removedOrder);
         assertEquals(testOrder, removedOrder);
