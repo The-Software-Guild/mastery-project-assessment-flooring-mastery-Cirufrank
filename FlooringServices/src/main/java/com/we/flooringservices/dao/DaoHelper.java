@@ -4,6 +4,8 @@
  */
 package com.we.flooringservices.dao;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -63,5 +65,19 @@ public interface DaoHelper {
     public static String extractDateFromFileName(String fileName) {
         final String dateFromFileName = fileName.substring(DATE_SUBSTRING_BEGINNING_INDEX).trim();
         return dateFromFileName;
+    }
+    
+    public static boolean fileExists(String fileName) {
+        final File currentFile = new File(fileName);
+        return currentFile.exists();
+    }
+    public static void createNewFile(String fileName) {
+        final File currentFile = new File(fileName);
+        try {
+            currentFile.createNewFile();
+        } catch(IOException error) {
+            System.out.println("-_- File " + fileName + " "
+                    + "could not be created");
+        }
     }
 }

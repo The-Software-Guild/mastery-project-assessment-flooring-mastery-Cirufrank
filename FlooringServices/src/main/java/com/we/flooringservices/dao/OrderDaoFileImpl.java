@@ -5,14 +5,23 @@
 package com.we.flooringservices.dao;
 
 import com.we.flooringservices.model.Order;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  *
@@ -34,6 +43,7 @@ public class OrderDaoFileImpl implements OrderDao {
             TOTAL_HEADER = "total",
             ORDER_DATE_HEADER = "orderDate",
             ORDER_FILE_BEGINNING_STRING = "Orders_",
+            TXT_STRING = ".txt",
             ORDER_DATE_FILE_HEADERS = DaoHelper.createDelimiterSeparatedString(
                     DaoHelper.DELIMITER,
                     ORDER_NUMBER_HEADER, CUSTOMER_NAME_HEADER, STATE_HEADER,
@@ -112,22 +122,114 @@ public class OrderDaoFileImpl implements OrderDao {
         return order;
     }
     
-    public List<Order> getAllOrders() {
+    public Order unMarshallOrderWithoutDate(String orderAsText, LocalDateTime orderDate) {
+        final String[] orderTokens = orderAsText.split(DaoHelper.DELIMITER);
+        final int ORDER_NUMBER_INDEX = 0, CUSTOMER_NAME_INDEX = 1,
+                STATE_INDEX = 2, TAX_RATE_INDEX = 3, PRODUCT_TYPE_INDEX = 4,
+                AREA_INDEX = 5, SQUARE_FOOT_COST_INDEX = 6,
+                SQUARE_FOOT_LABOR_COST_INDEX = 7, MATERIAL_COST_INDEX = 8,
+                LABOR_COST_INDEX = 9, TAX_INDEX = 10, TOTAL_INDEX = 11,
+                ORDER_DATE_INDEX = 12;
+        final Order order = new Order(
+                Integer.parseInt(orderTokens[ORDER_NUMBER_INDEX]),
+        orderTokens[CUSTOMER_NAME_INDEX], orderTokens[STATE_INDEX],
+        new BigDecimal(orderTokens[TAX_RATE_INDEX]), orderTokens[PRODUCT_TYPE_INDEX],
+        new BigDecimal(orderTokens[AREA_INDEX]),
+        new BigDecimal(orderTokens[SQUARE_FOOT_COST_INDEX]),
+        new BigDecimal(orderTokens[SQUARE_FOOT_LABOR_COST_INDEX]), 
+        new BigDecimal(orderTokens[MATERIAL_COST_INDEX]), 
+        new BigDecimal(orderTokens[LABOR_COST_INDEX]),
+        new BigDecimal(orderTokens[TAX_INDEX]), 
+        new BigDecimal(orderTokens[TOTAL_INDEX]), 
+        orderDate);
+        return order;
+    }
+    
+    public void loadOrdersForDate(String ordersFileName) {
+        try {
+                Scanner scanner = new Scanner(
+                                        new BufferedReader(
+                                            new FileReader(ordersFileName)));
+                //Here to get rid of headers line
+                scanner.nextLine();
+                while(scanner.hasNextLine()) {
+                    final String currentOrderText = scanner.nextLine();
+                    final String orderDateString = 
+                            DaoHelper.extractDateFromFileName(ordersFileName);
+                    final LocalDateTime orderDate = 
+                            DaoHelper.parseFileDateString(orderDateString);
+                    Order currentOrder = 
+                            unMarshallOrderWithoutDate(currentOrderText,
+                                    orderDate);
+                    allOrders.put(currentOrder.getOrderNumber(),currentOrder);
+                }
+                scanner.close();
+            } catch(FileNotFoundException error) {
+                System.out.println("-_- Could not fine "
+                        + "file " + ordersFileName);
+            }
+    }
+    
+    public void loadAllOrders() {
         final int NO_ORDER_FILES = 0;
         final File dataDirectory = new File(dataDirectoryName);
-        if (!dataDirectory.exists()) return null;
+        if (!dataDirectory.exists()) return;
         final String[] filesNamesInDataDirectory = dataDirectory.list();
         final String[] orderFileNamesInDataDirectory = 
                 Arrays.stream(filesNamesInDataDirectory).filter(fileName ->
                     fileName.contains(ORDER_FILE_BEGINNING_STRING)
                 ).toArray(fileName -> new String[fileName]);
-        if (orderFileNamesInDataDirectory.length == NO_ORDER_FILES) return null;
-        
+        if (orderFileNamesInDataDirectory.length == NO_ORDER_FILES) return;
         Arrays.stream(orderFileNamesInDataDirectory).forEach(orderFileName ->
         {
+            loadOrdersForDate(orderFileName);
+        }
+       );
+        
+    }
+    
+    public void writeOrderForDate(String ordersFileName) throws IOException {
+        try {
+            if (DaoHelper.fileExists(ordersFileName))
+                DaoHelper.createNewFile(ordersFileName);
+            PrintWriter output = new PrintWriter(
+                                        new FileWriter(ordersFileName));
+            output.println(ORDER_DATE_FILE_HEADERS);
+            output.flush();
+            final List<Order> ordersForDate = new ArrayList<>(allOrders.values());
+            for (Order currentOrder: ordersForDate) {
+                final String orderAsText = marshallOrderNoDate(currentOrder);
+                output.println(orderAsText);
+                output.flush();
+            }
+            output.close();
+        } catch(FileNotFoundException error) {
+            System.out.println("-_- Unable to save orders to date file");
+        }
+    }
+    //Make method that gets all dates when they're loaded
+    //And create file from there
+    public void writeAllOrders() {
+        final List<Order> currentOrders = new ArrayList<>(allOrders.values());
+        for (Order currentOrder : currentOrders) {
+            final String stringDateFormatted = 
+                    DaoHelper.formatFileDate(
+                            currentOrder.getOrderDate());
+            final String currentOrderFileName = 
+                    ORDER_FILE_BEGINNING_STRING + stringDateFormatted
+                    + TXT_STRING;
+            final File orderFile = new File(currentOrderFileName);
+            try {
+                if (!orderFile.exists()) orderFile.createNewFile();
+                PrintWriter output = new PrintWriter(
+                                        new FileWriter(currentOrderFileName));
+                final String orderAsText = marshallOrderNoDate(currentOrder);
+                output.println(ORDER_DATE_FILE_HEADERS);
+                
+            } catch(IOException error) {
+                System.out.println("-_- Orders could not be saved");
+            }
             
         }
-        );
-        
     }
 }
