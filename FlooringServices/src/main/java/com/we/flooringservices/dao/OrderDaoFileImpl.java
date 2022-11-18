@@ -5,6 +5,7 @@
 package com.we.flooringservices.dao;
 
 import com.we.flooringservices.model.Order;
+import com.we.flooringservices.service.FlooringServicesNoOrdersFoundExeception;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,7 +73,6 @@ public class OrderDaoFileImpl implements OrderDao {
                     TOTAL_HEADER, ORDER_DATE_HEADER);
     
     private String dataDirectoryName, exportAllDataFileName;
-    
     public OrderDaoFileImpl() {
         dataDirectoryName = "Data";
         exportAllDataFileName = "Backup/DataExport.txt";
@@ -85,7 +85,7 @@ public class OrderDaoFileImpl implements OrderDao {
     
     @Override
     public List<Order> getAllOrders() throws 
-            FlooringServicesDaoPersistenceException {
+            FlooringServicesNoOrdersFoundExeception {
         loadAllOrders();
         final List<Order> allOrders = new ArrayList<>(orders.values());
         return allOrders;
@@ -93,7 +93,7 @@ public class OrderDaoFileImpl implements OrderDao {
     
     @Override
     public List<Order> getAllOrdersForDate(LocalDateTime orderDate) 
-    throws FlooringServicesDaoPersistenceException{
+    throws FlooringServicesNoOrdersFoundExeception{
         final String orderFileName = 
                 DaoHelper.createOrderDateFileName(
                    dataDirectoryName + "/" + ORDER_FILE_BEGINNING_STRING, 
@@ -107,14 +107,15 @@ public class OrderDaoFileImpl implements OrderDao {
     
     @Override
     public Order getOrder(int orderId)
-    throws FlooringServicesDaoPersistenceException{
+    throws FlooringServicesNoOrdersFoundExeception{
         loadAllOrders();
         final Order order = orders.get(orderId);
         return order;
     }
     
     @Override
-    public Order removeOrder(Order order) throws FlooringServicesDaoPersistenceException {
+    public Order removeOrder(Order order) throws FlooringServicesDaoPersistenceException,
+            FlooringServicesNoOrdersFoundExeception{
         final String orderFileName = 
                 DaoHelper.createOrderDateFileName(
                    dataDirectoryName + "/" + ORDER_FILE_BEGINNING_STRING, 
@@ -130,14 +131,15 @@ public class OrderDaoFileImpl implements OrderDao {
     
     @Override
     public void updateOrder(Order order)
-    throws FlooringServicesDaoPersistenceException{
+    throws FlooringServicesDaoPersistenceException,
+            FlooringServicesNoOrdersFoundExeception{
         loadAllOrders();
         orders.put(order.getOrderNumber(), order);
         writeAllOrders();
     }
     
     @Override
-    public void addOrder(Order order) throws FlooringServicesDaoPersistenceException {
+    public void addOrder(Order order) throws FlooringServicesDaoPersistenceException, FlooringServicesNoOrdersFoundExeception {
         final String orderFileName = 
                 DaoHelper.createOrderDateFileName(
                    dataDirectoryName + "/" + ORDER_FILE_BEGINNING_STRING, 
@@ -151,7 +153,8 @@ public class OrderDaoFileImpl implements OrderDao {
     
     @Override
     public void exportAllActiveOrders() 
-    throws FlooringServicesDaoPersistenceException{
+    throws FlooringServicesDaoPersistenceException,
+            FlooringServicesNoOrdersFoundExeception{
         loadAllOrders();
         exportAllOrders();
     }
@@ -163,7 +166,8 @@ public class OrderDaoFileImpl implements OrderDao {
     }
     
     private void cleanFiles(String orderFileName, LocalDateTime orderDate)
-    throws FlooringServicesDaoPersistenceException{
+    throws FlooringServicesDaoPersistenceException,
+            FlooringServicesNoOrdersFoundExeception{
         final int NO_ORDERS = 0;
         final List<Order> ordersForDate = getAllOrdersForDate(orderDate);
         if (ordersForDate.size() == NO_ORDERS) {
@@ -247,7 +251,7 @@ public class OrderDaoFileImpl implements OrderDao {
     }
     
     private void loadOrdersForDate(String ordersFileName)
-        throws FlooringServicesDaoPersistenceException{
+        throws FlooringServicesNoOrdersFoundExeception{
         try {
                 Scanner scanner = new Scanner(
                                         new BufferedReader(
@@ -268,12 +272,11 @@ public class OrderDaoFileImpl implements OrderDao {
                 }
                 scanner.close();
             } catch(FileNotFoundException error) {
-                throw new FlooringServicesDaoPersistenceException("-_- Could not find "
-                        + "file " + ordersFileName);
+                throw new FlooringServicesNoOrdersFoundExeception("No orders found for date");
             }
     }
     
-    private void loadAllOrders() throws FlooringServicesDaoPersistenceException {
+    private void loadAllOrders() throws FlooringServicesNoOrdersFoundExeception {
         final int NO_ORDER_FILES = 0;
         final File dataDirectory = new File(dataDirectoryName);
         if (!dataDirectory.exists()) return;
@@ -288,7 +291,7 @@ public class OrderDaoFileImpl implements OrderDao {
             orderFileName = dataDirectoryName + "/" + orderFileName;
             try {
                 loadOrdersForDate(orderFileName);
-            } catch(FlooringServicesDaoPersistenceException error) {
+            } catch(FlooringServicesNoOrdersFoundExeception error) {
                 //check on this
             }
         }

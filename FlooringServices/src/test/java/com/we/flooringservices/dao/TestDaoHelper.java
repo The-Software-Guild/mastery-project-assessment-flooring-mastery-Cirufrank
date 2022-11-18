@@ -22,12 +22,12 @@ import java.util.Locale;
  * list of text representing an object, thus keeping out code DRY
  */
 
-public interface DaoHelper {
+public interface TestDaoHelper {
     final public static String DELIMITER = ",",
             FILE_DATE_FORMAT = "MMddyyyy",
             EXPORT_DATE_FORMAT = "MM-dd-yyyy";
-    final static int DATE_SUBSTRING_BEGINNING_INDEX = 12,
-            DATE_SUBSTRING_ENDING_INDEX = 20,
+    final static int DATE_SUBSTRING_BEGINNING_INDEX = 16,
+            DATE_SUBSTRING_ENDING_INDEX = 24,
             EXPORT_DATE_BEGINNING_INDEX = 0,
             EXPORT_DATE_ENDING_INDEX = 10;
     public static String createDelimiterSeparatedString(String delimiter, String... items) {

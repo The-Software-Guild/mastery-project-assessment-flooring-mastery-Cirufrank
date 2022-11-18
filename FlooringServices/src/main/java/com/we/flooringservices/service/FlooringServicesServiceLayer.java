@@ -4,6 +4,7 @@
  */
 package com.we.flooringservices.service;
 
+import com.we.flooringservices.dao.FlooringServicesDaoPersistenceException;
 import com.we.flooringservices.model.Order;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +14,14 @@ import java.util.List;
  * @author ciruf
  */
 public interface FlooringServicesServiceLayer {
-    public List<Order> displayOrders(LocalDateTime orderDate);
-    public void addOrder(Order order);
+    /**
+     * Ensures there are orders to display and returns those orders to user
+     *
+     * @param LocalDateTime date of the orders to view
+     * @return List<Order> list of order object representing the orders 
+     * placed on the date specified
+     */
+    public List<Order> getOrders(LocalDateTime orderDate) throws FlooringServicesNoOrdersFoundExeception,
+            FlooringServicesDaoPersistenceException;
+//    public void addOrder(Order order);
 }

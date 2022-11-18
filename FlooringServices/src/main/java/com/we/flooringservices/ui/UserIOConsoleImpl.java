@@ -99,6 +99,7 @@ public class UserIOConsoleImpl implements UserIO {
                         + "MM/dd/yyyy, for example: 01/23/2022 or 12/05/2022.");
                 continue;
            }
+           isValid = true;
         }
         return userDate;
     }
