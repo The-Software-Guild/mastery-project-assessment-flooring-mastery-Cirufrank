@@ -37,7 +37,8 @@ public class StateDaoFileImplTest {
 
     @Test
     @Order(1)
-    public void testGetAllStates(State stateToAdd, StateDaoFileStubImpl testStateDao) {
+    public void testGetAllStates(State stateToAdd, StateDaoFileStubImpl testStateDao) 
+        throws FlooringServicesDaoPersistenceException{
         final int TOTAL_AVAILABLE_STATES_INT = 26, ONE_STATE = 1;
         ArrayList<State> allStates = new ArrayList<>(
                 testStateDao.getAllStates());
@@ -58,7 +59,8 @@ public class StateDaoFileImplTest {
     @ParameterizedTest
     @ValueSource(ints = {5})
     @Order(2)
-    public void testGetState(int stateId, StateDaoFileStubImpl testStateDao) {
+    public void testGetState(int stateId, StateDaoFileStubImpl testStateDao)
+        throws FlooringServicesDaoPersistenceException{
         final State accurateState = new State(stateId, "CA", "California", new BigDecimal("4.60"));
         final State testState = testStateDao.getState(stateId);
         assertEquals(accurateState, testState);
@@ -67,7 +69,8 @@ public class StateDaoFileImplTest {
     
     @Test
     @Order(3)
-    public void testAddState(State stateToAdd, StateDaoFileStubImpl testStateDao) {
+    public void testAddState(State stateToAdd, StateDaoFileStubImpl testStateDao) 
+     throws FlooringServicesDaoPersistenceException{
         testStateDao.addState(stateToAdd);
         final State stateJustAdded = 
                 testStateDao.getState(
@@ -78,7 +81,8 @@ public class StateDaoFileImplTest {
     
     @Test
     @Order(4)
-    public void testRemoveState(State stateToRemove, StateDaoFileStubImpl testStateDao) {
+    public void testRemoveState(State stateToRemove, StateDaoFileStubImpl testStateDao)
+        throws FlooringServicesDaoPersistenceException{
         testStateDao.removeState(stateToRemove.getStateId());
         assertTrue(testStateDao.getState(stateToRemove.getStateId()) == null);
     }

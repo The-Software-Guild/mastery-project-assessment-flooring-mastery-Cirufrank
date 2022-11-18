@@ -54,21 +54,24 @@ public class StateDaoFileImpl implements StateDao {
     }
     
     @Override
-    public State getState(int stateId) {
+    public State getState(int stateId) 
+        throws FlooringServicesDaoPersistenceException {
         loadStates();
         State stateRetrieved = allStates.get(stateId);
         return stateRetrieved;
     }
     
     @Override
-    public List<State> getAllStates() {
+    public List<State> getAllStates() 
+        throws FlooringServicesDaoPersistenceException{
         loadStates();
         final List<State> currentStates = new ArrayList<>(allStates.values());
         return currentStates;
     }
     
     @Override
-    public void addState(State state) {
+    public void addState(State state) 
+        throws FlooringServicesDaoPersistenceException{
         loadStates();
         allStates.put(state.getStateId(), state);
         writeStates();
@@ -97,7 +100,8 @@ public class StateDaoFileImpl implements StateDao {
         return stateAsText;
     }
     
-    private void loadStates() {
+    private void loadStates() 
+        throws FlooringServicesDaoPersistenceException{
         
         try {
             Scanner scanner = new Scanner(
@@ -112,13 +116,13 @@ public class StateDaoFileImpl implements StateDao {
             }
             scanner.close();
         } catch(FileNotFoundException error) {
-            System.out.println("-_- Could not load states from file");
-            System.out.println(error.getMessage());
+            throw new FlooringServicesDaoPersistenceException("-_- Could not load states from file");
         }
         
     }
     
-    private void writeStates() {
+    private void writeStates() 
+        throws FlooringServicesDaoPersistenceException {
         final ArrayList<State> currentStates = new ArrayList<>(allStates.values());
         try {
             PrintWriter output = new PrintWriter(
@@ -132,7 +136,7 @@ public class StateDaoFileImpl implements StateDao {
             }
             output.close();
         } catch(IOException error) {
-            System.out.println("-_- Could not write states to file");
+            throw new FlooringServicesDaoPersistenceException("-_- Could not write states to file");
         }
     }  
     

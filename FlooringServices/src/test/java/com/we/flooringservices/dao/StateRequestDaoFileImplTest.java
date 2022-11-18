@@ -50,7 +50,8 @@ public class StateRequestDaoFileImplTest {
      * Test of logStateRequest method, of class StateRequestDaoFileImpl.
      */
     @Test
-    public void testLogStateRequest(StateRequestDaoFileStubImpl testRequestDao) {
+    public void testLogStateRequest(StateRequestDaoFileStubImpl testRequestDao) 
+        throws FlooringServicesDaoPersistenceException{
         final String stateAbbrv = "CA";
         final StateRequest prevRequest = testRequestDao.getRequest(stateAbbrv);
         final int ONE_REQUEST = 1;

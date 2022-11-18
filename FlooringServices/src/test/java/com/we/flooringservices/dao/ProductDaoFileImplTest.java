@@ -38,7 +38,8 @@ public class ProductDaoFileImplTest {
 
     @Test
     @Order(1)
-    public void testGetAllProducts(Product productToAdd, ProductDaoFileStubImpl testProductDao) {
+    public void testGetAllProducts(Product productToAdd, ProductDaoFileStubImpl testProductDao) 
+        throws FlooringServicesDaoPersistenceException{
         final int TOTAL_PRODUCTS = 8, ONE_PRODUCT = 1;
         final ArrayList<Product> allProducts = 
                 new ArrayList<>(testProductDao.getAllProducts());
@@ -56,7 +57,8 @@ public class ProductDaoFileImplTest {
     @ParameterizedTest
     @ValueSource(ints = {1})
     @Order(2)
-    public void testGetProduct(int productId, ProductDaoFileStubImpl testProductDao) {
+    public void testGetProduct(int productId, ProductDaoFileStubImpl testProductDao) 
+        throws FlooringServicesDaoPersistenceException{
         final Product accurateProduct = new Product(
         productId,"Carpet",new BigDecimal(2.25),
                 new BigDecimal("2.10"), Availability.AVAILABLE);
@@ -66,14 +68,16 @@ public class ProductDaoFileImplTest {
     
     @Test
     @Order(3)
-    public void testAddProduct(Product productToAdd, ProductDaoFileStubImpl testProductDao) {
+    public void testAddProduct(Product productToAdd, ProductDaoFileStubImpl testProductDao) 
+        throws FlooringServicesDaoPersistenceException{
         testProductDao.addProduct(productToAdd);
         assertEquals(productToAdd, testProductDao.getProduct(productToAdd.getProductId()));
     }
     
     @Test
     @Order(4)
-    public void testEditProduct(Product productToEdit, ProductDaoFileStubImpl testProductDao) {
+    public void testEditProduct(Product productToEdit, ProductDaoFileStubImpl testProductDao) 
+        throws FlooringServicesDaoPersistenceException{
         final Availability UNAVAILABLE = Availability.UNAVAILABLE;
         productToEdit.setProductStatus(UNAVAILABLE);
         testProductDao.editProduct(productToEdit);
@@ -83,7 +87,8 @@ public class ProductDaoFileImplTest {
     
     @Test
     @Order(5)
-    public void testRemoveProduct(Product productToRemove, ProductDaoFileStubImpl testProductDao) {
+    public void testRemoveProduct(Product productToRemove, ProductDaoFileStubImpl testProductDao) 
+        throws FlooringServicesDaoPersistenceException{
         testProductDao.removeProduct(productToRemove.getProductId());
         assertTrue(
                 testProductDao.getProduct(

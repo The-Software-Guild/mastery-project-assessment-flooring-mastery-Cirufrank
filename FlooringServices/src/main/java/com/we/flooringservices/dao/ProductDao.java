@@ -25,7 +25,8 @@ public interface ProductDao {
      * @return the Product object that has the id specified if
      * found within the taxes file, null otherwise
      */
-    public Product getProduct(int productId);
+    public Product getProduct(int productId)
+            throws FlooringServicesDaoPersistenceException;
     /**
      * Returns a list of all of the products currently
      * within inventory (listed within the Data/Products.txt
@@ -35,7 +36,8 @@ public interface ProductDao {
      * @return A list of the products currently listed in 
      * inventory
      */
-    public List<Product> getAllProducts();
+    public List<Product> getAllProducts()
+            throws FlooringServicesDaoPersistenceException;
     /**
      * Adds a product to our inventory list by saving it
      * to the Data/Products.txt file
@@ -47,7 +49,8 @@ public interface ProductDao {
      * 
      * @return void
      */
-    public void addProduct (Product product);
+    public void addProduct (Product product)
+            throws FlooringServicesDaoPersistenceException;
     /**
      * Edits a product to our inventory list by saving its
      * new changes to the Data/Products.txt file
@@ -59,5 +62,6 @@ public interface ProductDao {
      * 
      * @return void
      */
-    public void editProduct(Product product);
+    public void editProduct(Product product)
+            throws FlooringServicesDaoPersistenceException;
 }

@@ -35,7 +35,7 @@ public class AuditDaoFileImpl implements AuditDao {
         this.auditFileName = auditFileName;
     }
     
-    public void writeAuditEntry(String message) {
+    public void writeAuditEntry(String message) throws FlooringServicesDaoPersistenceException {
         final LocalDateTime currentLocalDateTime = LocalDateTime.now();
         final String timeStamp = currentLocalDateTime.format(
                                     DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN)); 
@@ -50,7 +50,7 @@ public class AuditDaoFileImpl implements AuditDao {
             output.flush();
             output.close();
         } catch(IOException error) {
-            System.out.println("-_- Could not write audit entry to file");
+            throw new FlooringServicesDaoPersistenceException("-_- Could not write audit entry to file", error.getCause());
         }
     }
 }

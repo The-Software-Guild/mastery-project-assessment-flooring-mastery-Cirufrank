@@ -29,11 +29,11 @@ public class UserIOConsoleImpl implements UserIO {
             try {
                 userChoiceInt = Integer.parseInt(userChoice);
             } catch(NumberFormatException error) {
-                print("Input invalid. Please enter and integer");
+                print("Input invalid. Please enter an integer.");
                 break;
             }
             if (userChoiceInt < MINIMUM_CHOICE || userChoiceInt > MAX_CHOICE) {
-                print("Out of range. Please enter a choice between 1 and 6");
+                print("Out of range. Please enter a choice between 1 and 6.");
             } else {
                 isValid = true;
             }

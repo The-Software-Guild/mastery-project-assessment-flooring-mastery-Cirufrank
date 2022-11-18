@@ -48,7 +48,8 @@ public class AuditDaoFileImplTest {
      * Test of writeAuditEntry method, of class AuditDaoFileImpl.
      */
     @Test
-    public void testWriteAuditEntry(AuditDaoFileStubImpl testAuditDao) {
+    public void testWriteAuditEntry(AuditDaoFileStubImpl testAuditDao) 
+        throws FlooringServicesDaoPersistenceException{
         final Random randGenerator = new Random();
         final String messageWithPadding = "This is a test " + randGenerator.nextInt();
         testAuditDao.writeAuditEntry(messageWithPadding);

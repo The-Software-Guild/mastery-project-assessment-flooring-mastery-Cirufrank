@@ -23,7 +23,7 @@ public class FlooringServicesView {
             BORDER = "*******************************",
             DISPLAY_ORDERS_OPTION = "* 1. Display Orers",
             ADD_ORDER_OPTION = "* 2. Add an Order",
-            EDIT_ORDER_OPTION = "8 3. Edit an Order",
+            EDIT_ORDER_OPTION = "* 3. Edit an Order",
             REMOVE_ORDER_OPTION = "* 4. Remove an Order",
             EXPORT_ALL_DATA_OPTION = "* 5. Export and View All Data",
             QUIT_OPTION = "* 6. Quit",

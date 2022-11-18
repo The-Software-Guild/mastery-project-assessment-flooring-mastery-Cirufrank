@@ -41,7 +41,7 @@ public interface OrderDao {
      * @param None
      * @return A list of all orders ever created successfully
      */
-    public List<Order> getAllOrders();
+    public List<Order> getAllOrders() throws FlooringServicesDaoPersistenceException;
     /**
      * Returns all currently active orders that have been successfully
      * saved for the date specified
@@ -50,7 +50,8 @@ public interface OrderDao {
      * @return A list of all currently active orders created successfully
      * on the date specified
      */
-    public List<Order> getAllOrdersForDate(LocalDateTime orderDate);
+    public List<Order> getAllOrdersForDate(LocalDateTime orderDate)
+            throws FlooringServicesDaoPersistenceException;
     /**
      * Returns an order that matches the specified id
      *
@@ -58,7 +59,7 @@ public interface OrderDao {
      * @return An order matching the id of the order specified if found, null
      * otherwise
      */
-    public Order getOrder(int orderId);
+    public Order getOrder(int orderId) throws FlooringServicesDaoPersistenceException;
     /**
      * Removes an order from its file within the appropriate
      * Data/Orders_MMDDYYYY.txt file (the date is added to the unMarshalled
@@ -69,7 +70,7 @@ public interface OrderDao {
      * @return Order order object instance representing the order removed, and 
      * null if no order matching the ID specified was found
      */
-    public Order removeOrder(Order order) throws IOException;
+    public Order removeOrder(Order order) throws FlooringServicesDaoPersistenceException;
     /**
      * Updates an order's information from its file within the appropriate
      * Data/Orders_MMDDYYYY.txt file
@@ -78,7 +79,8 @@ public interface OrderDao {
      * within the appropriate Data/Orders_MMDDYYYY.txt file
      * @return void
      */
-    public void updateOrder(Order order);
+    public void updateOrder(Order order) throws 
+            FlooringServicesDaoPersistenceException;
     /**
      * Adds an order's information the appropriate file within the 
      * appropriate Data/Orders_MMDDYYYY.txt file
@@ -87,7 +89,7 @@ public interface OrderDao {
      * to the Data/Orders_MMDDYYYY.txt file
      * @return void
      */
-    public void addOrder(Order order) throws IOException;
+    public void addOrder(Order order) throws FlooringServicesDaoPersistenceException;
     /**
      * Saves all active orders' information to the Backup/ExportData.txt 
      * file
@@ -95,5 +97,6 @@ public interface OrderDao {
      * @param None
      * @return void
      */
-    public void exportAllActiveOrders();
+    public void exportAllActiveOrders()
+            throws FlooringServicesDaoPersistenceException;
 }

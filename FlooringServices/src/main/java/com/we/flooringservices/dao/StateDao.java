@@ -24,7 +24,8 @@ public interface StateDao {
      * @return the State object associated with the given id if
      * it exists within the Taxes file, null otherwise
      */
-    public State getState(int StateId);
+    public State getState(int StateId)
+            throws FlooringServicesDaoPersistenceException;
     
     /**
      * Returns a List of all the states available to order flooring 
@@ -34,7 +35,8 @@ public interface StateDao {
      * @return a List of State objects constructed from their information
      * within the Taxes file
      */
-    public List<State> getAllStates();
+    public List<State> getAllStates()
+            throws FlooringServicesDaoPersistenceException;
     
     /**
      * Writes a new state to the Taxes file
@@ -46,5 +48,6 @@ public interface StateDao {
      * 
      * @return void
      */
-    public void addState(State state);
+    public void addState(State state)
+            throws FlooringServicesDaoPersistenceException;
 }

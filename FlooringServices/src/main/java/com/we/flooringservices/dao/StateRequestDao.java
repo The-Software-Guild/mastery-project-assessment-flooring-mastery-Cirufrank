@@ -22,5 +22,6 @@ public interface StateRequestDao {
      * request to
      * @return void
      */
-    public void logStateRequest(String stateAbbrv);
+    public void logStateRequest(String stateAbbrv) throws 
+            FlooringServicesDaoPersistenceException;
 }

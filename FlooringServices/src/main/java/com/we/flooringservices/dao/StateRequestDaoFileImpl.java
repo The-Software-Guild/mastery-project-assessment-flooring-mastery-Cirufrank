@@ -56,7 +56,8 @@ public class StateRequestDaoFileImpl implements StateRequestDao {
         this.stateRequestsFileName = stateRequestsFileName;
     }
     
-    public void logStateRequest(String stateAbbrv) {
+    public void logStateRequest(String stateAbbrv) 
+        throws FlooringServicesDaoPersistenceException{
         loadAllRequests();
         final StateRequest request = allRequests.get(stateAbbrv);
         final int updatedRequests = request.getTotalRequests() + ONE_REQUEST;
@@ -90,7 +91,8 @@ public class StateRequestDaoFileImpl implements StateRequestDao {
                         Integer.toString(request.getTotalRequests()));
         return requestAsText;                   
     }
-     private void loadAllRequests() {
+     private void loadAllRequests() 
+        throws FlooringServicesDaoPersistenceException{
          try {
              Scanner scanner = new Scanner(
                                     new BufferedReader(
@@ -104,11 +106,12 @@ public class StateRequestDaoFileImpl implements StateRequestDao {
              }
              scanner.close();
          } catch(FileNotFoundException error) {
-             System.out.println("-_- Could not load state requests");
+             throw new FlooringServicesDaoPersistenceException("-_- Could not load state requests");
          }
      }
      
-     private void writeRequestsToFile() {
+     private void writeRequestsToFile() 
+        throws FlooringServicesDaoPersistenceException{
          final List<StateRequest> requests = new ArrayList<>(allRequests.values());
          try {
              PrintWriter output = 
@@ -123,7 +126,7 @@ public class StateRequestDaoFileImpl implements StateRequestDao {
              }
              output.close();
          } catch(IOException error) {
-             System.out.println("-_- Could not save stae Requests to file");
+             throw new FlooringServicesDaoPersistenceException("-_- Could not save stae Requests to file");
          }
      }
 }

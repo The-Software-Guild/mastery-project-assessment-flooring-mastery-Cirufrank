@@ -57,7 +57,8 @@ public class ProductDaoFileStubImpl implements ProductDao {
     }
     
     @Override
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts() 
+        throws FlooringServicesDaoPersistenceException{
         loadProducts();
         final List<Product> currentProducts =
                 new ArrayList<>(allProducts.values());
@@ -65,7 +66,8 @@ public class ProductDaoFileStubImpl implements ProductDao {
     }
     
     @Override
-    public Product getProduct(int productId) {
+    public Product getProduct(int productId) 
+        throws FlooringServicesDaoPersistenceException{
         loadProducts();
         final Product productRetrieved = 
                 allProducts.get(productId);
@@ -73,14 +75,16 @@ public class ProductDaoFileStubImpl implements ProductDao {
     }
     
     @Override
-    public void addProduct(Product product) {
+    public void addProduct(Product product) 
+        throws FlooringServicesDaoPersistenceException{
         loadProducts();
         allProducts.put(product.getProductId(), product);
         writeProducts();
     }
     
     @Override
-    public void editProduct(Product product) {
+    public void editProduct(Product product) 
+        throws FlooringServicesDaoPersistenceException{
         loadProducts();
         allProducts.put(product.getProductId(), product);
         writeProducts();
@@ -89,7 +93,8 @@ public class ProductDaoFileStubImpl implements ProductDao {
     //Here for the prupose of testing adding the 
     //same product then removing it so future
     //tests continue to pass
-    public void removeProduct(int productId) {
+    public void removeProduct(int productId) 
+        throws FlooringServicesDaoPersistenceException{
         loadProducts();
         allProducts.remove(productId);
         writeProducts();
@@ -127,7 +132,8 @@ public class ProductDaoFileStubImpl implements ProductDao {
         
     }
     
-    private void loadProducts() {
+    private void loadProducts() 
+        throws FlooringServicesDaoPersistenceException{
         try {
             Scanner scanner =
                     new Scanner( 
@@ -144,12 +150,13 @@ public class ProductDaoFileStubImpl implements ProductDao {
             }
             scanner.close();
         } catch(FileNotFoundException error) {
-            System.out.println("-_- Unable to read"
+            throw new FlooringServicesDaoPersistenceException("-_- Unable to read"
                     + "products from file");
         }
     }
     
-    private void writeProducts() {
+    private void writeProducts() 
+        throws FlooringServicesDaoPersistenceException{
         final ArrayList<Product> currentProducts =
                 new ArrayList<>(allProducts.values());
         try {
@@ -166,7 +173,7 @@ public class ProductDaoFileStubImpl implements ProductDao {
             }
             output.close();
         } catch(IOException error) {
-            System.out.println("-_- Could not write "
+            throw new FlooringServicesDaoPersistenceException("-_- Could not write "
                     + "products to file");
         }
     }

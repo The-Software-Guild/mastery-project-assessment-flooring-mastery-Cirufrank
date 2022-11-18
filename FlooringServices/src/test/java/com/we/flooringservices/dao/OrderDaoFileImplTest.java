@@ -41,7 +41,8 @@ public class OrderDaoFileImplTest {
     }
     
     @AfterAll
-    public static void tearDownClass(Order testOrder, OrderDaoFileStubImpl testOrderDao) throws IOException {
+    public static void tearDownClass(Order testOrder, OrderDaoFileStubImpl testOrderDao) throws 
+            FlooringServicesDaoPersistenceException{
        testOrderDao.removeOrder(testOrder);
     }
     
@@ -57,7 +58,8 @@ public class OrderDaoFileImplTest {
      * Test of getAllOrders method, of class OrderDaoFileImpl.
      */
     @Test
-    public void testGetAllOrders(Order testOrder, OrderDaoFileStubImpl testOrderDao) {
+    public void testGetAllOrders(Order testOrder, OrderDaoFileStubImpl testOrderDao) 
+        throws FlooringServicesDaoPersistenceException{
         final int ALL_CURRENT_ORDERS = 3, ONE_ORDER = 1;
         final List<Order> currentOrders = testOrderDao.getAllOrders();
         for (Order currentOrder: currentOrders) {
@@ -72,7 +74,8 @@ public class OrderDaoFileImplTest {
      * Test of getAllOrdersForDate method, of class OrderDaoFileImpl.
      */
     @Test
-    public void testGetAllOrdersForDate(OrderDaoFileStubImpl testOrderDao) {
+    public void testGetAllOrdersForDate(OrderDaoFileStubImpl testOrderDao) 
+        throws FlooringServicesDaoPersistenceException{
         final LocalDateTime orderDate = DaoHelper.parseFileDateString("06022013");
         final int ALL_ORDERS_FOR_DATE = 2;
         final List<Order> ordersForDate = testOrderDao.getAllOrdersForDate(orderDate);
@@ -83,7 +86,8 @@ public class OrderDaoFileImplTest {
      * Test of getOrder method, of class OrderDaoFileImpl.
      */
     @Test
-    public void testAddGetOrder(Order testOrder, OrderDaoFileStubImpl testOrderDao) throws IOException {
+    public void testAddGetOrder(Order testOrder, OrderDaoFileStubImpl testOrderDao) 
+        throws FlooringServicesDaoPersistenceException{
         testOrderDao.addOrder(testOrder);
         final Order addedOrder = testOrderDao.getOrder(testOrder.getOrderNumber());
         assertNotNull(addedOrder);
@@ -94,7 +98,8 @@ public class OrderDaoFileImplTest {
      * Test of updateOrder method, of class OrderDaoFileImpl.
      */
     @Test
-    public void testUpdateOrder(Order testOrder, OrderDaoFileStubImpl testOrderDao) {
+    public void testUpdateOrder(Order testOrder, OrderDaoFileStubImpl testOrderDao) 
+        throws FlooringServicesDaoPersistenceException{
         final String previousOrderCustomerName = testOrder.getCustomerName();
         testOrder.setCustomerName("A different customer");
         testOrderDao.updateOrder(testOrder);
@@ -106,7 +111,8 @@ public class OrderDaoFileImplTest {
      * Test of exportAllActiveOrders method, of class OrderDaoFileImpl.
      */
     @Test
-    public void testExportAllActiveOrders(OrderDaoFileStubImpl testOrderDao) {
+    public void testExportAllActiveOrders(OrderDaoFileStubImpl testOrderDao) 
+        throws FlooringServicesDaoPersistenceException{
         final List<Order> allOrders = testOrderDao.getAllOrders();
         final int totalOrders = allOrders.size();
         
@@ -119,7 +125,8 @@ public class OrderDaoFileImplTest {
      * Test of removeOrder method, of class OrderDaoFileImpl.
      */
     @Test
-    public void testRemoveOrder(Order testOrder, OrderDaoFileStubImpl testOrderDao) throws IOException {
+    public void testRemoveOrder(Order testOrder, OrderDaoFileStubImpl testOrderDao) 
+        throws FlooringServicesDaoPersistenceException{
         final Order orderToRemove = testOrderDao.getOrder(testOrder.getOrderNumber());
         if (orderToRemove == null) {
             testOrderDao.addOrder(testOrder);

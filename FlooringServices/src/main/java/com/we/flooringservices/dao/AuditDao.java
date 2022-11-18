@@ -20,5 +20,5 @@ public interface AuditDao {
      * @param String entry to write to the audit log
      * @return void
      */
-    public void writeAuditEntry(String entry);
+    public void writeAuditEntry(String entry) throws FlooringServicesDaoPersistenceException;
 }

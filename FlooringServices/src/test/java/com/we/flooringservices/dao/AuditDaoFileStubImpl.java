@@ -39,7 +39,8 @@ public class AuditDaoFileStubImpl implements AuditDao {
         this.auditFileName = auditFileName;
     }
     
-    public void writeAuditEntry(String message) {
+    public void writeAuditEntry(String message) 
+        throws FlooringServicesDaoPersistenceException{
         final LocalDateTime currentLocalDateTime = LocalDateTime.now();
         final String timeStamp = currentLocalDateTime.format(
                                     DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN)); 
@@ -58,7 +59,8 @@ public class AuditDaoFileStubImpl implements AuditDao {
         }
     }
     
-    public String getLastAuditEntry() {
+    public String getLastAuditEntry() 
+        throws FlooringServicesDaoPersistenceException {
         String mostRecentEntry = "";
         try {
             Scanner scanner = new Scanner(
@@ -70,7 +72,7 @@ public class AuditDaoFileStubImpl implements AuditDao {
              }
              scanner.close();
         } catch(FileNotFoundException error) {
-            System.out.println("-_- Could not find audit file");
+            throw new FlooringServicesDaoPersistenceException("-_- Could not find audit file");
         }
         return mostRecentEntry;
     }
