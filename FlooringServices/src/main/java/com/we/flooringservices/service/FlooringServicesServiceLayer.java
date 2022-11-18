@@ -25,15 +25,52 @@ public interface FlooringServicesServiceLayer {
     public List<Order> getOrders(LocalDateTime orderDate) throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException;
     /**
+     * Retrieves an order with the number specified for the user
+     *
+     * @param int number of the order to retirieve
+     * @return Order object instance of Order retrieved, null otherwise
+     */
+    public Order getOrder(int orderNumber);
+    /**
+     * Creates an order from customer information specified
+     *UPDATE
+     * @param int number of the order to retirieve
+     * @return Order object instance of Order created
+     */
+    public Order createOrder(LocalDateTime orderDate, String customerName,
+            String orderState, String orderProductType, 
+            BigDecimal orderArea) 
+    throws FlooringServicesDaoPersistenceException,
+         FlooringServicesNoOrdersFoundExeception;
+    /**
      * Allows user to add new Order
-     *UPDATE PARAMS
+     *
      * @param Order Order object instance representing order to add
      * @return void
      */
-    public void addOrder(LocalDateTime orderdate, String customerName,
-            String orderState, String orderProductType, 
-            BigDecimal orderArea) throws FlooringServicesDaoPersistenceException,
+    public void addOrder(Order order) throws FlooringServicesDaoPersistenceException,
             FlooringServicesNoOrdersFoundExeception;
+    /**
+     * Allows user to update order and by saving order updates to file storage
+     *
+     * @param Order Order object instance representing order to update
+     * 
+     * 
+     * @return void
+     */
+    public void updateOrder(Order order) throws FlooringServicesDaoPersistenceException,
+            FlooringServicesNoOrdersFoundExeception;
+    /**
+     * Creates a new order object instance with its fields recalculated if necessary
+     *
+     * @param Order Order object instance representing order to update
+     * @param boolean True or false depending on if the order needs to have its fields
+     * recaulculated
+     * 
+     * @return Order with updated calculations if necessary
+     */
+    public Order updateOrderCalculations(Order order, boolean recalculate) 
+    throws FlooringServicesDaoPersistenceException;
     /**
      * Determines if input state is available to purchase services for
      *
@@ -62,4 +99,23 @@ public interface FlooringServicesServiceLayer {
      */
     public void logStateRequest(String stateAbbrv) 
     throws FlooringServicesDaoPersistenceException;
+    /**
+     * Tells user if an order exists for a date
+     *
+     * @param int orderNumber for order
+     * @param LocalDateTime date the order was said to be placed on
+     * @return boolean true if order exists for date, false 
+     * otherwise
+     */
+    public boolean orderExistsForDate(int orderNumber, LocalDateTime orderDate) 
+        throws FlooringServicesNoOrdersFoundExeception,
+            FlooringServicesDaoPersistenceException;
+    /**
+     * Tells user if an order exists within out application at all
+     *
+     * @param int orderNumber for order
+     * @return boolean true if order exists within the application,
+     * false otherwise
+     */
+    public boolean orderExists(int orderNumber);
 }

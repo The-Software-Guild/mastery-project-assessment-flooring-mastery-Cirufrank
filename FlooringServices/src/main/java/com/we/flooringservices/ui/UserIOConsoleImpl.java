@@ -34,6 +34,7 @@ public class UserIOConsoleImpl implements UserIO {
                                         "OH", "OK", "OR", "PW", "PA", "PR", "RI", 
                                         "SC", "SD", "TN", "TX", "UT", "VT", "VI", 
                                         "VA", "WA", "WV", "WI", "WY"};
+    final static String EMPTY_STRING = "".intern();
     @Override
     public void print(String message) {
         System.out.println(message);
@@ -59,6 +60,27 @@ public class UserIOConsoleImpl implements UserIO {
             }
         }
         return userChoiceInt;
+    }
+    @Override
+    public int readInt(String message) {
+        final int MIN_CHOICE = 1;
+        print(message);
+        boolean isValid = false;
+        int userInt = 0;
+        while(isValid != true) {
+            final String userIntString = readString();
+            try {
+                userInt = Integer.parseInt(userIntString);
+            } catch(NumberFormatException error) {
+                print("Invalid input. Please enter an integer.");
+            }
+            if (userInt < MIN_CHOICE) {
+                print("Invalid input. Please enter and integer greater than 0.");
+                continue;
+            }
+            isValid = true;
+        }
+        return userInt;
     }
     @Override
     public BigDecimal readBigDecimal(String message) {
@@ -101,6 +123,29 @@ public class UserIOConsoleImpl implements UserIO {
             isValid = true;
         }
         return userBigDecimal;
+    }
+    private String readBigDecimalString() {
+        final int TWO_DECIMAL_PLACES = 2;
+        boolean isValid = false;
+        BigDecimal userBigDecimal = new BigDecimal("0");
+        String userChoice = "";
+        while(isValid != true) {
+            userChoice = readString();
+            if (userChoice.equals(EMPTY_STRING))
+                return userChoice;
+            try {
+                userBigDecimal = new BigDecimal(userChoice)
+                        .setScale(TWO_DECIMAL_PLACES, 
+                                RoundingMode.HALF_UP);
+            } catch(NumberFormatException error) {
+                print("Input could not be parsed to a moentary value."
+                        + "Please input a monetary value in this format "
+                        + "0.00");
+                continue;
+            }
+            isValid = true;
+        }
+        return userBigDecimal.toString();
     }
 
     @Override
@@ -167,6 +212,25 @@ public class UserIOConsoleImpl implements UserIO {
         return userStateAbbrv;   
     }
     @Override
+    public String readEditStateAbbrv(String message) {
+        print(message);
+        final List<String> validAbbreviations = new ArrayList<>(
+                Arrays.asList(VALID_ABBREVIATIONS));
+        final String EMPTY_STATE = "".intern();
+        validAbbreviations.add(EMPTY_STATE);
+        String userStateAbbrv = "";
+        boolean isValid = false;
+        while(isValid != true) {
+            userStateAbbrv = readString().toUpperCase().intern();
+            if (!validAbbreviations.contains(userStateAbbrv)) {
+                print("Invalid state abbreviation. Please input a valid state.");
+                continue;
+            }
+            isValid = true;
+        }
+        return userStateAbbrv;   
+    }
+    @Override
     public String readCustomerName(String message) {
         final String[] validCharacters = {"a","b","c","d","e",
             "f","g","h","i","j","k","l","m","n","o",
@@ -187,6 +251,42 @@ public class UserIOConsoleImpl implements UserIO {
                 print("Must enter name");
                 continue;
             }
+            boolean invalidChar = false;
+            for (int index = 0; index < userName.length(); index += 1) {
+                final String currentStringChar = String.valueOf(userName.charAt(index)).intern();
+                if (!validCharactersList.contains(currentStringChar)) {
+                    invalidChar = true;
+                    break;
+                }
+            }
+            if (invalidChar == true) {
+                print("Invalid characters "
+                    + "found. Name can only contain charcters "
+                    + "within the English alphabet as well as "
+                    + "numbers from 0 - 9, commas, spaces, and periods. "
+                        + "Please enter valid name.");
+                continue;
+            }
+            isValid = true;
+        }
+        return userName;
+    }
+    @Override
+    public String readEditCustomerName(String message) {
+        final String[] validCharacters = {"a","b","c","d","e",
+            "f","g","h","i","j","k","l","m","n","o",
+            "p","q","r","s","t","u","v","w","x","y","z"," ",
+            "0", "1", "2", "3","4","5","6","7","8","9",
+            ",",".","A","B","C","D","E","F","G","H","I",
+        "J","K","L","M","N","O","P","Q","R","S","T","U",
+        "V","W","X","YZ"};
+        final List<String> validCharactersList =
+                new ArrayList<>(Arrays.asList(validCharacters));
+        print(message);
+        String userName = "";
+        boolean isValid = false;
+        while(isValid != true) {
+            userName = readString();
             boolean invalidChar = false;
             for (int index = 0; index < userName.length(); index += 1) {
                 final String currentStringChar = String.valueOf(userName.charAt(index)).intern();
@@ -242,6 +342,22 @@ public class UserIOConsoleImpl implements UserIO {
         }
         return userProductChoice;
     }
+    @Override
+    public String editProductType(String message, List<String> productTypes) {
+        productTypes.add(EMPTY_STRING);
+        print(message);
+        String userProductChoice = "";
+        while(true) {
+            userProductChoice = readString();
+            if (!productTypes.contains(userProductChoice)) {
+                print("Invalid choice. Please enter product "
+                        + "type selection exactly as it appears "
+                        + "on the list");
+                continue;
+            } else break;
+        }
+        return userProductChoice;
+    }
     public BigDecimal readArea(String message) {
         final int EQUAL_TO_MIN = 0;
         final BigDecimal MIN_AREA = new BigDecimal("100");
@@ -258,5 +374,27 @@ public class UserIOConsoleImpl implements UserIO {
             }
         }
         return userArea;
+    }
+    @Override
+    public String readEditArea(String message) {
+        final int EQUAL_TO_MIN = 0;
+        final BigDecimal MIN_AREA = new BigDecimal("100");
+        String userAreaString = EMPTY_STRING;
+        print(message);
+        BigDecimal userArea = new BigDecimal("0");
+        while (true) {
+            userAreaString = readBigDecimalString();
+            if (userAreaString.equals(EMPTY_STRING))
+                return userAreaString;
+            else userArea = new BigDecimal(userAreaString);
+            if (userArea.compareTo(MIN_AREA) == EQUAL_TO_MIN 
+                    || userArea.compareTo(MIN_AREA) > EQUAL_TO_MIN) {
+                break;
+            } else {
+                print("Invalid area. Please enter an area "
+                        + "greated than or equal to 100 square feet");
+            }
+        }
+        return userArea.toString();
     }
 }

@@ -61,7 +61,8 @@ public class ServiceCalculator {
                 .multiply(taxRate.divide(
                                 BIG_DECIMAL_100, 
                                 TWO_PLACES_SCALE, 
-                                HALF_UP_ROUNDING_MODE));
+                                HALF_UP_ROUNDING_MODE)).setScale(TWO_PLACES_SCALE, 
+                                HALF_UP_ROUNDING_MODE);
         return totalTax;
     }
     

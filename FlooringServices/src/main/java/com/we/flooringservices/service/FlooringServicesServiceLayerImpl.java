@@ -17,6 +17,7 @@ import com.we.flooringservices.model.State;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -60,7 +61,56 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
         return ordersForDate;
     }
     @Override
-    public void addOrder(LocalDateTime orderDate, String customerName,
+    public boolean orderExistsForDate(int orderNumber, LocalDateTime orderDate) 
+        throws 
+            FlooringServicesDaoPersistenceException {
+        try {
+            boolean orderExistsForDate = false;
+            final List<Order> ordersForDate = getOrders(orderDate);
+            for (Order currentOrder: ordersForDate) {
+                final int currentOrderNumber = currentOrder.getOrderNumber();
+                if (currentOrderNumber == orderNumber)
+                    orderExistsForDate = true;
+            }
+            return orderExistsForDate;
+        } catch(FlooringServicesNoOrdersFoundExeception error) {
+            return false;
+        }
+    }
+    @Override
+    public Order getOrder(int orderNumber) {
+        Order order;
+        try {
+            order = orderDao.getOrder(orderNumber);
+        } catch(FlooringServicesNoOrdersFoundExeception error) {
+            order = null;
+        }
+        return order;
+        
+    }
+    @Override
+    public boolean orderExists(int orderNumber) {
+        try {
+            final List<Order> allOrders = orderDao.getAllOrders();
+            boolean orderExists = false;
+            for (Order currentOrder: allOrders) {
+                final int currentOrderNumber = currentOrder.getOrderNumber();
+                if (currentOrderNumber == orderNumber)
+                    orderExists = true;
+            }
+            return orderExists;
+        } catch(FlooringServicesNoOrdersFoundExeception error){
+            return false; 
+        }   
+    }
+    @Override
+    public void addOrder(Order order) 
+    throws FlooringServicesDaoPersistenceException,
+         FlooringServicesNoOrdersFoundExeception   {   
+        orderDao.addOrder(order);
+    }
+    @Override
+    public Order createOrder(LocalDateTime orderDate, String customerName,
             String orderState, String orderProductType, 
             BigDecimal orderArea) 
     throws FlooringServicesDaoPersistenceException,
@@ -82,7 +132,37 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
                      costPerSquareFoot, laborCostPerSquareFoot,
                     materialCost, laborCost, tax,
                     total, orderDate, allOrders.size());
-        orderDao.addOrder(order);
+        return order;
+    }
+    @Override
+    public void updateOrder(Order order) throws FlooringServicesDaoPersistenceException,
+           FlooringServicesNoOrdersFoundExeception {
+           orderDao.updateOrder(order);
+        
+    }
+    @Override
+    public Order updateOrderCalculations(Order order, boolean recalculate) throws FlooringServicesDaoPersistenceException  {  
+        if (recalculate == false) {
+            return order;
+        }
+        final State state = stateDao.getState(order.getState());
+        final BigDecimal taxRate = state.getTaxRate();
+        final Product product = productDao.getProduct(order.getProductType());
+        final BigDecimal costPerSquareFoot = product.getCostPerSquareFoot();
+        final BigDecimal laborCostPerSquareFoot = product.getLaborCostPerSquareFoot();
+        final ServiceCalculator serviceCalculator = new ServiceCalculator(order.getArea(), costPerSquareFoot,
+            laborCostPerSquareFoot, taxRate);
+        final BigDecimal materialCost = serviceCalculator.getMaterialCost();
+        final BigDecimal laborCost = serviceCalculator.getLaborCost();
+        final BigDecimal tax = serviceCalculator.getTax();
+        final BigDecimal total = serviceCalculator.getTotalCost();
+        Order updatedOrder = new Order(order.getOrderNumber(),order.getCustomerName(), 
+                order.getState(),
+                    taxRate, order.getProductType(), order.getArea(),
+                     costPerSquareFoot, laborCostPerSquareFoot,
+                    materialCost, laborCost, tax,
+                    total, order.getOrderDate());
+        return updatedOrder;
     }
     @Override
     public boolean isStateAvailable(String stateAbbrv) 

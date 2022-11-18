@@ -58,7 +58,7 @@ public class FlooringServicesController {
                             addOrder();
                             break;
                         case EDIT_ORDER:
-                            view.print("Not implemented: edit order");
+                            editOrder();
                             break;
                         case REMOVE_ORDER:
                             view.print("Not implemented: remove order");
@@ -104,8 +104,84 @@ public class FlooringServicesController {
             }
             final String productType = view.getProductType(allProductTypes);
             final BigDecimal area = view.getArea();
-            service.addOrder(orderDate, customerName, orderState, productType, area);
-            view.displayOrderAddedSuccessfullyMessage();
+            final Order newOrder = service.createOrder(orderDate, customerName, orderState, productType, area);
+            final boolean addOrder = view.displayOrderAndGetAddChoice(newOrder);
+            if (addOrder) {
+                service.addOrder(newOrder);
+                view.displayOrderAddedSuccessfullyMessage();
+            }
+            else return;
             
+        }
+        private void editOrder() throws FlooringServicesNoOrdersFoundExeception,
+            FlooringServicesDaoPersistenceException {
+            final List<String> allProductTypes = service.getAvailableProductTypes();
+            final String EMPTY_STRING = "".intern();
+            boolean continueToEdit = true, recalculate = false;
+            int orderNumber = view.getOrderNumber();
+            LocalDateTime orderDate = view.getUserDateChoice();
+            while(continueToEdit && 
+                    service.orderExistsForDate(orderNumber, orderDate) != true) {
+                if (service.orderExists(orderNumber)) {
+                    view.printOrderExistsButNoOrderForDateMessage();
+                    continueToEdit = view.getUserContinueChoice();
+                    if (continueToEdit == false) {
+                        view.printExitedMessage();
+                        return;
+                    }
+                    orderDate = view.getUserDateChoice();
+                }
+                else {
+                    view.printOrderDoesNotExistMessage();
+                    continueToEdit = view.getUserContinueChoice();
+                    if (continueToEdit == false) {
+                        view.printExitedMessage();
+                        return;
+                    }
+                    orderNumber = view.getOrderNumber();
+                    orderDate = view.getUserDateChoice();
+                }
+            }
+            Order order = service.getOrder(orderNumber);
+            final String customerName = view.editCustomerName(order);
+            if (!customerName.equals(EMPTY_STRING)) order.setCustomerName(customerName);
+            String orderState = view.editOrderState(order);
+            continueToEdit = true;
+            while(continueToEdit &&
+                service.isStateAvailable(orderState) != true
+                    && !orderState.equals(EMPTY_STRING)) {
+                service.logStateRequest(orderState);
+                view.printStateUnavailableMessage();
+                continueToEdit = view.getUserContinueChoice();
+                if (continueToEdit == false) {
+                    view.printExitedMessage();
+                    orderState = EMPTY_STRING;
+                    break;
+                }
+                orderState = view.getNextState();
+            }
+            if (!orderState.equals(EMPTY_STRING)){
+                recalculate = true;
+                order.setState(orderState);
+            }
+            String productType = view.editProductType(order, allProductTypes);
+            if (!productType.equals(EMPTY_STRING)) 
+            {
+                recalculate = true;
+                order.setProductType(productType);
+            }
+            String stringArea = view.editArea(order);
+            if (!stringArea.equals(EMPTY_STRING)) {
+                BigDecimal area = new BigDecimal(stringArea);
+                recalculate = true;
+                order.setArea(area);
+            }
+            Order orderWithEdits = service.updateOrderCalculations(order, recalculate);
+            view.displayOrderEdits(orderWithEdits);
+            continueToEdit = view.getUserContinueChoice();
+            if (continueToEdit == true) {
+                service.updateOrder(orderWithEdits);
+                view.displayEditSuccessBanner();
+            } else view.displayNoEditsMade(order);
         }
     }

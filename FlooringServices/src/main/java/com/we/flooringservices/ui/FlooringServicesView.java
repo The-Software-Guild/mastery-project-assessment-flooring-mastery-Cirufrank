@@ -39,7 +39,7 @@ public class FlooringServicesView {
             + "MM/dd/yyyy such as 04/31/2022 or 12/23/2022",
             PLEASE_ENTER_NAME = "Please enter your name",
             PLEASE_ENTER_STATE = "Please enter state abbreviation",
-            WOULD_YOU_LIKE_TO_CONTINUE = "Would you like to continue?",
+            WOULD_YOU_LIKE_TO_CONTINUE = "Would you like to continue? (Yes or No)",
             STATE_UNAVILABLE = "Sorry, the state entered is "
             + "unavailable for services. We have taken note of this "
             + "and logged the state specified to our requests.",
@@ -48,7 +48,18 @@ public class FlooringServicesView {
             + "like to purchase",
             ENTER_AREA = "Please enter an area (Note: area must be "
             + "over 100 square feet)",
-            SUCCESSFUL_ORDER_ADD = "=== Order added Successfully ===";
+            SUCCESSFUL_ORDER_ADD = "=== Order added Successfully ===",
+            ENTER_ORDER_NUMBER = "Please enter the order's number",
+            ORDER_EXISTS_BUT_NOT_FOR_DATE = "No order was found for the date specified, "
+            + "but an order does exists for that number."
+            + "\n For security purposes, we cannot disclose the date, however, "
+            + "would you like to put in another date?",
+            NO_ORDERs_EXISTS_FOR_NUMBER = "No orders exist for both the "
+            + "date and number specified. Would you like to enter another order?",
+            ENTER_FOR_NO_CHANGES = "Please press enter if you would not like to change this entry",
+            EMPTY_STRING = "".intern(),
+            ORDER_SUMMARY_BANNER = "=== ORDER SUMMARY ===",
+            UPDATE_SUCCESS_MESSAGE = "=== ORDER UPDATE SUCCESS ===";
             
     
     private UserIO io;
@@ -104,16 +115,62 @@ public class FlooringServicesView {
                 total);
         return orderFormatted;
     }
+    public boolean displayOrderAndGetAddChoice(Order newOrder) {
+        final String YES = "yes", NO = "no";
+        final String newOrderString = formatOrder(newOrder);
+        io.print(newOrderString);
+        return getUserContinueChoice();
+    }
+    public String editCustomerName(Order order) {
+        String customerName = io.readEditCustomerName("Enter customer name (" + order.getCustomerName()
+        + ")\n" + ENTER_FOR_NO_CHANGES);
+        return customerName;
+    }
+    public String editOrderState(Order order) {
+        String customerState = io.readEditStateAbbrv("Enter order state (" + order.getState()
+        + ")\n" + ENTER_FOR_NO_CHANGES);
+        return customerState;
+    }
+    public String editArea(Order order) {
+        String customerAreaString = io.readEditArea("Enter order area (" + order.getArea()
+        + ")\n" + ENTER_FOR_NO_CHANGES);
+        return customerAreaString;
+    }
+    public void displayOrderEdits(Order order) {
+        final String formattedOrder = formatOrder(order);
+        io.print(ORDER_SUMMARY_BANNER);
+        io.print(formattedOrder);
+    }
+    public void displayEditSuccessBanner() {
+        io.print(UPDATE_SUCCESS_MESSAGE);
+    }
+    public void displayNoEditsMade(Order order) {
+        io.print("No edits made to order number " + order.getOrderNumber());
+    }
+    public String editProductType(Order order, List<String> availableProducts) {
+        displayProductType(availableProducts);
+        final String productType = io.editProductType("Enter product type (" + order.getProductType()
+        + ")\n" + ENTER_FOR_NO_CHANGES, availableProducts);
+        return productType;
+    }
     public int getUserItemChoice() {
         final int userChoice = io.readItemChoice(PLEASE_ENTER_CHOICE);
         return userChoice;
     }
-    
+    public int getOrderNumber() {
+        final int orderNumber = io.readInt(ENTER_ORDER_NUMBER);
+        return orderNumber;
+    }
     public LocalDateTime getUserDateChoice() {
         final LocalDateTime userDate = io.readLocalDateTime(ENTER_DATE);
         return userDate;
     }
-
+    public void printOrderDoesNotExistMessage() {
+        io.print(NO_ORDERs_EXISTS_FOR_NUMBER);
+    }
+    public void printOrderExistsButNoOrderForDateMessage() {
+        io.print(ORDER_EXISTS_BUT_NOT_FOR_DATE);
+    }
     public LocalDateTime getFutureDate() {
         final LocalDateTime orderDate = io.readFutureLocalDateTime(PLEASE_ENTER_FUTURE_DATE);
         return orderDate;

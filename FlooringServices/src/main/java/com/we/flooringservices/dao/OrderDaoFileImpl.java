@@ -138,9 +138,18 @@ public class OrderDaoFileImpl implements OrderDao {
     public void updateOrder(Order order)
     throws FlooringServicesDaoPersistenceException,
             FlooringServicesNoOrdersFoundExeception{
-        loadAllOrders();
+        removeOrdersFromMemory();
+        final String orderFileName = 
+                DaoHelper.createOrderDateFileName(
+                   dataDirectoryName + "/" + ORDER_FILE_BEGINNING_STRING, 
+                          order.getOrderDate(),
+                     TXT_STRING);
+        if (!DaoHelper.fileExists(orderFileName))
+                DaoHelper.createNewFile(orderFileName);
+        loadOrdersForDate(orderFileName);
         orders.put(order.getOrderNumber(), order);
-        writeAllOrders();
+        final List<Order> currentOrders = new ArrayList<>(orders.values());
+        writeOrdersForDate(orderFileName, currentOrders);
     }
     
     @Override
