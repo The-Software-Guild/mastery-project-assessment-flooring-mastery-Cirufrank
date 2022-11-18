@@ -9,6 +9,7 @@ import com.we.flooringservices.model.Order;
 import com.we.flooringservices.service.FlooringServicesNoOrdersFoundExeception;
 import com.we.flooringservices.service.FlooringServicesServiceLayer;
 import com.we.flooringservices.ui.FlooringServicesView;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class FlooringServicesController {
                             viewOrders();
                             break;
                         case ADD_NEW_ODER:
-                            view.print("Not implemented: add new order");
+                            addOrder();
                             break;
                         case EDIT_ORDER:
                             view.print("Not implemented: edit order");
@@ -80,5 +81,31 @@ public class FlooringServicesController {
             final LocalDateTime userDateChoice = view.getUserDateChoice();
             final List<Order> ordersForDate = service.getOrders(userDateChoice);
             view.displayOrders(ordersForDate);
+        }
+        private void addOrder()
+            throws FlooringServicesDaoPersistenceException,
+                FlooringServicesNoOrdersFoundExeception{
+            final LocalDateTime orderDate = view.getFutureDate();
+            final String customerName = view.getCustomerName();
+            boolean continueOrder = true;
+            final List<String> allProductTypes = service.getAvailableProductTypes();
+            String orderState = view.getOrderState();
+            boolean continueToOrder = true;
+            while(continueToOrder &&
+                service.isStateAvailable(orderState) != true) {
+                service.logStateRequest(orderState);
+                view.printStateUnavailableMessage();
+                continueToOrder = view.getUserContinueChoice();
+                if (continueToOrder == false) {
+                    view.printExitedMessage();
+                    return;
+                }
+                orderState = view.getNextState();
+            }
+            final String productType = view.getProductType(allProductTypes);
+            final BigDecimal area = view.getArea();
+            service.addOrder(orderDate, customerName, orderState, productType, area);
+            view.displayOrderAddedSuccessfullyMessage();
+            
         }
     }

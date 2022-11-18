@@ -20,12 +20,12 @@ public interface ProductDao {
     /**
      * Returns a product from the database that matches the 
      * id specified
-     *
+     *UPDATE
      * @param productId int id of the product to retrieve
      * @return the Product object that has the id specified if
      * found within the taxes file, null otherwise
      */
-    public Product getProduct(int productId)
+    public Product getProduct(String productType)
             throws FlooringServicesDaoPersistenceException;
     /**
      * Returns a list of all of the products currently

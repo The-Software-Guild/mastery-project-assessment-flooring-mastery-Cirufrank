@@ -43,7 +43,7 @@ public class StateDaoFileStubImpl implements StateDao {
                     STATE_ABBRV_HEADER,STATE_NAME_HEADER,
                     STATE_TAXES_HEADER);
     private static String taxesFileName;
-    private Map<Integer, State> allStates = new HashMap<>();
+    private Map<String, State> allStates = new HashMap<>();
     
     public StateDaoFileStubImpl() {
         taxesFileName  = "Data/Taxes.txt";
@@ -55,10 +55,10 @@ public class StateDaoFileStubImpl implements StateDao {
     }
     
     @Override
-    public State getState(int stateId) 
+    public State getState(String stateAbbrv) 
         throws FlooringServicesDaoPersistenceException{
         loadStates();
-        State stateRetrieved = allStates.get(stateId);
+        State stateRetrieved = allStates.get(stateAbbrv);
         return stateRetrieved;
     }
     
@@ -74,7 +74,7 @@ public class StateDaoFileStubImpl implements StateDao {
     public void addState(State state) 
         throws FlooringServicesDaoPersistenceException{
         loadStates();
-        allStates.put(state.getStateId(), state);
+        allStates.put(state.getStateAbbrv(), state);
         writeStates();
     }
     //For testing and for availability if we are to create
@@ -121,7 +121,7 @@ public class StateDaoFileStubImpl implements StateDao {
             scanner.nextLine();
             while(scanner.hasNextLine()) {
                 final State currentState = unMarshallState(scanner.nextLine()); 
-                allStates.put(currentState.getStateId(), currentState);
+                allStates.put(currentState.getStateAbbrv(), currentState);
             }
             scanner.close();
         } catch(FileNotFoundException error) {

@@ -44,6 +44,14 @@ public interface OrderDao {
      */
     public List<Order> getAllOrders() throws FlooringServicesNoOrdersFoundExeception;
     /**
+     * Returns the number of current available orders
+     *
+     * @param None
+     * @return int representing number of available orders
+     */
+    public int getTotalOrders() throws 
+           FlooringServicesNoOrdersFoundExeception;
+    /**
      * Returns all currently active orders that have been successfully
      * saved for the date specified
      *

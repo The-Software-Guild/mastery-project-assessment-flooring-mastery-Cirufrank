@@ -46,7 +46,7 @@ public class ProductDaoFileImplTest {
         for (Product currentProduct: allProducts) {
             System.out.println(currentProduct.toString());
         }
-        if (testProductDao.getProduct(productToAdd.getProductId()) != null) {
+        if (testProductDao.getProduct(productToAdd.getProductType()) != null) {
             assertEquals(TOTAL_PRODUCTS + ONE_PRODUCT, allProducts.size());
         }else {
             assertEquals(TOTAL_PRODUCTS, allProducts.size());
@@ -63,7 +63,7 @@ public class ProductDaoFileImplTest {
         productId,"Carpet",new BigDecimal(2.25),
                 new BigDecimal("2.10"), Availability.AVAILABLE);
         
-        assertEquals(accurateProduct, testProductDao.getProduct(productId));
+        assertEquals(accurateProduct, testProductDao.getProduct(accurateProduct.getProductType()));
     }
     
     @Test
@@ -71,7 +71,7 @@ public class ProductDaoFileImplTest {
     public void testAddProduct(Product productToAdd, ProductDaoFileStubImpl testProductDao) 
         throws FlooringServicesDaoPersistenceException{
         testProductDao.addProduct(productToAdd);
-        assertEquals(productToAdd, testProductDao.getProduct(productToAdd.getProductId()));
+        assertEquals(productToAdd, testProductDao.getProduct(productToAdd.getProductType()));
     }
     
     @Test
@@ -82,7 +82,7 @@ public class ProductDaoFileImplTest {
         productToEdit.setProductStatus(UNAVAILABLE);
         testProductDao.editProduct(productToEdit);
         assertEquals(productToEdit, 
-                testProductDao.getProduct(productToEdit.getProductId()));
+                testProductDao.getProduct(productToEdit.getProductType()));
     }
     
     @Test
@@ -92,7 +92,7 @@ public class ProductDaoFileImplTest {
         testProductDao.removeProduct(productToRemove.getProductId());
         assertTrue(
                 testProductDao.getProduct(
-                        productToRemove.getProductId()) == null);
+                        productToRemove.getProductType()) == null);
     }
     
 }

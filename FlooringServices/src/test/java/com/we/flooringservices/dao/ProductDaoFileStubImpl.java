@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductDaoFileStubImpl implements ProductDao {
-    final private Map<Integer, Product> allProducts= new HashMap<>();
+    final private Map<String, Product> allProducts= new HashMap<>();
     final private static String DELIMITER = ",",
             PRODUCT_ID_HEADER = "productId",
             PRODUCT_TYPE_HEADER = "productType",
@@ -66,11 +66,11 @@ public class ProductDaoFileStubImpl implements ProductDao {
     }
     
     @Override
-    public Product getProduct(int productId) 
+    public Product getProduct(String productType) 
         throws FlooringServicesDaoPersistenceException{
         loadProducts();
         final Product productRetrieved = 
-                allProducts.get(productId);
+                allProducts.get(productType);
         return productRetrieved;
     }
     
@@ -78,7 +78,7 @@ public class ProductDaoFileStubImpl implements ProductDao {
     public void addProduct(Product product) 
         throws FlooringServicesDaoPersistenceException{
         loadProducts();
-        allProducts.put(product.getProductId(), product);
+        allProducts.put(product.getProductType(), product);
         writeProducts();
     }
     
@@ -86,7 +86,7 @@ public class ProductDaoFileStubImpl implements ProductDao {
     public void editProduct(Product product) 
         throws FlooringServicesDaoPersistenceException{
         loadProducts();
-        allProducts.put(product.getProductId(), product);
+        allProducts.put(product.getProductType(), product);
         writeProducts();
     }
     
@@ -146,7 +146,7 @@ public class ProductDaoFileStubImpl implements ProductDao {
                 final String productAsText = scanner.nextLine();
                 final Product currentProduct =
                         unMarshallProduct(productAsText);
-                allProducts.put(currentProduct.getProductId(), currentProduct);
+                allProducts.put(currentProduct.getProductType(), currentProduct);
             }
             scanner.close();
         } catch(FileNotFoundException error) {

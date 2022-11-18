@@ -49,7 +49,7 @@ public class StateDaoFileImplTest {
         //ensure this test resolves all of its methods before 
         //the other tests are ran so that this if-else statement
         //and the Order annotations are not needed
-        if (testStateDao.getState(stateToAdd.getStateId()) == null) {
+        if (testStateDao.getState(stateToAdd.getStateAbbrv()) == null) {
             assertEquals(TOTAL_AVAILABLE_STATES_INT, allStates.size());
         } else {
             assertEquals(TOTAL_AVAILABLE_STATES_INT + ONE_STATE, allStates.size());
@@ -62,7 +62,7 @@ public class StateDaoFileImplTest {
     public void testGetState(int stateId, StateDaoFileStubImpl testStateDao)
         throws FlooringServicesDaoPersistenceException{
         final State accurateState = new State(stateId, "CA", "California", new BigDecimal("4.60"));
-        final State testState = testStateDao.getState(stateId);
+        final State testState = testStateDao.getState(accurateState.getStateAbbrv());
         assertEquals(accurateState, testState);
     }
     
@@ -74,7 +74,7 @@ public class StateDaoFileImplTest {
         testStateDao.addState(stateToAdd);
         final State stateJustAdded = 
                 testStateDao.getState(
-                        stateToAdd.getStateId());
+                        stateToAdd.getStateAbbrv());
         assertEquals(stateToAdd, stateJustAdded);
         
     }
@@ -84,7 +84,7 @@ public class StateDaoFileImplTest {
     public void testRemoveState(State stateToRemove, StateDaoFileStubImpl testStateDao)
         throws FlooringServicesDaoPersistenceException{
         testStateDao.removeState(stateToRemove.getStateId());
-        assertTrue(testStateDao.getState(stateToRemove.getStateId()) == null);
+        assertTrue(testStateDao.getState(stateToRemove.getStateAbbrv()) == null);
     }
     
 }

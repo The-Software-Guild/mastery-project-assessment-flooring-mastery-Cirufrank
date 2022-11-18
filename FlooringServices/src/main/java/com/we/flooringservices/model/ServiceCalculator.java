@@ -45,12 +45,14 @@ public class ServiceCalculator {
     }
     
     public static BigDecimal calculateMaterialCost(BigDecimal area, BigDecimal costPerSquareFoot) {
-        final BigDecimal materialCost = area.multiply(costPerSquareFoot);
+        final BigDecimal materialCost = area.multiply(costPerSquareFoot)
+                                            .setScale(TWO_PLACES_SCALE, HALF_UP_ROUNDING_MODE);
         return materialCost;
     }
     
     public static BigDecimal calculateLaborCost(BigDecimal area, BigDecimal laborCostPerSquareFoot) {
-        final BigDecimal laborCost = area.multiply(laborCostPerSquareFoot);
+        final BigDecimal laborCost = area.multiply(laborCostPerSquareFoot).setScale(
+                TWO_PLACES_SCALE, HALF_UP_ROUNDING_MODE);
         return laborCost;
     }
     
@@ -64,7 +66,8 @@ public class ServiceCalculator {
     }
     
     public static BigDecimal calculateTotalCost(BigDecimal materialCost, BigDecimal laborCost, BigDecimal tax) {
-        final BigDecimal totalCost = materialCost.add(laborCost).add(tax);
+        final BigDecimal totalCost = materialCost.add(laborCost).add(tax)
+                                        .setScale(TWO_PLACES_SCALE, HALF_UP_ROUNDING_MODE);
         return totalCost;
     }
 
