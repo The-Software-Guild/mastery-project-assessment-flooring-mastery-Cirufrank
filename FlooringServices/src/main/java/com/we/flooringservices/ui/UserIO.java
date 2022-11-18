@@ -38,31 +38,31 @@ public interface UserIO {
      * @param message input prompt to be displayed to user
      * @return String
      */
-//    public String readString(String message);
-//    /**
-//     * Continues to prompt user to enter string input 
-//     * until it can be parsed to a BigDecimal with a 
-//     * scale of 2, then returns the BigDecimal input
-//     *
-//     * @param message input prompt to be displayed to user
-//     * @return BigDecimal
-//     */
-//    public BigDecimal readBigDecimal(String message);
-//    /**
-//     * Continues to prompt user to enter string input 
-//     * until it can be parsed to a LocalDateTime object 
-//     * instance
-//     *
-//     * @param message input prompt to be displayed to user
-//     * @return LocalDateTime
-//     */
-//    public LocalDateTime readLocalDateTime(String message);
-//    /**
-//     * Continues to prompt user to enter string input 
-//     * until a valid state abbreviation is entered
-//     *
-//     * @param message input prompt to be displayed to user
-//     * @return String
-//     */
-//    public String readStateAbbrv(String message);
+    public String readString(String message);
+    /**
+     * Continues to prompt user to enter string input 
+     * until it can be parsed to a BigDecimal with a 
+     * scale of 2, then returns the BigDecimal input
+     *
+     * @param message input prompt to be displayed to user
+     * @return BigDecimal
+     */
+    public BigDecimal readBigDecimal(String message);
+    /**
+     * Continues to prompt user to enter string input 
+     * until it can be parsed to a LocalDateTime object 
+     * instance
+     *
+     * @param message input prompt to be displayed to user
+     * @return LocalDateTime
+     */
+    public LocalDateTime readLocalDateTime(String message);
+    /**
+     * Continues to prompt user to enter string input 
+     * until a valid state abbreviation is entered
+     *
+     * @param message input prompt to be displayed to user
+     * @return String
+     */
+    public String readStateAbbrv(String message);
 }
