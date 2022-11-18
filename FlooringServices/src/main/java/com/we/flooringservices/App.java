@@ -5,7 +5,9 @@
 
 package com.we.flooringservices;
 
+import com.we.flooringservices.controller.FlooringServicesController;
 import java.io.File;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  *
@@ -33,7 +35,11 @@ import java.io.File;
 public class App {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        System.out.println(new File(".").getAbsolutePath());
+        AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext();
+        appContext.scan("com.we.flooringservices");
+        appContext.refresh();
+          
+        FlooringServicesController controller = appContext.getBean("flooringServicesController", FlooringServicesController.class);
+        controller.run();
     }
 }
