@@ -23,5 +23,21 @@ public interface FlooringServicesServiceLayer {
      */
     public List<Order> getOrders(LocalDateTime orderDate) throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException;
-//    public void addOrder(Order order);
+    /**
+     * Allows user to add new Order
+     *
+     * @param Order Order object instance representing order to add
+     * @return void
+     */
+    public void addOrder(Order order) throws FlooringServicesDaoPersistenceException,
+            FlooringServicesNoOrdersFoundExeception;
+    /**
+     * Determines if input state is available to purchase services for
+     *
+     * @param String abbreviation of state the user is attempting to 
+     * purchase orders from
+     * @return boolean
+     */
+    public boolean isStateAvailale(String stateAbbrv) 
+    throws FlooringServicesDaoPersistenceException;
 }
