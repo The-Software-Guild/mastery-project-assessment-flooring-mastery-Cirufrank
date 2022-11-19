@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Primary
 public class FlooringServicesView {
-    final private String WELCOME_MESSAGE = "=== WELCOME OUR FLOORING SERVICES ===",
+    final private String WELCOME_MESSAGE = "=== WELCOME TO OUR FLOORING SERVICES ===",
             BORDER = "*******************************",
             DISPLAY_ORDERS_OPTION = "* 1. Display Orders",
             ADD_ORDER_OPTION = "* 2. Add an Order",
