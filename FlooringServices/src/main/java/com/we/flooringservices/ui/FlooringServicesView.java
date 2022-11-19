@@ -225,7 +225,7 @@ public class FlooringServicesView {
         print(BORDER);
         displayProductType(productTypes);
         print(BORDER);
-        final String productType = io.readProductType(CHOOSE_PRODUCT_TYPE, productTypes);
+        String productType = io.readProductType(CHOOSE_PRODUCT_TYPE, productTypes);
         return productType;
     }
     private void displayProductType(List<String> productTypes) {

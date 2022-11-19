@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
@@ -332,15 +333,15 @@ public class UserIOConsoleImpl implements UserIO {
         print(message);
         String userProductChoice = "";
         while(true) {
-            userProductChoice = readString();
-            if (!productTypes.contains(userProductChoice)) {
-                print("Invalid choice. Please enter product "
-                        + "type selection exactly as it appears "
-                        + "on the list");
-                continue;
-            } else break;
+            userProductChoice = readString().toLowerCase().intern();
+            for (String curProductType: productTypes) {
+            if (curProductType.toLowerCase().equals(userProductChoice))
+                return curProductType;
+            }
+            print("Invalid choice. Please enter product "
+                    + "type selection exactly as it appears "
+                    + "on the list");
         }
-        return userProductChoice;
     }
     @Override
     public String editProductType(String message, List<String> productTypes) {
@@ -348,15 +349,15 @@ public class UserIOConsoleImpl implements UserIO {
         print(message);
         String userProductChoice = "";
         while(true) {
-            userProductChoice = readString();
-            if (!productTypes.contains(userProductChoice)) {
-                print("Invalid choice. Please enter product "
-                        + "type selection exactly as it appears "
-                        + "on the list");
-                continue;
-            } else break;
+            userProductChoice = readString().toLowerCase().intern();
+            for (String curProductType: productTypes) {
+            if (curProductType.toLowerCase().equals(userProductChoice))
+                return curProductType;
+            }
+            print("Invalid choice. Please enter product "
+                    + "type selection exactly as it appears "
+                    + "on the list");
         }
-        return userProductChoice;
     }
     public BigDecimal readArea(String message) {
         final int EQUAL_TO_MIN = 0;
