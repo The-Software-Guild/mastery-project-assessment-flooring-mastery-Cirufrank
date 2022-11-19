@@ -16,34 +16,14 @@ import java.util.Objects;
  * 
  * @description This class represents the orders within this application
  * 
- * TO DO: Update fields logic
  */
 public class Order {
     final private static int ONE_ORDER = 1;
-    private ServiceCalculator serviceCalculator;
     private int orderNumber;
     private String customerName, state, productType;
     private BigDecimal taxRate, area, costPerSquareFoot, laborCostPerSquareFoot,
             materialCost, laborCost, tax, total;
     private LocalDateTime orderDate;
-    
-    public Order(Product product, String customerName, String state,
-            BigDecimal area, BigDecimal taxRate, LocalDateTime orderDate, int totalOrders) {
-        orderNumber = totalOrders + ONE_ORDER;
-        this.productType = product.getProductType();
-        this.costPerSquareFoot = product.getCostPerSquareFoot();
-        this.laborCostPerSquareFoot = product.getLaborCostPerSquareFoot();
-        this.customerName = customerName;
-        this.state = state;
-        this.area = area;
-        this.taxRate = taxRate;
-        this.orderDate = orderDate;
-        this.serviceCalculator = new ServiceCalculator(area, costPerSquareFoot,
-            laborCostPerSquareFoot, taxRate);
-        this.materialCost = serviceCalculator.getMaterialCost();
-        this.laborCost = serviceCalculator.getLaborCost();
-        this.total = serviceCalculator.getTotalCost();
-    }
     
     public Order(int orderNumber, String customerName, String state,
                     BigDecimal taxRate, String productType, BigDecimal area,
@@ -83,14 +63,6 @@ public class Order {
         this.tax = tax;
         this.total = total;
         this.orderDate = orderDate;
-    }
-    
-    public void recalculateOrderCost() {
-            serviceCalculator.updateCalculations(area, costPerSquareFoot,
-            laborCostPerSquareFoot, taxRate);
-            this.materialCost = serviceCalculator.getMaterialCost();
-            this.laborCost = serviceCalculator.getLaborCost();
-            this.total = serviceCalculator.getTotalCost();
     }
  
     public int getOrderNumber() {
@@ -175,7 +147,6 @@ public class Order {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.serviceCalculator);
         hash = 97 * hash + this.orderNumber;
         hash = 97 * hash + Objects.hashCode(this.customerName);
         hash = 97 * hash + Objects.hashCode(this.state);
@@ -216,9 +187,6 @@ public class Order {
         if (!Objects.equals(this.productType, other.productType)) {
             return false;
         }
-        if (!Objects.equals(this.serviceCalculator, other.serviceCalculator)) {
-            return false;
-        }
         if (!Objects.equals(this.taxRate, other.taxRate)) {
             return false;
         }
@@ -248,7 +216,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" + "serviceCalculator=" + serviceCalculator + ", orderNumber=" + orderNumber + ", customerName=" + customerName + ", state=" + state + ", productType=" + productType + ", taxRate=" + taxRate + ", area=" + area + ", costPerSquareFoot=" + costPerSquareFoot + ", laborCostPerSquareFoot=" + laborCostPerSquareFoot + ", materialCost=" + materialCost + ", laborCost=" + laborCost + ", tax=" + tax + ", total=" + total + ", orderDate=" + orderDate + '}';
+        return "Order{" + "orderNumber=" + orderNumber + ", customerName=" + customerName + ", state=" + state + ", productType=" + productType + ", taxRate=" + taxRate + ", area=" + area + ", costPerSquareFoot=" + costPerSquareFoot + ", laborCostPerSquareFoot=" + laborCostPerSquareFoot + ", materialCost=" + materialCost + ", laborCost=" + laborCost + ", tax=" + tax + ", total=" + total + ", orderDate=" + orderDate + '}';
     }
     
 }

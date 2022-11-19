@@ -27,7 +27,17 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author ciruf
+ * @author Cirũ Franklin (she/they), Software Engineer
+ * @course DI002 Full Stack Development Using Java and React (2210)
+ * @project Assessment: Flooring Mastery Project with Spring DI
+ * 
+ * @description This it the implementation of the application's 
+ * Service Layer interface and defines the methods responsible for the Flooring
+ * Services business logic of our application
+ * 
+ * These methods should be available to create, read, update, and delete 
+ * orders with custom validation that makes sense for our 
+ * application
  */
 
 @Component

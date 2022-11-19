@@ -19,7 +19,9 @@ import org.springframework.stereotype.Component;
  * @course DI002 Full Stack Development Using Java and React (2210)
  * @project Assessment: Flooring Mastery Project with Spring DI
  * 
- * @description 
+ * @description This class acts the the view layer of out application 
+ * and is responsible for displaying and retrieving user input and 
+ * output throughout the application
  */
 @Component
 @Primary

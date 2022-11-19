@@ -12,8 +12,18 @@ import java.util.List;
 
 /**
  *
- * @author ciruf
+ * @author Cirũ Franklin (she/they), Software Engineer
+ * @course DI002 Full Stack Development Using Java and React (2210)
+ * @project Assessment: Flooring Mastery Project with Spring DI
+ * 
+ * @description This interface declares the methods responsible for the Flooring
+ * Services business logic of our application
+ * 
+ * These methods should be available to create, read, update, and delete 
+ * orders with custom validation that makes sense for our 
+ * application
  */
+
 public interface FlooringServicesServiceLayer {
     /**
      * Ensures there are orders to display and returns those orders to user

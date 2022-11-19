@@ -13,7 +13,8 @@ import java.util.List;
  * @course DI002 Full Stack Development Using Java and React (2210)
  * @project Assessment: Flooring Mastery Project with Spring DI
  * 
- * @description
+ * @description This interface declares the methods needed to read and 
+ * write information to and from the Taxes file
  */
 public interface StateDao {
     /**
