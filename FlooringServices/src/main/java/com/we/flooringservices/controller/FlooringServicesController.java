@@ -91,6 +91,12 @@ public class FlooringServicesController {
             final List<String> allProductTypes = service.getAvailableProductTypes();
             String orderState = view.getOrderState();
             boolean continueToOrder = true;
+            //While the state a user selects is not available for purchasing
+            //services from/to continue to prompt the user for a new state
+            //and log the request for purchase of the state to the state 
+            //requests file
+            //If a user decides not to continue to order then exit the 
+            //add order method and return the user to the main menu
             while(continueToOrder &&
                 service.isStateAvailable(orderState) != true) {
                 service.logStateRequest(orderState);
@@ -120,8 +126,14 @@ public class FlooringServicesController {
             boolean continueToEdit = true, recalculate = false;
             int orderNumber = view.getOrderNumber();
             LocalDateTime orderDate = view.getUserDateChoice();
+            //If an order does not exist for the date and number specified
+            //prompt user for if they would like to try again
+            //If not exit the method and return the user to the main menu
             while(continueToEdit && 
                     service.orderExistsForDate(orderNumber, orderDate) != true) {
+                //If there is an order that exists for the number specified
+                //but not for the date specified tell the user this and 
+                //ask if they'd like to put in another date
                 if (service.orderExists(orderNumber)) {
                     view.printOrderExistsButNoOrderForDateMessage();
                     continueToEdit = view.getUserContinueChoice();
@@ -131,6 +143,9 @@ public class FlooringServicesController {
                     }
                     orderDate = view.getUserDateChoice();
                 }
+                //If an order does not exists for both the number and 
+                //date specified tell the user this and ask them if they'd 
+                //like to re-enter the fields
                 else {
                     view.printOrderDoesNotExistMessage();
                     continueToEdit = view.getUserContinueChoice();
@@ -147,6 +162,12 @@ public class FlooringServicesController {
             if (!customerName.equals(EMPTY_STRING)) order.setCustomerName(customerName);
             String orderState = view.editOrderState(order);
             continueToEdit = true;
+            //While the state a user selects is not available for purchasing
+            //services from/to continue to prompt the user for a different state
+            //or empty string and log the request for purchase of the state to the state 
+            //requests file
+            //If a user decides not to continue to edit the order's state then exit the 
+            //edit state loop and break the user into the next editing option
             while(continueToEdit &&
                 service.isStateAvailable(orderState) != true
                     && !orderState.equals(EMPTY_STRING)) {
@@ -190,6 +211,11 @@ public class FlooringServicesController {
             boolean continueToEdit = true, recalculate = false;
             int orderNumber = view.getOrderNumber();
             LocalDateTime orderDate = view.getUserDateChoice();
+            //If an order does exist for the number specified but not
+            //for the date, prompt user for if they would like to enter
+            //in another date, but do not reveal the date for sercurity 
+            //purposes
+            //If not exit the method and return the user to the main menu
             while(continueToEdit && 
                     service.orderExistsForDate(orderNumber, orderDate) != true) {
                 if (service.orderExists(orderNumber)) {
@@ -201,6 +227,10 @@ public class FlooringServicesController {
                     }
                     orderDate = view.getUserDateChoice();
                 }
+                //If no orders exists for the number and date specified alert
+                //the user of this and ask them if they'd like to enter in 
+                //another order number and date 
+                //If they say no exit the method and return them to the main menu
                 else {
                     view.printOrderDoesNotExistMessage();
                     continueToEdit = view.getUserContinueChoice();
