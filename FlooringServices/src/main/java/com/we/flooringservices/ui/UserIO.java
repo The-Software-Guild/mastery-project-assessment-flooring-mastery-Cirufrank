@@ -41,7 +41,7 @@ public interface UserIO {
      */
     public String readString(String message);
     /**
-     * Prompts user to enter name until no valid characters 
+     * Prompts user to enter name until no invalid characters 
      * are present within the name
      *
      * @param String message input prompt to be displayed to user
@@ -49,7 +49,7 @@ public interface UserIO {
      */
     public String readCustomerName(String message);
     /**
-     * Prompts user to enter name until no valid characters 
+     * Prompts user to enter name until no invalid characters 
      * are present within the name (empty strings allowed to 
      * signify no edits to be made)
      *

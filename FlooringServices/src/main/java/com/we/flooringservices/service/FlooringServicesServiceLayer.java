@@ -35,7 +35,8 @@ public interface FlooringServicesServiceLayer {
     public List<Order> getOrders(LocalDateTime orderDate) throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException;
     /**
-     * Ensures there are orders to display and returns those orders to user
+     * Ensures there are orders to display and returns all 
+     * available orders to user
      *
      * @param None
      * @return List<Order> list of order objects representing all available 
@@ -46,7 +47,7 @@ public interface FlooringServicesServiceLayer {
             FlooringServicesDaoPersistenceException;
     /**
      * Saves all active orders that have been successfully
-     * created to a Backup/DataExport file
+     * created to a Backup/DataExport.txt file
      *
      * @param None
      * @return void
@@ -62,9 +63,13 @@ public interface FlooringServicesServiceLayer {
      */
     public Order getOrder(int orderNumber);
     /**
-     * Creates an order from customer information specified
-     *UPDATE
-     * @param int number of the order to retirieve
+     * Creates an order from customer-given order information specified
+     *
+     * @param LocalDateTime date of the order
+     * @param String name of the customer purchasing the order
+     * @param String abbreviation of the state the order was made to
+     * @param String type of the product purchased
+     * @param BigDecimal area of the flooring purchased
      * @return Order object instance of Order created
      */
     public Order createOrder(LocalDateTime orderDate, String customerName,

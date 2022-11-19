@@ -20,8 +20,8 @@ public interface StateDao {
     /**
      * Returns a state object filled with the state's current
      * tax and id information from the database
-     *CHANGE
-     * @param stateId int of the state's id within the Taxes file
+     *
+     * @param String abbreviation of the state to retrieve
      * @return the State object associated with the given id if
      * it exists within the Taxes file, null otherwise
      */

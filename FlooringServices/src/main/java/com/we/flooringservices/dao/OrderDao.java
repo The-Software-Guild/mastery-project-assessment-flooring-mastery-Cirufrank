@@ -65,10 +65,10 @@ public interface OrderDao {
      * Returns an order that matches the specified id
      *
      * @param int The id of the order that the user would like to retrieve
-     * @return An order matching the id of the order specified if found, null
+     * @return An order matching the number of the order specified if found, null
      * otherwise
      */
-    public Order getOrder(int orderId) throws FlooringServicesNoOrdersFoundExeception;
+    public Order getOrder(int orderNumber) throws FlooringServicesNoOrdersFoundExeception;
     /**
      * Removes an order from its file within the appropriate
      * Data/Orders_MMDDYYYY.txt file (the date is added to the unMarshalled

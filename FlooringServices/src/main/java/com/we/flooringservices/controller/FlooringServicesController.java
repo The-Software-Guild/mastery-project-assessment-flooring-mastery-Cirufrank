@@ -67,6 +67,7 @@ public class FlooringServicesController {
                             exportAndViewAllOrders();
                             break;
                         case QUIT:
+                            displayGoodbyeMessage();
                             usingApplication = false;
                     }
                 } catch(FlooringServicesNoOrdersFoundExeception | 
@@ -116,7 +117,10 @@ public class FlooringServicesController {
                 service.addOrder(newOrder);
                 view.displayOrderAddedSuccessfullyMessage();
             }
-            else return;
+            else {
+                view.displayOrderNotPlacedMessage();
+                return;
+            }
             
         }
         private void editOrder() throws FlooringServicesNoOrdersFoundExeception,
@@ -259,5 +263,8 @@ public class FlooringServicesController {
             List<Order> allOrdersExported = service.getAllOrders();
             service.exportAllOrders();
             view.displayOrders(allOrdersExported);
+        }
+        private void displayGoodbyeMessage() {
+            view.displayGoodbyeBanner();
         }
     }

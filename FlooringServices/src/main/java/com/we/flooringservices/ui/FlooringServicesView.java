@@ -64,7 +64,11 @@ public class FlooringServicesView {
             UPDATE_SUCCESS_MESSAGE = "=== ORDER UPDATE SUCCESS ===",
             REMOVE_SUCCESS_BANNER = "=== ORDER REMOVED ===",
             ORDER_NOT_REMOVED_MESSAGE = "Order not removed.",
-            ORDERS_SUCCESSFULLY_EXPORTED = "=== ORDERS SUCCESSFULLY EXPORTED ===";
+            ORDERS_SUCCESSFULLY_EXPORTED = "=== ORDERS SUCCESSFULLY EXPORTED ===",
+            ASTERISK = "*",
+            AVAILABLE_PRODUCTS_BANNER = "=== AVAILABLE PRODUCTS ===",
+            NO_ORDER_PLACED = "Order not placed.",
+            GOODBYE_MESSAGE = "=== GOODBYE, COME AGAIN SOON! ===";
             
     
     private UserIO io;
@@ -217,17 +221,26 @@ public class FlooringServicesView {
         print(EXIT_MESSAGE);
     }
     public String getProductType(List<String> productTypes) {
+        print(AVAILABLE_PRODUCTS_BANNER);
+        print(BORDER);
         displayProductType(productTypes);
+        print(BORDER);
         final String productType = io.readProductType(CHOOSE_PRODUCT_TYPE, productTypes);
         return productType;
     }
     private void displayProductType(List<String> productTypes) {
         for (String productType:productTypes) {
-            print(productType);
+            print(ASTERISK + " " + productType);
         }
     }
     public void displayOrderAddedSuccessfullyMessage() {
         print(SUCCESSFUL_ORDER_ADD);
+    }
+    public void displayOrderNotPlacedMessage() {
+        print(NO_ORDER_PLACED);
+    }
+    public void displayGoodbyeBanner() {
+        print(GOODBYE_MESSAGE);
     }
     public BigDecimal getArea() {
         final BigDecimal userArea = io.readArea(ENTER_AREA);
