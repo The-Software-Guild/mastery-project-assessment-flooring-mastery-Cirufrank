@@ -52,14 +52,17 @@ public class FlooringServicesView {
             ENTER_ORDER_NUMBER = "Please enter the order's number",
             ORDER_EXISTS_BUT_NOT_FOR_DATE = "No order was found for the date specified, "
             + "but an order does exists for that number."
-            + "\n For security purposes, we cannot disclose the date, however, "
+            + "\nFor security purposes, we cannot disclose the date, however, "
             + "would you like to put in another date?",
             NO_ORDERs_EXISTS_FOR_NUMBER = "No orders exist for both the "
             + "date and number specified. Would you like to enter another order?",
             ENTER_FOR_NO_CHANGES = "Please press enter if you would not like to change this entry",
             EMPTY_STRING = "".intern(),
             ORDER_SUMMARY_BANNER = "=== ORDER SUMMARY ===",
-            UPDATE_SUCCESS_MESSAGE = "=== ORDER UPDATE SUCCESS ===";
+            UPDATE_SUCCESS_MESSAGE = "=== ORDER UPDATE SUCCESS ===",
+            REMOVE_SUCCESS_BANNER = "=== ORDER REMOVED ===",
+            ORDER_NOT_REMOVED_MESSAGE = "Order not removed.",
+            ORDERS_SUCCESSFULLY_EXPORTED = "=== ORDERS SUCCESSFULLY EXPORTED ===";
             
     
     private UserIO io;
@@ -115,10 +118,21 @@ public class FlooringServicesView {
                 total);
         return orderFormatted;
     }
-    public boolean displayOrderAndGetAddChoice(Order newOrder) {
-        final String YES = "yes", NO = "no";
-        final String newOrderString = formatOrder(newOrder);
+    public void displayOrder(Order order) {
+        final String newOrderString = formatOrder(order);
         io.print(newOrderString);
+    }
+    public void displayRemoveSuccessMessage() {
+        io.print(REMOVE_SUCCESS_BANNER);
+    }
+    public void displayOrderNotRemoved() {
+        io.print(ORDER_NOT_REMOVED_MESSAGE);
+    }
+    public void displayAllOrdersExportedBanner() {
+        io.print(ORDERS_SUCCESSFULLY_EXPORTED);
+    }
+    public boolean displayOrderAndGetContinueChoice(Order newOrder) {
+        displayOrder(newOrder);
         return getUserContinueChoice();
     }
     public String editCustomerName(Order order) {

@@ -60,6 +60,18 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
         }
         return ordersForDate;
     }
+    public List<Order> getAllOrders() 
+        throws FlooringServicesNoOrdersFoundExeception,
+            FlooringServicesDaoPersistenceException {
+        final List<Order> allOrdersExported = orderDao.getAllOrders();
+        return allOrdersExported;
+    }
+    
+    public void exportAllOrders() 
+    throws FlooringServicesNoOrdersFoundExeception,
+            FlooringServicesDaoPersistenceException {
+        orderDao.exportAllActiveOrders();
+    }
     @Override
     public boolean orderExistsForDate(int orderNumber, LocalDateTime orderDate) 
         throws 
@@ -163,6 +175,12 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
                     materialCost, laborCost, tax,
                     total, order.getOrderDate());
         return updatedOrder;
+    }
+    @Override
+    public void removeOrder(Order orderToRemove) 
+    throws FlooringServicesDaoPersistenceException,
+            FlooringServicesNoOrdersFoundExeception {
+        orderDao.removeOrder(orderToRemove);
     }
     @Override
     public boolean isStateAvailable(String stateAbbrv) 

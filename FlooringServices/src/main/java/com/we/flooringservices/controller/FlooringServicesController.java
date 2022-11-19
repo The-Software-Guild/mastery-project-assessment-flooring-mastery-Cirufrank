@@ -61,10 +61,10 @@ public class FlooringServicesController {
                             editOrder();
                             break;
                         case REMOVE_ORDER:
-                            view.print("Not implemented: remove order");
+                            removeOrder();
                             break;
                         case EXPORT_AND_VIEW_ALL_ORDERS:
-                            view.print("Not implemented:export and view all orders");
+                            exportAndViewAllOrders();
                             break;
                         case QUIT:
                             usingApplication = false;
@@ -105,7 +105,7 @@ public class FlooringServicesController {
             final String productType = view.getProductType(allProductTypes);
             final BigDecimal area = view.getArea();
             final Order newOrder = service.createOrder(orderDate, customerName, orderState, productType, area);
-            final boolean addOrder = view.displayOrderAndGetAddChoice(newOrder);
+            final boolean addOrder = view.displayOrderAndGetContinueChoice(newOrder);
             if (addOrder) {
                 service.addOrder(newOrder);
                 view.displayOrderAddedSuccessfullyMessage();
@@ -183,5 +183,51 @@ public class FlooringServicesController {
                 service.updateOrder(orderWithEdits);
                 view.displayEditSuccessBanner();
             } else view.displayNoEditsMade(order);
+        }
+        private void removeOrder() 
+            throws FlooringServicesNoOrdersFoundExeception,
+                FlooringServicesDaoPersistenceException {
+            boolean continueToEdit = true, recalculate = false;
+            int orderNumber = view.getOrderNumber();
+            LocalDateTime orderDate = view.getUserDateChoice();
+            while(continueToEdit && 
+                    service.orderExistsForDate(orderNumber, orderDate) != true) {
+                if (service.orderExists(orderNumber)) {
+                    view.printOrderExistsButNoOrderForDateMessage();
+                    continueToEdit = view.getUserContinueChoice();
+                    if (continueToEdit == false) {
+                        view.printExitedMessage();
+                        return;
+                    }
+                    orderDate = view.getUserDateChoice();
+                }
+                else {
+                    view.printOrderDoesNotExistMessage();
+                    continueToEdit = view.getUserContinueChoice();
+                    if (continueToEdit == false) {
+                        view.printExitedMessage();
+                        return;
+                    }
+                    orderNumber = view.getOrderNumber();
+                    orderDate = view.getUserDateChoice();
+                }
+            }
+            Order order = service.getOrder(orderNumber);
+            final boolean removeOrder = 
+                    view.displayOrderAndGetContinueChoice(order);
+            if (removeOrder == true) {
+                service.removeOrder(order);
+                view.displayRemoveSuccessMessage();
+            } else {
+                view.displayOrderNotRemoved();
+            }
+        }
+        private void exportAndViewAllOrders() 
+        throws FlooringServicesNoOrdersFoundExeception,
+                FlooringServicesDaoPersistenceException {
+            view.displayAllOrdersExportedBanner();
+            List<Order> allOrdersExported = service.getAllOrders();
+            service.exportAllOrders();
+            view.displayOrders(allOrdersExported);
         }
     }

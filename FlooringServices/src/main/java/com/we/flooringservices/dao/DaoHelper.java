@@ -78,6 +78,14 @@ public interface DaoHelper {
         final File currentFile = new File(fileName);
         return currentFile.exists();
     }
+    public static boolean directoryExists(String directoryName) {
+        final File currentDirectory = new File(directoryName);
+        return currentDirectory.isDirectory();
+    }
+    public static void createNewDirectory(String directoryName) {
+        final File currentDirectory = new File(directoryName);
+        currentDirectory.mkdir();
+    }
     public static void createNewFile(String fileName) {
         final File currentFile = new File(fileName);
         try {

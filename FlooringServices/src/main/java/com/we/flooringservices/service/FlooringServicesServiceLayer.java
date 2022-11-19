@@ -19,11 +19,31 @@ public interface FlooringServicesServiceLayer {
      * Ensures there are orders to display and returns those orders to user
      *
      * @param LocalDateTime date of the orders to view
-     * @return List<Order> list of order object representing the orders 
+     * @return List<Order> list of order objects representing the orders 
      * placed on the date specified
      */
     public List<Order> getOrders(LocalDateTime orderDate) throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException;
+    /**
+     * Ensures there are orders to display and returns those orders to user
+     *
+     * @param None
+     * @return List<Order> list of order objects representing all available 
+     * orders ever placed
+     */
+    public List<Order> getAllOrders() 
+        throws FlooringServicesNoOrdersFoundExeception,
+            FlooringServicesDaoPersistenceException;
+    /**
+     * Saves all active orders that have been successfully
+     * created to a Backup/DataExport file
+     *
+     * @param None
+     * @return void
+     */
+    public void exportAllOrders() 
+    throws FlooringServicesNoOrdersFoundExeception,
+            FlooringServicesDaoPersistenceException; 
     /**
      * Retrieves an order with the number specified for the user
      *
@@ -59,6 +79,17 @@ public interface FlooringServicesServiceLayer {
      * @return void
      */
     public void updateOrder(Order order) throws FlooringServicesDaoPersistenceException,
+            FlooringServicesNoOrdersFoundExeception;
+    /**
+     * Removes order from storage
+     *
+     * @param Order Order object instance representing order to remove
+     * 
+     * 
+     * @return void
+     */
+    public void removeOrder(Order orderToRemove) 
+    throws FlooringServicesDaoPersistenceException,
             FlooringServicesNoOrdersFoundExeception;
     /**
      * Creates a new order object instance with its fields recalculated if necessary
