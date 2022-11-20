@@ -9,15 +9,18 @@ import com.we.flooringservices.dao.DaoHelper;
 import com.we.flooringservices.dao.OrderDaoFileImplParameterResolver;
 import com.we.flooringservices.dao.OrderParameterResolver;
 import com.we.flooringservices.dao.ProductDaoFileImplParameterResolver;
+import com.we.flooringservices.dao.ProductDaoFileStubImpl;
 import com.we.flooringservices.dao.ProductParameterResolver;
 import com.we.flooringservices.dao.StateDaoFileImplParameterResolver;
 import com.we.flooringservices.dao.StateParameterResolver;
 import com.we.flooringservices.dao.StateRequestDaoFileImplParameterResolver;
 import com.we.flooringservices.model.Order;
+import com.we.flooringservices.model.Product;
 import com.we.flooringservices.model.State;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -227,7 +230,18 @@ public class FlooringServicesServiceLayerImplTest {
      * Test of getAvailableProductTypes method, of class FlooringServicesServiceLayerImpl.
      */
     @Test
-    public void testGetAvailableProductTypes() throws Exception {
+    public void testGetAvailableProductTypes(ProductDaoFileStubImpl productDao,
+               FlooringServicesServiceLayerStubImpl testServiceLayer ) throws Exception {
+        final List<String> availableProductTypes = productDao.getAllProducts()
+                .stream().map(product -> product.getProductType()).collect(Collectors.toList());
+        final List<String> alsoAvailableProductTypes = testServiceLayer.getAvailableProductTypes();
+        assertEquals(availableProductTypes.size(), alsoAvailableProductTypes.size());
+        for (String curProductType: alsoAvailableProductTypes) {
+            curProductType = curProductType.intern();
+            if (!availableProductTypes.contains(curProductType)) {
+                fail();
+            }
+        }
     }
 
     /**
