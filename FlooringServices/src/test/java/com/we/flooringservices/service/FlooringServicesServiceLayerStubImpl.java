@@ -17,12 +17,10 @@ import com.we.flooringservices.model.State;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,7 +29,7 @@ import org.springframework.stereotype.Component;
  * @course DI002 Full Stack Development Using Java and React (2210)
  * @project Assessment: Flooring Mastery Project with Spring DI
  * 
- * @description This is the implementation of the application's 
+ * @description TEST STUB: This is the implementation of the application's 
  * Service Layer interface and defines the methods responsible for the Flooring
  * Services business logic of our application
  * 
@@ -39,20 +37,22 @@ import org.springframework.stereotype.Component;
  * orders with custom validation that makes sense for our 
  * application
  */
-
 @Component
-@Primary
-public class FlooringServicesServiceLayerImpl implements FlooringServicesServiceLayer {
+public class FlooringServicesServiceLayerStubImpl implements FlooringServicesServiceLayer {
     @Autowired
+    @Qualifier("orderDaoFileStubImpl")
     private OrderDao orderDao;
     @Autowired
+    @Qualifier("stateDaoFileStubImpl")
     private StateDao stateDao;
     @Autowired
+    @Qualifier("productDaoFileStubImpl")
     private ProductDao productDao;
     @Autowired
+    @Qualifier("stateRequestDaoFileStubImpl")
     private StateRequestDao requestDao;
     
-    public FlooringServicesServiceLayerImpl(OrderDao orderDao, StateDao stateDao,
+    public FlooringServicesServiceLayerStubImpl(OrderDao orderDao, StateDao stateDao,
             ProductDao productDao, StateRequestDao requestDao) {
         this.orderDao = orderDao;
         this.stateDao = stateDao;
