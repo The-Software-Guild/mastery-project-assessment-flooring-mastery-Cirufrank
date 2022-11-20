@@ -93,7 +93,6 @@ public class OrderDaoFileStubImpl implements OrderDao {
     @Override
     public List<Order> getAllOrders() throws 
             FlooringServicesNoOrdersFoundExeception {
-        removeOrdersFromMemory();
         loadAllOrders();
         final List<Order> allOrders = new ArrayList<>(orders.values());
         return allOrders;
@@ -177,7 +176,6 @@ public class OrderDaoFileStubImpl implements OrderDao {
         final List<Order> allOrdersForDate = new ArrayList<>(orders.values());
         writeOrdersForDate(orderFileName, allOrdersForDate);
     }
-    
     @Override
     public void exportAllActiveOrders() 
     throws FlooringServicesDaoPersistenceException,
@@ -292,7 +290,8 @@ public class OrderDaoFileStubImpl implements OrderDao {
                                         new BufferedReader(
                                             new FileReader(ordersFileName)));
                 //Here to get rid of headers line
-                scanner.nextLine();
+                if (scanner.hasNextLine())
+                    scanner.nextLine();
                 while(scanner.hasNextLine()) {
                     final String currentOrderText = scanner.nextLine();
                     final String orderDateString = 
@@ -342,7 +341,8 @@ public class OrderDaoFileStubImpl implements OrderDao {
                         new BufferedReader(
                             new FileReader(exportAllDataFileName)));
             //Here so we don't try to parse headers
-            scanner.nextLine();
+            if (scanner.hasNextLine())
+                scanner.nextLine();
             while (scanner.hasNextLine()) {
                 final String orderAsText = scanner.nextLine();
                 final Order currentOrder = unMarshallOrderWithDate(orderAsText);

@@ -147,6 +147,9 @@ public class FlooringServicesServiceLayerImplTest {
         testServiceLayer.addOrder(testOrder);
         final Order orderRetrieved = testServiceLayer.getOrder(testOrder.getOrderNumber());
         assertEquals(testOrder, orderRetrieved);
+        testServiceLayer.removeOrder(testOrder);
+        final Order removedOrder = testServiceLayer.getOrder(testOrder.getOrderNumber());
+        assertNull(removedOrder);
         
     }
 
@@ -249,17 +252,6 @@ public class FlooringServicesServiceLayerImplTest {
         assertNotEquals(previousLaborCost, recalculatedOrder.getLaborCost());
         assertNotEquals(previousTax, recalculatedOrder.getTax());
         assertNotEquals(previousTotal, recalculatedOrder.getTotal());
-    }
-
-    /**
-     * Test of removeOrder method, of class FlooringServicesServiceLayerImpl.
-     */
-    @Test
-    public void testRemoveOrder(Order testOrder, 
-            FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
-        testServiceLayer.removeOrder(testOrder);
-        final Order removedOrder = testServiceLayer.getOrder(testOrder.getOrderNumber());
-        assertNull(removedOrder);
     }
 
     /**

@@ -109,7 +109,8 @@ public class StateDaoFileImpl implements StateDao {
                                     new FileReader(taxesFileName)));
             //Ensures we don't include the header cells in 
             //our results
-            scanner.nextLine();
+            if (scanner.hasNextLine())
+                    scanner.nextLine();
             while(scanner.hasNextLine()) {
                 final State currentState = unMarshallState(scanner.nextLine()); 
                 allStates.put(currentState.getStateAbbrv(), currentState);

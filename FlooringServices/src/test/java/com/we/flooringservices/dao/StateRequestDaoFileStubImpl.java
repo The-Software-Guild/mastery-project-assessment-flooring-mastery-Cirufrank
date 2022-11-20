@@ -106,7 +106,8 @@ public class StateRequestDaoFileStubImpl implements StateRequestDao {
                                     new BufferedReader(
                                         new FileReader(stateRequestsFileName)));
              //Here so the header line is not parsed to StateRequest
-             scanner.nextLine();
+             if (scanner.hasNextLine())
+                    scanner.nextLine();
              while(scanner.hasNextLine()) {
                  final String requestAsText = scanner.nextLine();
                  final StateRequest request = unMarshallStateRequest(requestAsText);

@@ -141,7 +141,8 @@ public class ProductDaoFileStubImpl implements ProductDao {
                             new FileReader(productsFileName)));
             //This skips the header line from being converted to
             //a Product thus causing an error
-            scanner.nextLine();
+            if (scanner.hasNextLine())
+                    scanner.nextLine();
             while (scanner.hasNextLine()) {
                 final String productAsText = scanner.nextLine();
                 final Product currentProduct =

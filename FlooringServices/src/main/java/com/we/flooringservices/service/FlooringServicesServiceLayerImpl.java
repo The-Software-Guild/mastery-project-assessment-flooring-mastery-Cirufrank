@@ -4,6 +4,7 @@
  */
 package com.we.flooringservices.service;
 
+import com.we.flooringservices.dao.AuditDao;
 import com.we.flooringservices.dao.FlooringServicesDaoPersistenceException;
 import com.we.flooringservices.dao.OrderDao;
 import com.we.flooringservices.dao.ProductDao;
@@ -51,13 +52,16 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
     private ProductDao productDao;
     @Autowired
     private StateRequestDao requestDao;
+    @Autowired
+    private AuditDao auditDao;
     
     public FlooringServicesServiceLayerImpl(OrderDao orderDao, StateDao stateDao,
-            ProductDao productDao, StateRequestDao requestDao) {
+            ProductDao productDao, StateRequestDao requestDao, AuditDao auditDao) {
         this.orderDao = orderDao;
         this.stateDao = stateDao;
         this.productDao = productDao;
         this.requestDao = requestDao;
+        this.auditDao = auditDao;
     }
     @Override
     public List<Order> getOrders(LocalDateTime orderDate) throws 
@@ -69,6 +73,7 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
             throw new FlooringServicesNoOrdersFoundExeception("No orders found for "
                     + "date specified");
         }
+        auditDao.writeAuditEntry("Orders retrieved for date " + orderDate.toString());
         return ordersForDate;
     }
     @Override
@@ -83,6 +88,7 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
         throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException {
         final List<Order> allOrdersExported = orderDao.getAllExportedOrders();
+        auditDao.writeAuditEntry("Exported orders retrieved");
         return allOrdersExported;
     }
     @Override
@@ -117,7 +123,6 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
             order = null;
         }
         return order;
-        
     }
     @Override
     public boolean orderExists(int orderNumber) {
@@ -139,6 +144,7 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
     throws FlooringServicesDaoPersistenceException,
          FlooringServicesNoOrdersFoundExeception   {   
         orderDao.addOrder(order);
+        auditDao.writeAuditEntry("Order added: " + order.toString());
     }
     @Override
     public Order createOrder(LocalDateTime orderDate, String customerName,
@@ -169,6 +175,7 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
     public void updateOrder(Order order) throws FlooringServicesDaoPersistenceException,
            FlooringServicesNoOrdersFoundExeception {
            orderDao.updateOrder(order);
+           auditDao.writeAuditEntry("Order updated: " + order.toString());
         
     }
     @Override
@@ -200,6 +207,7 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
     throws FlooringServicesDaoPersistenceException,
             FlooringServicesNoOrdersFoundExeception {
         orderDao.removeOrder(orderToRemove);
+        auditDao.writeAuditEntry("Order removed: " + orderToRemove.toString());
     }
     @Override
     public boolean isStateAvailable(String stateAbbrv) 
@@ -227,5 +235,7 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
     public void logStateRequest(String stateAbbrv) 
     throws FlooringServicesDaoPersistenceException{
         requestDao.logStateRequest(stateAbbrv);
+        auditDao.writeAuditEntry("Request logged for services "
+                + "to be expanded to state: " + stateAbbrv);
     }
 }
