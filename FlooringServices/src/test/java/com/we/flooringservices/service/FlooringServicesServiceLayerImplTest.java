@@ -149,7 +149,49 @@ public class FlooringServicesServiceLayerImplTest {
      * Test of createOrder method, of class FlooringServicesServiceLayerImpl.
      */
     @Test
-    public void testCreateOrder() throws Exception {
+    public void testCreateOrder(Order testOrder,
+               FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+        final List<Order> allOrders = testServiceLayer.getAllOrders();
+        final int ONE_ORDER = 1;
+        final LocalDateTime orderDate = testOrder.getOrderDate();
+        final String customerName = testOrder.getCustomerName();
+        final String orderState = testOrder.getState();
+        final String productType = testOrder.getProductType();
+        final BigDecimal orderArea = testOrder.getArea();
+//        final BigDecimal taxRate = testOrder.getTaxRate();
+//        final BigDecimal costPerSquareFoot = testOrder.getCostPerSquareFoot();
+//        final BigDecimal laborCostPerSquareFoot = testOrder.getLaborCostPerSquareFoot();
+//        final BigDecimal materialCost = testOrder.getMaterialCost();
+//        final BigDecimal laborCost = testOrder.getLaborCost();
+//        final BigDecimal tax = testOrder.getTax();
+//        final BigDecimal total = testOrder.getTotal();
+        final Order createdOrder = testServiceLayer.createOrder(orderDate, customerName, 
+                orderState, productType, orderArea);
+        final LocalDateTime createdOrderDate = createdOrder.getOrderDate();
+        final String createdCustomerName = createdOrder.getCustomerName();
+        final String createdOrderState = createdOrder.getState();
+        final String createdProductType = createdOrder.getProductType();
+        final BigDecimal createdOrderArea = createdOrder.getArea();
+//        final BigDecimal createdTaxRate = createdOrder.getTaxRate();
+//        final BigDecimal createdCostPerSquareFoot = createdOrder.getCostPerSquareFoot();
+//        final BigDecimal createdLaborCostPerSquareFoot = createdOrder.getLaborCostPerSquareFoot();
+//        final BigDecimal createdMaterialCost = createdOrder.getMaterialCost();
+//        final BigDecimal createdLaborCost = createdOrder.getLaborCost();
+//        final BigDecimal createdTax = createdOrder.getTax();
+//        final BigDecimal createdTotal = createdOrder.getTotal();
+        assertEquals(createdOrder.getOrderNumber(), allOrders.size() + ONE_ORDER);
+        assertEquals(orderDate, createdOrderDate);
+        assertEquals(customerName, createdCustomerName);
+        assertEquals(orderState, createdOrderState);
+        assertEquals(productType, createdProductType);
+        assertEquals(orderArea, createdOrderArea);
+//        assertEquals(taxRate, createdTaxRate);
+//        assertEquals(costPerSquareFoot, createdCostPerSquareFoot);
+//        assertEquals(laborCostPerSquareFoot, createdLaborCostPerSquareFoot);
+//        assertEquals(materialCost, createdMaterialCost);
+//        assertEquals(laborCost, createdLaborCost);
+//        assertEquals(tax, createdTax);
+//        assertEquals(total, createdTotal);
     }
 
     /**
