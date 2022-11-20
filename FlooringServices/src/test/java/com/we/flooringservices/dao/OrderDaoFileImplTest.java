@@ -57,13 +57,14 @@ public class OrderDaoFileImplTest {
     }
 
     /**
-     * Test of getAllOrders method, of class OrderDaoFileImpl.
+     * Test of getAllOrders and getTotalOrders method, of class OrderDaoFileImpl.
      */
     @Test
-    public void testGetAllOrders(Order testOrder, OrderDaoFileStubImpl testOrderDao) 
+    public void testGetAllOrdersAndGetTotalOrders(Order testOrder, OrderDaoFileStubImpl testOrderDao) 
         throws FlooringServicesDaoPersistenceException,
             FlooringServicesNoOrdersFoundExeception{
         final int ALL_CURRENT_ORDERS = 3, ONE_ORDER = 1;
+        final int totalOrders = testOrderDao.getTotalOrders();
         final List<Order> currentOrders = testOrderDao.getAllOrders();
         for (Order currentOrder: currentOrders) {
             System.out.println(currentOrder.toString());
@@ -71,6 +72,8 @@ public class OrderDaoFileImplTest {
         if (testOrderDao.getOrder(testOrder.getOrderNumber()) == null)
                 assertEquals(ALL_CURRENT_ORDERS,currentOrders.size());
         else assertEquals(ALL_CURRENT_ORDERS + ONE_ORDER, currentOrders.size());
+        
+       assertEquals(currentOrders.size(), totalOrders);
     }
 
     /**
