@@ -82,6 +82,14 @@ public class ProductDaoFileStubImpl implements ProductDao {
         writeProducts();
     }
     
+    @Override
+    public void editProduct(Product product) 
+        throws FlooringServicesDaoPersistenceException{
+        loadProducts();
+        allProducts.put(product.getProductType(), product);
+        writeProducts();
+    }
+    
     //Here for the purpose of testing by adding the 
     //same product then removing it so future
     //tests continue to pass
@@ -91,15 +99,7 @@ public class ProductDaoFileStubImpl implements ProductDao {
         allProducts.remove(productType);
         writeProducts();
     }
-    
-    @Override
-    public void editProduct(Product product) 
-        throws FlooringServicesDaoPersistenceException{
-        loadProducts();
-        allProducts.put(product.getProductType(), product);
-        writeProducts();
-    } 
-    
+     
     private String marshallProduct(Product product) {
         final String productAsText = DaoHelper
                 .createDelimiterSeparatedString(DaoHelper.DELIMITER,

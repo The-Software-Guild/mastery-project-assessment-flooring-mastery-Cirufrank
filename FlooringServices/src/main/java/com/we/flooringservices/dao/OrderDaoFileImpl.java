@@ -173,10 +173,7 @@ public class OrderDaoFileImpl implements OrderDao {
         final List<Order> allOrdersForDate = new ArrayList<>(orders.values());
         writeOrdersForDate(orderFileName, allOrdersForDate);
     }
-    private void removeOrdersFromMemory() {
-        List<Order> allOrders = new ArrayList<>(orders.values());
-        allOrders.stream().forEach(order -> orders.remove(order.getOrderNumber()));
-    }
+
     @Override
     public void exportAllActiveOrders() 
     throws FlooringServicesDaoPersistenceException,
@@ -191,6 +188,11 @@ public class OrderDaoFileImpl implements OrderDao {
         loadExportedOrders();
         final List<Order> exportedOrders = new ArrayList<>(orders.values());
         return exportedOrders;
+    }
+    
+    private void removeOrdersFromMemory() {
+        List<Order> allOrders = new ArrayList<>(orders.values());
+        allOrders.stream().forEach(order -> orders.remove(order.getOrderNumber()));
     }
     
     private void cleanFiles(String orderFileName, LocalDateTime orderDate)
