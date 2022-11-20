@@ -30,8 +30,8 @@ public class OrderParameterResolver implements ParameterResolver {
     final Order testOrder = new Order("Test Customer", "CA",
                     new BigDecimal("4.60"), "Carpet", new BigDecimal("249.00"),
                     new BigDecimal("2.25"), new BigDecimal("2.10"),
-                    new BigDecimal("100"), new BigDecimal("100"), new BigDecimal("50"),
-                    new BigDecimal("250"), orderDate, 3);
+                    new BigDecimal("560.25"), new BigDecimal("522.90"), new BigDecimal("54.16"),
+                    new BigDecimal("1137.31"), orderDate, 3);
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
         return parameterContext.getParameter().getType() == Order.class;
