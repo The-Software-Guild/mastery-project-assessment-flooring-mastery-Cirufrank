@@ -14,9 +14,11 @@ import com.we.flooringservices.dao.ProductParameterResolver;
 import com.we.flooringservices.dao.StateDaoFileImplParameterResolver;
 import com.we.flooringservices.dao.StateParameterResolver;
 import com.we.flooringservices.dao.StateRequestDaoFileImplParameterResolver;
+import com.we.flooringservices.dao.StateRequestDaoFileStubImpl;
 import com.we.flooringservices.model.Order;
 import com.we.flooringservices.model.Product;
 import com.we.flooringservices.model.State;
+import com.we.flooringservices.model.StateRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -248,7 +250,14 @@ public class FlooringServicesServiceLayerImplTest {
      * Test of logStateRequest method, of class FlooringServicesServiceLayerImpl.
      */
     @Test
-    public void testLogStateRequest() throws Exception {
+    public void testLogStateRequest(StateRequestDaoFileStubImpl testRequestDao,
+            FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+        final String stateAbbrv = "CA";
+        final StateRequest prevRequest = testRequestDao.getRequest(stateAbbrv);
+        final int ONE_REQUEST = 1;
+        testServiceLayer.logStateRequest(stateAbbrv);
+        final StateRequest newRequest = testRequestDao.getRequest(stateAbbrv);
+        assertEquals(prevRequest.getTotalRequests(), newRequest.getTotalRequests() - ONE_REQUEST);
     }
     
 }
