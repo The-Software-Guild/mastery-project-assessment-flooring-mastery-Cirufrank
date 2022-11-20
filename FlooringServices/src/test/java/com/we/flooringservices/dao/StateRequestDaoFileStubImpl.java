@@ -55,7 +55,7 @@ public class StateRequestDaoFileStubImpl implements StateRequestDao {
     public StateRequestDaoFileStubImpl(@Value("TestData/Test-StateRequests.txt")String stateRequestsFileName) {
         this.stateRequestsFileName = stateRequestsFileName;
     }
-    
+    @Override
     public void logStateRequest(String stateAbbrv) 
         throws FlooringServicesDaoPersistenceException{
         loadAllRequests();
@@ -65,12 +65,15 @@ public class StateRequestDaoFileStubImpl implements StateRequestDao {
         allRequests.put(stateAbbrv, request);
         writeRequestsToFile();
     }
+    
+    //Here for testing only
     public StateRequest getRequest(String stateAbbrv) 
         throws FlooringServicesDaoPersistenceException{
         loadAllRequests();
         final StateRequest request = allRequests.get(stateAbbrv);
         return request;
     }
+    
     private StateRequest unMarshallStateRequest(String requestAsText) {
         final int ID_INDEX = 0, ABBREVIATION_INDEX = 1, NAME_INDEX = 2,
                 AVAILABILITY_INDEX = 3, TOTAL_INDEX = 4;

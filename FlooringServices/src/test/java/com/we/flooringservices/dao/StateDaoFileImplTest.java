@@ -83,7 +83,7 @@ public class StateDaoFileImplTest {
     @Order(4)
     public void testRemoveState(State stateToRemove, StateDaoFileStubImpl testStateDao)
         throws FlooringServicesDaoPersistenceException{
-        testStateDao.removeState(stateToRemove.getStateId());
+        testStateDao.removeState(stateToRemove.getStateAbbrv());
         assertTrue(testStateDao.getState(stateToRemove.getStateAbbrv()) == null);
     }
     

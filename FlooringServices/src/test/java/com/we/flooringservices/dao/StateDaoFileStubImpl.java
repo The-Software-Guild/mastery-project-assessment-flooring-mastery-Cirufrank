@@ -56,7 +56,7 @@ public class StateDaoFileStubImpl implements StateDao {
     
     @Override
     public State getState(String stateAbbrv) 
-        throws FlooringServicesDaoPersistenceException{
+        throws FlooringServicesDaoPersistenceException {
         loadStates();
         State stateRetrieved = allStates.get(stateAbbrv);
         return stateRetrieved;
@@ -77,12 +77,13 @@ public class StateDaoFileStubImpl implements StateDao {
         allStates.put(state.getStateAbbrv(), state);
         writeStates();
     }
+    
     //For testing and for availability if we are to create
     //an admin role for the application
-    public void removeState(int stateId) 
+    public void removeState(String stateAbbrv) 
         throws FlooringServicesDaoPersistenceException{
         loadStates();
-        allStates.remove(stateId);
+        allStates.remove(stateAbbrv);
         writeStates();
     }
     
@@ -91,7 +92,7 @@ public class StateDaoFileStubImpl implements StateDao {
         final int ID_INDEX = 0, ABBRV_INDEX = 1, NAME_INDEX = 2, 
                 TAX_RATE_INDEX = 3;
         final String[] stateTokens = stringOfState.split(DaoHelper.DELIMITER);
-        final int stateId = Integer.parseInt(stateTokens[ID_INDEX]);
+        final int stateId = Integer.valueOf(stateTokens[ID_INDEX]);
         final String stateAbbrv = stateTokens[ABBRV_INDEX];
         final String stateName = stateTokens[NAME_INDEX];
         final BigDecimal taxRate = new BigDecimal(stateTokens[TAX_RATE_INDEX]);
@@ -131,7 +132,7 @@ public class StateDaoFileStubImpl implements StateDao {
     }
     
     private void writeStates() 
-        throws FlooringServicesDaoPersistenceException{
+        throws FlooringServicesDaoPersistenceException {
         final ArrayList<State> currentStates = new ArrayList<>(allStates.values());
         try {
             PrintWriter output = new PrintWriter(
@@ -147,7 +148,7 @@ public class StateDaoFileStubImpl implements StateDao {
         } catch(IOException error) {
             throw new FlooringServicesDaoPersistenceException("-_- Could not write states to file");
         }
-    }      
+    }     
     
     
 }

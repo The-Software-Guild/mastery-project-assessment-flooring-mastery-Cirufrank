@@ -56,6 +56,7 @@ public class StateRequestDaoFileImpl implements StateRequestDao {
         this.stateRequestsFileName = stateRequestsFileName;
     }
     
+    @Override
     public void logStateRequest(String stateAbbrv) 
         throws FlooringServicesDaoPersistenceException{
         loadAllRequests();

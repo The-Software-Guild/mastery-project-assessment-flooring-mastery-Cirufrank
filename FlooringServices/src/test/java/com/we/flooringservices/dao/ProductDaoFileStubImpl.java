@@ -58,7 +58,7 @@ public class ProductDaoFileStubImpl implements ProductDao {
     
     @Override
     public List<Product> getAllProducts() 
-        throws FlooringServicesDaoPersistenceException{
+        throws FlooringServicesDaoPersistenceException {
         loadProducts();
         final List<Product> currentProducts =
                 new ArrayList<>(allProducts.values());
@@ -67,7 +67,7 @@ public class ProductDaoFileStubImpl implements ProductDao {
     
     @Override
     public Product getProduct(String productType) 
-        throws FlooringServicesDaoPersistenceException{
+        throws FlooringServicesDaoPersistenceException {
         loadProducts();
         final Product productRetrieved = 
                 allProducts.get(productType);
@@ -82,27 +82,27 @@ public class ProductDaoFileStubImpl implements ProductDao {
         writeProducts();
     }
     
+    //Here for the purpose of testing by adding the 
+    //same product then removing it so future
+    //tests continue to pass
+    public void removeProduct(String productType) 
+        throws FlooringServicesDaoPersistenceException{
+        loadProducts();
+        allProducts.remove(productType);
+        writeProducts();
+    }
+    
     @Override
     public void editProduct(Product product) 
         throws FlooringServicesDaoPersistenceException{
         loadProducts();
         allProducts.put(product.getProductType(), product);
         writeProducts();
-    }
-    
-    //Here for the prupose of testing adding the 
-    //same product then removing it so future
-    //tests continue to pass
-    public void removeProduct(int productId) 
-        throws FlooringServicesDaoPersistenceException{
-        loadProducts();
-        allProducts.remove(productId);
-        writeProducts();
-    }
+    } 
     
     private String marshallProduct(Product product) {
         final String productAsText = DaoHelper
-                .createDelimiterSeparatedString(DELIMITER,
+                .createDelimiterSeparatedString(DaoHelper.DELIMITER,
                         Integer.toString(product.getProductId()),
                         product.getProductType(), 
                         product.getCostPerSquareFoot().toString(),
@@ -112,7 +112,7 @@ public class ProductDaoFileStubImpl implements ProductDao {
     }
     
     private Product unMarshallProduct(String productAsText) {
-        final String[] productTokens = productAsText.split(DELIMITER);
+        final String[] productTokens = productAsText.split(DaoHelper.DELIMITER);
         final int ID_INDEX = 0, PRODUCT_TYPE_INDEX = 1,
                 PRODUCT_SQUARE_FOOT_COST_INDEX = 2,
                 PRODUCT_LABOR_SQUARE_FOOT_COST_INDEX = 3,

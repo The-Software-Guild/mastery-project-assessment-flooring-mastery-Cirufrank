@@ -89,7 +89,7 @@ public class ProductDaoFileImplTest {
     @Order(5)
     public void testRemoveProduct(Product productToRemove, ProductDaoFileStubImpl testProductDao) 
         throws FlooringServicesDaoPersistenceException{
-        testProductDao.removeProduct(productToRemove.getProductId());
+        testProductDao.removeProduct(productToRemove.getProductType());
         assertTrue(
                 testProductDao.getProduct(
                         productToRemove.getProductType()) == null);
