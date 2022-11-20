@@ -184,8 +184,10 @@ public class OrderDaoFileImpl implements OrderDao {
         loadAllOrders();
         exportAllOrders();
     }
+    @Override
     public List getAllExportedOrders()
     throws FlooringServicesDaoPersistenceException{
+        removeOrdersFromMemory();
         loadExportedOrders();
         final List<Order> exportedOrders = new ArrayList<>(orders.values());
         return exportedOrders;

@@ -46,6 +46,18 @@ public interface FlooringServicesServiceLayer {
         throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException;
     /**
+     * Ensures there are orders to display and returns all 
+     * available orders that have been saved to the Backup file 
+     * to the user
+     *
+     * @param None
+     * @return A list of all orders ever created successfully and 
+     * saved to the backup file
+     */
+    public List<Order> getAllExportedOrders() 
+        throws FlooringServicesNoOrdersFoundExeception,
+            FlooringServicesDaoPersistenceException;
+    /**
      * Saves all active orders that have been successfully
      * created to a Backup/DataExport.txt file
      *

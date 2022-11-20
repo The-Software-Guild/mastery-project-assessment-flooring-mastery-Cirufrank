@@ -9,15 +9,22 @@ import com.we.flooringservices.dao.OrderDao;
 import com.we.flooringservices.dao.ProductDao;
 import com.we.flooringservices.dao.StateDao;
 import com.we.flooringservices.dao.StateRequestDao;
+import com.we.flooringservices.dao.TestDaoHelper;
 import com.we.flooringservices.model.Availability;
 import com.we.flooringservices.model.Order;
 import com.we.flooringservices.model.Product;
 import com.we.flooringservices.model.ServiceCalculator;
 import com.we.flooringservices.model.State;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -77,6 +84,14 @@ public class FlooringServicesServiceLayerStubImpl implements FlooringServicesSer
         return allOrdersExported;
     }
     
+    @Override
+    public List<Order> getAllExportedOrders() 
+        throws FlooringServicesNoOrdersFoundExeception,
+            FlooringServicesDaoPersistenceException {
+        final List<Order> allOrdersExported = orderDao.getAllExportedOrders();
+        return allOrdersExported;
+    }
+    @Override
     public void exportAllOrders() 
     throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException {
@@ -219,4 +234,5 @@ public class FlooringServicesServiceLayerStubImpl implements FlooringServicesSer
     throws FlooringServicesDaoPersistenceException{
         requestDao.logStateRequest(stateAbbrv);
     }
+    
 }

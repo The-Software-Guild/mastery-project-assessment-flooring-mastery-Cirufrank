@@ -260,8 +260,8 @@ public class FlooringServicesController {
         throws FlooringServicesNoOrdersFoundExeception,
                 FlooringServicesDaoPersistenceException {
             view.displayAllOrdersExportedBanner();
-            List<Order> allOrdersExported = service.getAllOrders();
             service.exportAllOrders();
+            List<Order> allOrdersExported = service.getAllExportedOrders();
             view.displayOrders(allOrdersExported);
         }
         private void displayGoodbyeMessage() {

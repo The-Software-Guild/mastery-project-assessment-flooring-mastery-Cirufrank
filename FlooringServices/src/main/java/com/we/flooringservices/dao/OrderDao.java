@@ -44,6 +44,18 @@ public interface OrderDao {
      */
     public List<Order> getAllOrders() throws FlooringServicesNoOrdersFoundExeception;
     /**
+     * Returns all currently active orders that have been successfully
+     * saved to the Backup/DataExport.txt file by unmarshalling the orders
+     * from that file and loading them into memory so that they can be 
+     * returned as a list
+     *
+     * @param None
+     * @return A list of all orders currently saved to the Backup/DataExport.txt
+     * file
+     */
+    public List getAllExportedOrders()
+    throws FlooringServicesDaoPersistenceException;
+    /**
      * Returns the number of current available orders
      *
      * @param None

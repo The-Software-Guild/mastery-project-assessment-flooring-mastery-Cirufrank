@@ -4,7 +4,6 @@
  */
 package com.we.flooringservices.service;
 
-import com.we.flooringservices.dao.AuditDaoFileStubImpl;
 import com.we.flooringservices.dao.DaoHelper;
 import com.we.flooringservices.dao.OrderDaoFileImplParameterResolver;
 import com.we.flooringservices.dao.OrderParameterResolver;
@@ -16,7 +15,6 @@ import com.we.flooringservices.dao.StateParameterResolver;
 import com.we.flooringservices.dao.StateRequestDaoFileImplParameterResolver;
 import com.we.flooringservices.dao.StateRequestDaoFileStubImpl;
 import com.we.flooringservices.model.Order;
-import com.we.flooringservices.model.Product;
 import com.we.flooringservices.model.State;
 import com.we.flooringservices.model.StateRequest;
 import java.math.BigDecimal;
@@ -99,10 +97,19 @@ public class FlooringServicesServiceLayerImplTest {
     }
 
     /**
-     * Test of exportAllOrders method, of class FlooringServicesServiceLayerImpl.
+     * Test of exportAllOrders and getAllExportedOrders methods, of class FlooringServicesServiceLayerImpl.
      */
     @Test
-    public void testExportAllOrders() throws Exception {
+    public void testExportAllOrdersAndGetAllExportedOrders(FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+        testServiceLayer.exportAllOrders();
+        final List<Order> allExportedOrders = testServiceLayer.getAllExportedOrders();
+        final List<Order> allOrders = testServiceLayer.getAllOrders();
+        assertEquals(allExportedOrders.size(), allOrders.size());
+        for (Order currentOrder: allExportedOrders) {
+            if (!allOrders.contains(currentOrder)) {
+                fail();
+            }
+        }
     }
 
     /**

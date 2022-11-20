@@ -75,6 +75,23 @@ public class OrderDaoFileImplTest {
         
        assertEquals(currentOrders.size(), totalOrders);
     }
+    /**
+     * Test of exportAllActiveOrders and getAllExportedOrders method, of class OrderDaoFileImpl.
+     */
+    @Test
+    public void testExportAllOrdersAndGetExportedOrders(OrderDaoFileStubImpl testOrderDao) 
+        throws FlooringServicesDaoPersistenceException,
+            FlooringServicesNoOrdersFoundExeception{
+        testOrderDao.exportAllActiveOrders();
+        final List<Order> allExportedOrders = testOrderDao.getAllExportedOrders();
+        final List<Order> allActiveOrders = testOrderDao.getAllOrders();
+        assertEquals(allExportedOrders.size(), allActiveOrders.size());
+        for (Order currentOrder: allExportedOrders) {
+            if (!allActiveOrders.contains(currentOrder)) {
+                fail();
+            }
+        }
+    }
 
     /**
      * Test of getAllOrdersForDate method, of class OrderDaoFileImpl.
@@ -149,8 +166,6 @@ public class OrderDaoFileImplTest {
         assertNull(previosulyRemovedOrder);
         
     }
-
-
     
     
 }

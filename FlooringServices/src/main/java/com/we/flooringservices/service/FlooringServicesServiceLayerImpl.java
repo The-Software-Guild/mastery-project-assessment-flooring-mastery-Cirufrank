@@ -59,6 +59,7 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
         this.productDao = productDao;
         this.requestDao = requestDao;
     }
+    @Override
     public List<Order> getOrders(LocalDateTime orderDate) throws 
             FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException{
@@ -70,13 +71,21 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
         }
         return ordersForDate;
     }
+    @Override
     public List<Order> getAllOrders() 
         throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException {
         final List<Order> allOrdersExported = orderDao.getAllOrders();
         return allOrdersExported;
     }
-    
+    @Override
+    public List<Order> getAllExportedOrders() 
+        throws FlooringServicesNoOrdersFoundExeception,
+            FlooringServicesDaoPersistenceException {
+        final List<Order> allOrdersExported = orderDao.getAllExportedOrders();
+        return allOrdersExported;
+    }
+    @Override
     public void exportAllOrders() 
     throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException {

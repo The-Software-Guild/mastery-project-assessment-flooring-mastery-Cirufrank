@@ -93,6 +93,7 @@ public class OrderDaoFileStubImpl implements OrderDao {
     @Override
     public List<Order> getAllOrders() throws 
             FlooringServicesNoOrdersFoundExeception {
+        removeOrdersFromMemory();
         loadAllOrders();
         final List<Order> allOrders = new ArrayList<>(orders.values());
         return allOrders;
@@ -187,8 +188,11 @@ public class OrderDaoFileStubImpl implements OrderDao {
         loadAllOrders();
         exportAllOrders();
     }
+    
+    @Override
     public List getAllExportedOrders()
     throws FlooringServicesDaoPersistenceException{
+        removeOrdersFromMemory();
         loadExportedOrders();
         final List<Order> exportedOrders = new ArrayList<>(orders.values());
         return exportedOrders;
