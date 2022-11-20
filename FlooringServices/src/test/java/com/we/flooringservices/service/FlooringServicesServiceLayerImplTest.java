@@ -14,6 +14,7 @@ import com.we.flooringservices.dao.StateDaoFileImplParameterResolver;
 import com.we.flooringservices.dao.StateParameterResolver;
 import com.we.flooringservices.dao.StateRequestDaoFileImplParameterResolver;
 import com.we.flooringservices.model.Order;
+import com.we.flooringservices.model.State;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -80,7 +81,16 @@ public class FlooringServicesServiceLayerImplTest {
      * Test of getAllOrders method, of class FlooringServicesServiceLayerImpl.
      */
     @Test
-    public void testGetAllOrders() throws Exception {
+    public void testGetAllOrders(Order testOrder, 
+            FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+        final int ALL_CURRENT_ORDERS = 3, ONE_ORDER = 1;
+        final List<Order> currentOrders = testServiceLayer.getAllOrders();
+        for (Order currentOrder: currentOrders) {
+            System.out.println(currentOrder.toString());
+        }
+        if (testServiceLayer.getOrder(testOrder.getOrderNumber()) == null)
+                assertEquals(ALL_CURRENT_ORDERS,currentOrders.size());
+        else assertEquals(ALL_CURRENT_ORDERS + ONE_ORDER, currentOrders.size());
     }
 
     /**
@@ -91,10 +101,29 @@ public class FlooringServicesServiceLayerImplTest {
     }
 
     /**
-     * Test of orderExistsForDate method, of class FlooringServicesServiceLayerImpl.
+     * Test of orderExistsForDate and orderExists methods, of class FlooringServicesServiceLayerImpl.
      */
     @Test
-    public void testOrderExistsForDate() throws Exception {
+    public void testOrderExistsForDateAndExists(Order testOrder, 
+            FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+        final LocalDateTime orderDate = DaoHelper.parseFileDateString("06022013");
+        final LocalDateTime noOrdersDate = DaoHelper.parseFileDateString("06023013");
+        final int EXISTING_ORDER_NUMBER = 2,
+                NON_EXISTING_ORDER_NUMBER = 100;
+        final boolean existingOrderExistsForDate = testServiceLayer.orderExistsForDate(
+                EXISTING_ORDER_NUMBER, orderDate);
+        assertTrue(existingOrderExistsForDate);
+        final boolean nonExistingOrderExistsForDate = testServiceLayer.orderExistsForDate(
+                NON_EXISTING_ORDER_NUMBER, orderDate);
+        assertFalse(nonExistingOrderExistsForDate);
+        final boolean existingOrderExitsForNoOrderDate = testServiceLayer.orderExistsForDate(
+                EXISTING_ORDER_NUMBER, noOrdersDate);
+        assertFalse(existingOrderExitsForNoOrderDate);
+        final boolean existsingOrderExists = testServiceLayer.orderExists(EXISTING_ORDER_NUMBER);
+        assertTrue(existsingOrderExists);
+        final boolean nonExistingOrderExists = testServiceLayer.orderExists(NON_EXISTING_ORDER_NUMBER);
+        assertFalse(nonExistingOrderExists);
+        
     }
 
     /**
@@ -107,14 +136,6 @@ public class FlooringServicesServiceLayerImplTest {
         final Order orderRetrieved = testServiceLayer.getOrder(testOrder.getOrderNumber());
         assertEquals(testOrder, orderRetrieved);
         
-    }
-    
-
-    /**
-     * Test of orderExists method, of class FlooringServicesServiceLayerImpl.
-     */
-    @Test
-    public void testOrderExists() {
     }
 
     
@@ -191,7 +212,15 @@ public class FlooringServicesServiceLayerImplTest {
      * Test of isStateAvailable method, of class FlooringServicesServiceLayerImpl.
      */
     @Test
-    public void testIsStateAvailable() throws Exception {
+    public void testIsStateAvailable(State testState,
+                FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+        final String MT = testState.getStateAbbrv();
+        final String unavailableStateAbbrv = MT;
+        final String AVAILABLE_STATE_ABBRV = "CA";
+        final boolean isUnavailableStateAvailable = testServiceLayer.isStateAvailable(unavailableStateAbbrv);
+        assertFalse(isUnavailableStateAvailable);
+        final boolean isAvailableStateAvailable = testServiceLayer.isStateAvailable(AVAILABLE_STATE_ABBRV);
+        assertTrue(isAvailableStateAvailable);
     }
 
     /**
