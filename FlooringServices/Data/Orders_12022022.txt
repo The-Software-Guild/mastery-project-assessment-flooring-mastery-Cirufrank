@@ -1,0 +1,2 @@
+orderNumber,customerName,state,taxRate,productType,area,costPerSquareFoot,laborCostPerSquareFoot,materialCost,laborCost,tax,total
+7,Roro Test,CA,4.60,Vinyl,101.00,5.18,3.35,523.18,338.35,43.08,904.61

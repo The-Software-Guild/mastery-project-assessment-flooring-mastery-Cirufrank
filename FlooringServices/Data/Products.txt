@@ -1,0 +1,9 @@
+productId,productType,costPerSquareFoot,laborCostPerSquareFoot,status
+1,Carpet,2.25,2.10,AVAILABLE
+2,Laminate,1.75,2.10,AVAILABLE
+3,Tile,3.50,4.15,AVAILABLE
+4,Wood,5.15,4.75,AVAILABLE
+5,Marble,7.18,3.35,AVAILABLE
+6,Vinyl,5.18,3.35,AVAILABLE
+7,Linoleum,3.35,1.25,AVAILABLE
+8,Cork,4.45,2.25,AVAILABLE

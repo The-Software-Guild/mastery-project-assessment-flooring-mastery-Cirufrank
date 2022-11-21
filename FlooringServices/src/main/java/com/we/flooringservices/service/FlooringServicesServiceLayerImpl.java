@@ -73,22 +73,23 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
             throw new FlooringServicesNoOrdersFoundExeception("No orders found for "
                     + "date specified");
         }
-        auditDao.writeAuditEntry("Orders retrieved for date " + orderDate.toString());
+        auditDao.writeAuditEntry("All " + ordersForDate.size() + "  orders retrieved for date " + orderDate.toString());
         return ordersForDate;
     }
     @Override
     public List<Order> getAllOrders() 
         throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException {
-        final List<Order> allOrdersExported = orderDao.getAllOrders();
-        return allOrdersExported;
+        final List<Order> allActiveOrders = orderDao.getAllOrders();
+        auditDao.writeAuditEntry("All " + allActiveOrders.size() + " active orders retrieved");
+        return allActiveOrders;
     }
     @Override
     public List<Order> getAllExportedOrders() 
         throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException {
         final List<Order> allOrdersExported = orderDao.getAllExportedOrders();
-        auditDao.writeAuditEntry("Exported orders retrieved");
+        auditDao.writeAuditEntry("All " + allOrdersExported.size() + " exported orders retrieved");
         return allOrdersExported;
     }
     @Override
@@ -96,6 +97,8 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
     throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException {
         orderDao.exportAllActiveOrders();
+        auditDao.writeAuditEntry("All active orders saved to "
+                + "backup file");
     }
     @Override
     public boolean orderExistsForDate(int orderNumber, LocalDateTime orderDate) 
@@ -119,9 +122,13 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
         Order order;
         try {
             order = orderDao.getOrder(orderNumber);
-        } catch(FlooringServicesNoOrdersFoundExeception error) {
+            auditDao.writeAuditEntry("Order number " + orderNumber +
+                    " retrieved");
+        } catch(FlooringServicesNoOrdersFoundExeception 
+                | FlooringServicesDaoPersistenceException error) {
             order = null;
         }
+        
         return order;
     }
     @Override
@@ -227,6 +234,7 @@ public class FlooringServicesServiceLayerImpl implements FlooringServicesService
                         filter(product ->
                                 product.getProductStatus() == Availability.AVAILABLE).map(product -> product.getProductType())
                 .collect(Collectors.toList());
+        auditDao.writeAuditEntry("All " + productTypes.size() + " available product types retrieved");
         return productTypes;
                 
         

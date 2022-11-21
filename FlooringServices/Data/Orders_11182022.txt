@@ -1,0 +1,2 @@
+orderNumber,customerName,state,taxRate,productType,area,costPerSquareFoot,laborCostPerSquareFoot,materialCost,laborCost,tax,total
+5,Roro,CA,4.60,Vinyl,100.00,5.18,3.35,518.00,335.00,42.6500,895.65

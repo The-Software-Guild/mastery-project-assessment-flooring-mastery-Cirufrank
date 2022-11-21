@@ -1,0 +1,2 @@
+orderNumber,customerName,state,taxRate,productType,area,costPerSquareFoot,laborCostPerSquareFoot,materialCost,laborCost,tax,total
+4,Test order edited,MO,5.82,Vinyl,157,5.18,3.35,813.26,525.95,80.35,1419.56

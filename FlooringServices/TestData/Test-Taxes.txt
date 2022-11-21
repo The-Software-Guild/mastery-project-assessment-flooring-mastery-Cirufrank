@@ -1,0 +1,27 @@
+stateId,stateAbbrv,stateName,taxRate
+8,DE,Delaware,3.24
+12,HI,Hawaii,3.92
+10,FL,Florida,4.95
+22,MA,Massachusetts,4.51
+21,MD,Maryland,3.76
+16,IA,Iowa,4.50
+20,ME,Maine,3.89
+11,GA,Georgia,5.32
+13,ID,Idaho,4.87
+23,MI,Michigan,4.15
+5,CA,California,4.60
+24,MN,Minnesota,3.27
+26,MO,Missouri,5.82
+14,IL,Illinois,5.39
+15,IN,Indiana,3.40
+25,MS,Mississippi,3.77
+17,KS,Kansas,5.36
+2,AK,Alaska,4.21
+1,AL,Alabama,5.65
+6,CO,Colorado,3.64
+18,KY,Kentucky,4.38
+4,AR,Arkansas,5.95
+7,CT,Connecticut,3.96
+19,LA,Louisiana,3.91
+3,AZ,Arizona,4.63
+9,DC,District of Columbia,5.03

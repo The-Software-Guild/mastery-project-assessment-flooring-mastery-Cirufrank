@@ -4,6 +4,8 @@
  */
 package com.we.flooringservices.service;
 
+import com.we.flooringservices.dao.AuditDaoFileImplParameterResolver;
+import com.we.flooringservices.dao.AuditDaoFileStubImpl;
 import com.we.flooringservices.dao.DaoHelper;
 import com.we.flooringservices.dao.OrderDaoFileImplParameterResolver;
 import com.we.flooringservices.dao.OrderParameterResolver;
@@ -44,6 +46,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(ProductDaoFileImplParameterResolver.class)
 @ExtendWith(StateDaoFileImplParameterResolver.class)
 @ExtendWith(StateRequestDaoFileImplParameterResolver.class)
+@ExtendWith(AuditDaoFileImplParameterResolver.class)
 @ExtendWith(OrderParameterResolver.class)
 @ExtendWith(ProductParameterResolver.class)
 @ExtendWith(StateParameterResolver.class)
@@ -73,11 +76,17 @@ public class FlooringServicesServiceLayerImplTest {
      * Test of getOrders method, of class FlooringServicesServiceLayerImpl.
      */
     @Test
-    public void testGetOrders(FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+    public void testGetOrders(FlooringServicesServiceLayerStubImpl testServiceLayer,
+            AuditDaoFileStubImpl testAuditDao) throws Exception {
         final LocalDateTime orderDate = DaoHelper.parseFileDateString("06022013");
         final int ALL_ORDERS_FOR_DATE = 2;
         final List<Order> ordersForDate = testServiceLayer.getOrders(orderDate);
         assertEquals(ALL_ORDERS_FOR_DATE, ordersForDate.size());
+        final String GET_ORDERS_AUDIT_ENTRY_SUBSTRING = "All " + ordersForDate.size() + 
+                "  orders retrieved for date " 
+                + orderDate.toString();
+        final String mostRecentAuditEntry = testAuditDao.getLastAuditEntry();
+        assertTrue(mostRecentAuditEntry.contains(GET_ORDERS_AUDIT_ENTRY_SUBSTRING));
     }
 
     /**
@@ -85,9 +94,15 @@ public class FlooringServicesServiceLayerImplTest {
      */
     @Test
     public void testGetAllOrders(Order testOrder, 
-            FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+            FlooringServicesServiceLayerStubImpl testServiceLayer,
+            AuditDaoFileStubImpl testAuditDao) throws Exception {
         final int ALL_CURRENT_ORDERS = 3, ONE_ORDER = 1;
         final List<Order> currentOrders = testServiceLayer.getAllOrders();
+        final String GET_ALL_ORDERS_AUDIT_ENTRY_SUBSTRING = 
+                "All " + currentOrders.size() + " active orders retrieved";
+        final String mostRecentAuditEntry = testAuditDao.getLastAuditEntry();
+        assertTrue(mostRecentAuditEntry.contains(GET_ALL_ORDERS_AUDIT_ENTRY_SUBSTRING));
+        
         for (Order currentOrder: currentOrders) {
             System.out.println(currentOrder.toString());
         }
@@ -100,9 +115,20 @@ public class FlooringServicesServiceLayerImplTest {
      * Test of exportAllOrders and getAllExportedOrders methods, of class FlooringServicesServiceLayerImpl.
      */
     @Test
-    public void testExportAllOrdersAndGetAllExportedOrders(FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+    public void testExportAllOrdersAndGetAllExportedOrders(FlooringServicesServiceLayerStubImpl testServiceLayer,
+            AuditDaoFileStubImpl testAuditDao) throws Exception {
         testServiceLayer.exportAllOrders();
+        final String EXPORT_ALL_ORDERS_SUBSTRING = 
+                "All active orders saved to "
+                + "backup file";
+        String mostRecentAuditEntry = testAuditDao.getLastAuditEntry();
+        assertTrue(mostRecentAuditEntry.contains(EXPORT_ALL_ORDERS_SUBSTRING));
         final List<Order> allExportedOrders = testServiceLayer.getAllExportedOrders();
+        final String GET_ALL_EXPORTED_ORDERS_SUBSTRING = 
+                "All " + allExportedOrders.size() + " exported orders retrieved";
+        mostRecentAuditEntry = testAuditDao.getLastAuditEntry();
+        assertTrue(mostRecentAuditEntry.contains(GET_ALL_EXPORTED_ORDERS_SUBSTRING));
+        
         final List<Order> allOrders = testServiceLayer.getAllOrders();
         assertEquals(allExportedOrders.size(), allOrders.size());
         for (Order currentOrder: allExportedOrders) {
@@ -143,11 +169,25 @@ public class FlooringServicesServiceLayerImplTest {
      */
     @Test
     public void testAddGetRemoveOrder(Order testOrder, 
-            FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+            FlooringServicesServiceLayerStubImpl testServiceLayer,
+            AuditDaoFileStubImpl testAuditDao) throws Exception {
         testServiceLayer.addOrder(testOrder);
+        final String ADD_ORDER_SUBSTRING = 
+                "Order added: " + testOrder.toString();
+        String mostRecentAuditEntry = testAuditDao.getLastAuditEntry();
+        assertTrue(mostRecentAuditEntry.contains(ADD_ORDER_SUBSTRING));
         final Order orderRetrieved = testServiceLayer.getOrder(testOrder.getOrderNumber());
+        final String GET_ORDER_SUBSTRING = 
+                "Order number " + testOrder.getOrderNumber() +
+                    " retrieved";
+        mostRecentAuditEntry = testAuditDao.getLastAuditEntry();
         assertEquals(testOrder, orderRetrieved);
+        assertTrue(mostRecentAuditEntry.contains(GET_ORDER_SUBSTRING));
         testServiceLayer.removeOrder(testOrder);
+        final String REMOVE_ORDER_SUBSTRING = 
+                "Order removed: " + testOrder.toString();
+        mostRecentAuditEntry = testAuditDao.getLastAuditEntry();
+        assertTrue(mostRecentAuditEntry.contains(REMOVE_ORDER_SUBSTRING));
         final Order removedOrder = testServiceLayer.getOrder(testOrder.getOrderNumber());
         assertNull(removedOrder);
         
@@ -209,7 +249,8 @@ public class FlooringServicesServiceLayerImplTest {
      */
     @Test
     public void testUpdateOrderAndUpdateOrderCalculations(Order testOrder, 
-            FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+            FlooringServicesServiceLayerStubImpl testServiceLayer,
+            AuditDaoFileStubImpl testAuditDao) throws Exception {
         final String previousCustomerName = testOrder.getCustomerName();
         final String previousProductType = testOrder.getProductType();
         final BigDecimal previousArea = testOrder.getArea();
@@ -226,6 +267,10 @@ public class FlooringServicesServiceLayerImplTest {
         testOrder.setCustomerName("Test order edited");
         testOrder.setArea(new BigDecimal("157"));
         testServiceLayer.updateOrder(testOrder);
+        final String UPDATE_ORDER_SUBSTRING = 
+                "Order updated: " + testOrder.toString();
+        final String mostRecentAuditEntry = testAuditDao.getLastAuditEntry();
+        assertTrue(mostRecentAuditEntry.contains(UPDATE_ORDER_SUBSTRING));
         final Order updatedOrder = testServiceLayer.getOrder(testOrder.getOrderNumber());
         assertNotEquals(previousCustomerName, updatedOrder.getCustomerName());
         assertNotEquals(previousProductType, updatedOrder.getProductType());
@@ -274,17 +319,22 @@ public class FlooringServicesServiceLayerImplTest {
      */
     @Test
     public void testGetAvailableProductTypes(ProductDaoFileStubImpl productDao,
-               FlooringServicesServiceLayerStubImpl testServiceLayer ) throws Exception {
+               FlooringServicesServiceLayerStubImpl testServiceLayer,
+               AuditDaoFileStubImpl testAuditDao) throws Exception {
         final List<String> availableProductTypes = productDao.getAllProducts()
                 .stream().map(product -> product.getProductType()).collect(Collectors.toList());
-        final List<String> alsoAvailableProductTypes = testServiceLayer.getAvailableProductTypes();
-        assertEquals(availableProductTypes.size(), alsoAvailableProductTypes.size());
-        for (String curProductType: alsoAvailableProductTypes) {
+        final List<String> testAvailableProductTypes = testServiceLayer.getAvailableProductTypes();
+        assertEquals(availableProductTypes.size(), testAvailableProductTypes.size());
+        for (String curProductType: testAvailableProductTypes) {
             curProductType = curProductType.intern();
             if (!availableProductTypes.contains(curProductType)) {
                 fail();
             }
         }
+        final String GET_AVAILABLE_PRODUCT_TYPES_SUBSTRING =
+                "All " + testAvailableProductTypes.size() + " available product types retrieved";
+        final String mostRecentAuditEntry = testAuditDao.getLastAuditEntry();
+        assertTrue(mostRecentAuditEntry.contains(GET_AVAILABLE_PRODUCT_TYPES_SUBSTRING));
     }
 
     /**
@@ -292,13 +342,19 @@ public class FlooringServicesServiceLayerImplTest {
      */
     @Test
     public void testLogStateRequest(StateRequestDaoFileStubImpl testRequestDao,
-            FlooringServicesServiceLayerStubImpl testServiceLayer) throws Exception {
+            FlooringServicesServiceLayerStubImpl testServiceLayer,
+            AuditDaoFileStubImpl testAuditDao) throws Exception {
         final String stateAbbrv = "CA";
         final StateRequest prevRequest = testRequestDao.getRequest(stateAbbrv);
         final int ONE_REQUEST = 1;
         testServiceLayer.logStateRequest(stateAbbrv);
+        final String LOG_STATE_REQUEST_AUDIT_SUBSTRING = 
+                "Request logged for services "
+                + "to be expanded to state: " + stateAbbrv;
+        final String mostRecentAuditEntry = testAuditDao.getLastAuditEntry();
         final StateRequest newRequest = testRequestDao.getRequest(stateAbbrv);
         assertEquals(prevRequest.getTotalRequests(), newRequest.getTotalRequests() - ONE_REQUEST);
+        assertTrue(mostRecentAuditEntry.contains(LOG_STATE_REQUEST_AUDIT_SUBSTRING));
     }
     
 }

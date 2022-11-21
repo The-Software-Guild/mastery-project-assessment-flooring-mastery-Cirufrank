@@ -1,0 +1,143 @@
+2022-11-17 01:24:15: This is a test -534686363
+2022-11-17 01:24:46: This is a test 1635860230
+2022-11-17 05:05:38: This is a test 601361649
+2022-11-17 05:53:24: This is a test 1718791099
+2022-11-17 06:46:57: This is a test 1571248896
+2022-11-17 07:39:04: This is a test -610984318
+2022-11-19 05:49:59: This is a test 180253116
+2022-11-19 06:02:12: This is a test 534428561
+2022-11-19 06:10:40: This is a test -2051775286
+2022-11-20 11:20:02: This is a test 1137305073
+2022-11-20 11:22:56: This is a test -1691928853
+2022-11-20 12:01:49: This is a test 1687916220
+2022-11-20 12:02:17: This is a test -661312731
+2022-11-20 12:08:34: This is a test -1436398968
+2022-11-20 12:20:14: This is a test 643711674
+2022-11-20 12:20:15: Orders retrieved for date 2013-06-02T00:00
+2022-11-20 12:20:15: Orders retrieved for date 2013-06-02T00:00
+2022-11-20 12:20:15: Order added: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 12:20:15: Order removed: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 12:20:15: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=4.60, area=157, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 12:20:15: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=5.82, area=157, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=813.26, laborCost=525.95, tax=80.35, total=1419.56, orderDate=2022-11-17T00:00}
+2022-11-20 12:20:15: Request logged for services to be expanded to state: CA
+2022-11-20 12:20:15: Orders retrieved for date 2013-06-02T00:00
+2022-11-20 12:20:16: Exported orders retrieved
+2022-11-20 04:06:12: This is a test 2060686221
+2022-11-20 04:06:14: All 8available product types retrieved
+2022-11-20 04:06:14: Orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:06:14: Orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:06:14: All 3 active orders retrieved
+2022-11-20 04:06:14: Order added: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:06:14: Order number 4 retrieved
+2022-11-20 04:06:14: Order removed: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:06:14: Order number 4 retrieved
+2022-11-20 04:06:14: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=4.60, area=157, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:06:14: Order number 4 retrieved
+2022-11-20 04:06:14: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=5.82, area=157, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=813.26, laborCost=525.95, tax=80.35, total=1419.56, orderDate=2022-11-17T00:00}
+2022-11-20 04:06:14: Order number 4 retrieved
+2022-11-20 04:06:14: Request logged for services to be expanded to state: CA
+2022-11-20 04:06:14: All 4 active orders retrieved
+2022-11-20 04:06:14: Order number 4 retrieved
+2022-11-20 04:06:14: Orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:06:14: All active orders saved to backup file
+2022-11-20 04:06:14: All 4exported orders retrieved
+2022-11-20 04:06:14: All 4 active orders retrieved
+2022-11-20 04:08:32: This is a test 392274722
+2022-11-20 04:08:33: All 8 available product types retrieved
+2022-11-20 04:08:33: Orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:08:33: Orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:08:33: All 3 active orders retrieved
+2022-11-20 04:08:33: Order added: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:08:33: Order number 4 retrieved
+2022-11-20 04:08:33: Order removed: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:08:33: Order number 4 retrieved
+2022-11-20 04:08:33: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=4.60, area=157, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:08:33: Order number 4 retrieved
+2022-11-20 04:08:33: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=5.82, area=157, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=813.26, laborCost=525.95, tax=80.35, total=1419.56, orderDate=2022-11-17T00:00}
+2022-11-20 04:08:33: Order number 4 retrieved
+2022-11-20 04:08:33: Request logged for services to be expanded to state: CA
+2022-11-20 04:08:33: All 4 active orders retrieved
+2022-11-20 04:08:33: Order number 4 retrieved
+2022-11-20 04:08:34: Orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:08:34: All active orders saved to backup file
+2022-11-20 04:08:34: All 4 exported orders retrieved
+2022-11-20 04:08:34: All 4 active orders retrieved
+2022-11-20 04:15:47: This is a test 1864611956
+2022-11-20 04:15:49: All 8 available product types retrieved
+2022-11-20 04:15:49: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:15:49: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:15:49: All 3 active orders retrieved
+2022-11-20 04:15:49: Order added: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:15:49: Order number 4 retrieved
+2022-11-20 04:15:49: Order removed: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:15:49: Order number 4 retrieved
+2022-11-20 04:15:49: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=4.60, area=157, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:15:49: Order number 4 retrieved
+2022-11-20 04:15:49: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=5.82, area=157, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=813.26, laborCost=525.95, tax=80.35, total=1419.56, orderDate=2022-11-17T00:00}
+2022-11-20 04:15:49: Order number 4 retrieved
+2022-11-20 04:15:49: Request logged for services to be expanded to state: CA
+2022-11-20 04:15:49: All 4 active orders retrieved
+2022-11-20 04:15:49: Order number 4 retrieved
+2022-11-20 04:15:49: All active orders saved to backup file
+2022-11-20 04:15:49: All 4 exported orders retrieved
+2022-11-20 04:15:49: All 4 active orders retrieved
+2022-11-20 04:16:49: This is a test -1291414858
+2022-11-20 04:16:51: All 8 available product types retrieved
+2022-11-20 04:16:51: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:16:51: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:16:51: All 3 active orders retrieved
+2022-11-20 04:16:51: Order added: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:16:51: Order number 4 retrieved
+2022-11-20 04:16:51: Order removed: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:16:51: Order number 4 retrieved
+2022-11-20 04:16:51: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=4.60, area=157, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:16:51: Order number 4 retrieved
+2022-11-20 04:16:51: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=5.82, area=157, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=813.26, laborCost=525.95, tax=80.35, total=1419.56, orderDate=2022-11-17T00:00}
+2022-11-20 04:16:51: Order number 4 retrieved
+2022-11-20 04:16:51: Request logged for services to be expanded to state: CA
+2022-11-20 04:16:51: All 4 active orders retrieved
+2022-11-20 04:16:51: Order number 4 retrieved
+2022-11-20 04:16:51: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:16:51: All active orders saved to backup file
+2022-11-20 04:16:51: All 4 exported orders retrieved
+2022-11-20 04:16:51: All 4 active orders retrieved
+2022-11-20 04:46:46: This is a test -765951022
+2022-11-20 04:46:48: All 8 available product types retrieved
+2022-11-20 04:46:48: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:46:48: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:46:48: All 3 active orders retrieved
+2022-11-20 04:46:48: Order added: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:46:48: Order number 4 retrieved
+2022-11-20 04:46:48: Order removed: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:46:48: Order number 4 retrieved
+2022-11-20 04:46:48: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=4.60, area=157, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:46:48: Order number 4 retrieved
+2022-11-20 04:46:48: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=5.82, area=157, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=813.26, laborCost=525.95, tax=80.35, total=1419.56, orderDate=2022-11-17T00:00}
+2022-11-20 04:46:48: Order number 4 retrieved
+2022-11-20 04:46:48: Request logged for services to be expanded to state: CA
+2022-11-20 04:46:48: All 4 active orders retrieved
+2022-11-20 04:46:48: Order number 4 retrieved
+2022-11-20 04:46:48: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:46:49: All active orders saved to backup file
+2022-11-20 04:46:49: All 4 exported orders retrieved
+2022-11-20 04:46:49: All 4 active orders retrieved
+2022-11-20 04:48:39: This is a test -1950660021
+2022-11-20 04:48:41: All 8 available product types retrieved
+2022-11-20 04:48:41: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:48:41: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:48:41: All 3 active orders retrieved
+2022-11-20 04:48:41: Order added: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:48:41: Order number 4 retrieved
+2022-11-20 04:48:41: Order removed: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:48:41: Order number 4 retrieved
+2022-11-20 04:48:42: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=4.60, area=157, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 04:48:42: Order number 4 retrieved
+2022-11-20 04:48:42: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=5.82, area=157, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=813.26, laborCost=525.95, tax=80.35, total=1419.56, orderDate=2022-11-17T00:00}
+2022-11-20 04:48:42: Order number 4 retrieved
+2022-11-20 04:48:42: Request logged for services to be expanded to state: CA
+2022-11-20 04:48:42: All 4 active orders retrieved
+2022-11-20 04:48:42: Order number 4 retrieved
+2022-11-20 04:48:42: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 04:48:43: All active orders saved to backup file
+2022-11-20 04:48:43: All 4 exported orders retrieved
+2022-11-20 04:48:43: All 4 active orders retrieved

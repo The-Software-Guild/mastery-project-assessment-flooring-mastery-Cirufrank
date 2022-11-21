@@ -1,0 +1,11 @@
+orderNumber,customerName,state,taxRate,productType,area,costPerSquareFoot,laborCostPerSquareFoot,materialCost,laborCost,tax,total,orderDate
+1,Ada Lovelace,CA,25.00,Tile,249.00,3.50,4.15,871.50,1033.35,476.21,2381.06,11-17-2022
+2,Doctor Who,WA,9.25,Wood,243.00,5.15,4.75,1251.45,1154.25,216.51,2622.21,11-17-2022
+3,Albert Einstein,KY,6.00,Carpet,217.00,2.25,2.10,488.25,455.70,56.64,1000.59,11-17-2022
+4,Test name,CA,4.60,Vinyl,100.00,5.18,3.35,518.00,335.00,42.6500,895.65,11-22-2022
+5,Roro,CA,4.60,Vinyl,100.00,5.18,3.35,518.00,335.00,42.6500,895.65,11-18-2022
+6,Roro Test,CA,4.60,Vinyl,101.00,5.18,3.35,523.18,338.35,43.0765,904.61,11-23-2022
+7,Roro Test,CA,4.60,Vinyl,101.00,5.18,3.35,523.18,338.35,43.08,904.61,12-02-2022
+8,Test add,CA,4.60,Vinyl,101.00,5.18,3.35,523.18,338.35,43.08,904.61,11-22-2022
+9,Test Order Edited,CA,4.60,Vinyl,107.00,5.18,3.35,554.26,358.45,45.64,958.35,11-22-2025
+10,Test order please edit,CA,4.60,Vinyl,109.00,5.18,3.35,564.62,365.15,46.49,976.26,11-30-2029
