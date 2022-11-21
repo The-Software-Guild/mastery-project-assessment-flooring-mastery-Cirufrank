@@ -26,10 +26,12 @@ public interface TestDaoHelper {
     final public static String DELIMITER = ",",
             FILE_DATE_FORMAT = "MMddyyyy",
             EXPORT_DATE_FORMAT = "MM-dd-yyyy";
+    
     final static int DATE_SUBSTRING_BEGINNING_INDEX = 16,
             DATE_SUBSTRING_ENDING_INDEX = 24,
             EXPORT_DATE_BEGINNING_INDEX = 0,
             EXPORT_DATE_ENDING_INDEX = 10;
+    
     public static String createDelimiterSeparatedString(String delimiter, String... items) {
         final int ONE_ITEM = 1, ENDING_STRING_INDEX = items.length - ONE_ITEM;
         String delimiterSeparatedString = "";
@@ -89,12 +91,13 @@ public interface TestDaoHelper {
         currentDirectory.mkdir();
     }
     
-    public static void createNewFile(String fileName) {
+    public static void createNewFile(String fileName) 
+    throws FlooringServicesDaoPersistenceException{
         final File currentFile = new File(fileName);
         try {
             currentFile.createNewFile();
         } catch(IOException error) {
-            System.out.println("-_- File " + fileName + " "
+            throw new FlooringServicesDaoPersistenceException("-_- File "
                     + "could not be created");
         }
     }

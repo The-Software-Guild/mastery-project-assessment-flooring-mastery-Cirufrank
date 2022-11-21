@@ -6,7 +6,6 @@ package com.we.flooringservices.dao;
 
 import com.we.flooringservices.model.Order;
 import com.we.flooringservices.service.FlooringServicesNoOrdersFoundExeception;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -15,8 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
@@ -61,8 +58,7 @@ public class OrderDaoFileImplTest {
      */
     @Test
     public void testGetAllOrdersAndGetTotalOrders(Order testOrder, OrderDaoFileStubImpl testOrderDao) 
-        throws FlooringServicesDaoPersistenceException,
-            FlooringServicesNoOrdersFoundExeception{
+        throws Exception {
         final int ALL_CURRENT_ORDERS = 3, ONE_ORDER = 1;
         final int totalOrders = testOrderDao.getTotalOrders();
         final List<Order> currentOrders = testOrderDao.getAllOrders();
@@ -80,8 +76,7 @@ public class OrderDaoFileImplTest {
      */
     @Test
     public void testExportAllOrdersAndGetExportedOrders(OrderDaoFileStubImpl testOrderDao) 
-        throws FlooringServicesDaoPersistenceException,
-            FlooringServicesNoOrdersFoundExeception{
+        throws Exception{
         testOrderDao.exportAllActiveOrders();
         final List<Order> allExportedOrders = testOrderDao.getAllExportedOrders();
         final List<Order> allActiveOrders = testOrderDao.getAllOrders();
@@ -98,8 +93,7 @@ public class OrderDaoFileImplTest {
      */
     @Test
     public void testGetAllOrdersForDate(OrderDaoFileStubImpl testOrderDao) 
-        throws FlooringServicesDaoPersistenceException,
-            FlooringServicesNoOrdersFoundExeception{
+        throws Exception {
         final LocalDateTime orderDate = DaoHelper.parseFileDateString("06022013");
         final int ALL_ORDERS_FOR_DATE = 2;
         final List<Order> ordersForDate = testOrderDao.getAllOrdersForDate(orderDate);
@@ -111,8 +105,7 @@ public class OrderDaoFileImplTest {
      */
     @Test
     public void testAddGetOrder(Order testOrder, OrderDaoFileStubImpl testOrderDao) 
-        throws FlooringServicesDaoPersistenceException,
-            FlooringServicesNoOrdersFoundExeception{
+        throws Exception {
         testOrderDao.addOrder(testOrder);
         final Order addedOrder = testOrderDao.getOrder(testOrder.getOrderNumber());
         assertNotNull(addedOrder);
@@ -124,8 +117,7 @@ public class OrderDaoFileImplTest {
      */
     @Test
     public void testUpdateOrder(Order testOrder, OrderDaoFileStubImpl testOrderDao) 
-        throws FlooringServicesDaoPersistenceException,
-            FlooringServicesNoOrdersFoundExeception{
+        throws Exception {
         final String previousOrderCustomerName = testOrder.getCustomerName();
         testOrder.setCustomerName("A different customer");
         testOrderDao.updateOrder(testOrder);
@@ -138,8 +130,7 @@ public class OrderDaoFileImplTest {
      */
     @Test
     public void testExportAllActiveOrders(OrderDaoFileStubImpl testOrderDao) 
-        throws FlooringServicesDaoPersistenceException,
-            FlooringServicesNoOrdersFoundExeception{
+        throws Exception {
         final List<Order> allOrders = testOrderDao.getAllOrders();
         final int totalOrders = allOrders.size();
         
@@ -153,8 +144,7 @@ public class OrderDaoFileImplTest {
      */
     @Test
     public void testRemoveOrder(Order testOrder, OrderDaoFileStubImpl testOrderDao) 
-        throws FlooringServicesDaoPersistenceException,
-            FlooringServicesNoOrdersFoundExeception{
+        throws Exception {
         final Order orderToRemove = testOrderDao.getOrder(testOrder.getOrderNumber());
         if (orderToRemove == null) {
             testOrderDao.addOrder(testOrder);
@@ -162,8 +152,8 @@ public class OrderDaoFileImplTest {
         final Order removedOrder = testOrderDao.removeOrder(testOrder);
         assertNotNull(removedOrder);
         assertEquals(testOrder, removedOrder);
-        final Order previosulyRemovedOrder = testOrderDao.getOrder(testOrder.getOrderNumber());
-        assertNull(previosulyRemovedOrder);
+        final Order previouslyRemovedOrder = testOrderDao.getOrder(testOrder.getOrderNumber());
+        assertNull(previouslyRemovedOrder);
         
     }
     

@@ -1,0 +1,30 @@
+2022-11-20 04:52:10: All active orders saved to backup file
+2022-11-20 04:52:10: All 10 exported orders retrieved
+2022-11-20 07:13:34: All 2  orders retrieved for date 2029-11-30T00:00
+2022-11-20 07:14:00: All 10 active orders retrieved
+2022-11-20 07:14:00: All active orders saved to backup file
+2022-11-20 07:14:00: All 10 exported orders retrieved
+2022-11-20 07:14:59: All 2  orders retrieved for date 2029-11-30T00:00
+2022-11-20 07:14:59: Order number 10 retrieved
+2022-11-20 07:15:01: Order removed: Order{orderNumber=10, customerName=Test order please edit, state=CA, productType=Vinyl, taxRate=4.60, area=109.00, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=564.62, laborCost=365.15, tax=46.49, total=976.26, orderDate=2029-11-30T00:00}
+2022-11-20 07:15:12: All 1  orders retrieved for date 2029-11-30T00:00
+2022-11-20 07:15:16: All 9 active orders retrieved
+2022-11-20 07:15:16: All active orders saved to backup file
+2022-11-20 07:15:16: All 9 exported orders retrieved
+2022-11-20 07:16:06: All 8 available product types retrieved
+2022-11-20 07:16:13: All 1  orders retrieved for date 2025-11-22T00:00
+2022-11-20 07:16:13: Order number 9 retrieved
+2022-11-20 07:16:40: Order updated: Order{orderNumber=9, customerName=Test Order Edited Again, state=CA, productType=Vinyl, taxRate=4.60, area=109.00, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=564.62, laborCost=365.15, tax=46.49, total=976.26, orderDate=2025-11-22T00:00}
+2022-11-20 07:16:48: All 1  orders retrieved for date 2025-11-22T00:00
+2022-11-20 07:16:54: All 8 available product types retrieved
+2022-11-20 07:17:18: All 1  orders retrieved for date 2025-11-22T00:00
+2022-11-20 07:17:18: Order number 9 retrieved
+2022-11-20 07:17:33: Order updated: Order{orderNumber=9, customerName=Test Order Edited, state=CA, productType=Vinyl, taxRate=4.60, area=109.00, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=564.62, laborCost=365.15, tax=46.49, total=976.26, orderDate=2025-11-22T00:00}
+2022-11-20 07:17:39: All 9 active orders retrieved
+2022-11-20 07:17:39: All active orders saved to backup file
+2022-11-20 07:17:39: All 9 exported orders retrieved
+2022-11-20 07:18:07: All 8 available product types retrieved
+2022-11-20 07:18:24: Order added: Order{orderNumber=10, customerName=Test Order add, state=CA, productType=Vinyl, taxRate=4.60, area=109.00, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=564.62, laborCost=365.15, tax=46.49, total=976.26, orderDate=2029-11-30T00:00}
+2022-11-20 07:18:51: All 10 active orders retrieved
+2022-11-20 07:18:51: All active orders saved to backup file
+2022-11-20 07:18:51: All 10 exported orders retrieved

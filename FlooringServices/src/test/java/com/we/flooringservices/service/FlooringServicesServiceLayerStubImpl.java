@@ -47,6 +47,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class FlooringServicesServiceLayerStubImpl implements FlooringServicesServiceLayer {
+    final private static int NO_ORDERS = 0;
+    
     @Autowired
     @Qualifier("orderDaoFileStubImpl")
     private OrderDao orderDao;
@@ -75,7 +77,6 @@ public class FlooringServicesServiceLayerStubImpl implements FlooringServicesSer
     public List<Order> getOrders(LocalDateTime orderDate) throws 
             FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException{
-        final int NO_ORDERS = 0;
         final List<Order> ordersForDate = orderDao.getAllOrdersForDate(orderDate);
         if (ordersForDate.size() == NO_ORDERS) {
             throw new FlooringServicesNoOrdersFoundExeception("No orders found for "
@@ -84,10 +85,15 @@ public class FlooringServicesServiceLayerStubImpl implements FlooringServicesSer
         auditDao.writeAuditEntry("All " + ordersForDate.size() + "  orders retrieved for date " + orderDate.toString());
         return ordersForDate;
     }
+    
+    @Override
     public List<Order> getAllOrders() 
         throws FlooringServicesNoOrdersFoundExeception,
             FlooringServicesDaoPersistenceException {
         final List<Order> allActiveOrders = orderDao.getAllOrders();
+        if (allActiveOrders.size() == NO_ORDERS) {
+            throw new FlooringServicesNoOrdersFoundExeception("No orders found.");
+        }
         auditDao.writeAuditEntry("All " + allActiveOrders.size() + " active orders retrieved");
         return allActiveOrders;
     }
@@ -111,34 +117,39 @@ public class FlooringServicesServiceLayerStubImpl implements FlooringServicesSer
     @Override
     public boolean orderExistsForDate(int orderNumber, LocalDateTime orderDate) 
         throws 
-            FlooringServicesDaoPersistenceException {
+            FlooringServicesDaoPersistenceException,
+            FlooringServicesNoOrdersFoundExeception {
         try {
             boolean orderExistsForDate = false;
             final List<Order> ordersForDate = getOrders(orderDate);
             for (Order currentOrder: ordersForDate) {
                 final int currentOrderNumber = currentOrder.getOrderNumber();
-                if (currentOrderNumber == orderNumber)
+                if (currentOrderNumber == orderNumber) {
                     orderExistsForDate = true;
+                    return orderExistsForDate;
+                }
             }
             return orderExistsForDate;
-        } catch(FlooringServicesNoOrdersFoundExeception error) {
+        } catch(FlooringServicesNoOrdersFoundExeception | 
+                FlooringServicesDaoPersistenceException error) {
             return false;
         }
     }
     @Override
-    public Order getOrder(int orderNumber) {
+    public Order getOrder(int orderNumber)
+        {
         Order order;
         try {
             order = orderDao.getOrder(orderNumber);
             auditDao.writeAuditEntry("Order number " + orderNumber +
                     " retrieved");
-        } catch(FlooringServicesNoOrdersFoundExeception 
-                | FlooringServicesDaoPersistenceException error) {
+        } catch(FlooringServicesDaoPersistenceException error) {
             order = null;
         }
-        return order;
         
+        return order;
     }
+    
     @Override
     public boolean orderExists(int orderNumber) {
         try {
@@ -146,14 +157,17 @@ public class FlooringServicesServiceLayerStubImpl implements FlooringServicesSer
             boolean orderExists = false;
             for (Order currentOrder: allOrders) {
                 final int currentOrderNumber = currentOrder.getOrderNumber();
-                if (currentOrderNumber == orderNumber)
+                if (currentOrderNumber == orderNumber) {
                     orderExists = true;
+                    return orderExists;
+                }
             }
             return orderExists;
-        } catch(FlooringServicesNoOrdersFoundExeception error){
+        } catch(FlooringServicesDaoPersistenceException error){
             return false; 
         }   
     }
+    
     @Override
     public void addOrder(Order order) 
     throws FlooringServicesDaoPersistenceException,

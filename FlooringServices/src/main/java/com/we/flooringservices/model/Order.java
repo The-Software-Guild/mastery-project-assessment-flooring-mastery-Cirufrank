@@ -25,6 +25,7 @@ public class Order {
             materialCost, laborCost, tax, total;
     private LocalDateTime orderDate;
     
+    //Constructor for exisitng order instance
     public Order(int orderNumber, String customerName, String state,
                     BigDecimal taxRate, String productType, BigDecimal area,
                     BigDecimal costPerSquareFoot, BigDecimal laborCostPerSquareFoot,
@@ -45,6 +46,7 @@ public class Order {
         this.orderDate = orderDate;
     }
     
+    //Constructor for newly added order instance
     public Order(String customerName, String state,
                     BigDecimal taxRate, String productType, BigDecimal area,
                     BigDecimal costPerSquareFoot, BigDecimal laborCostPerSquareFoot,

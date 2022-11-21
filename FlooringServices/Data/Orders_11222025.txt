@@ -1,2 +1,2 @@
 orderNumber,customerName,state,taxRate,productType,area,costPerSquareFoot,laborCostPerSquareFoot,materialCost,laborCost,tax,total
-9,Test Order Edited,CA,4.60,Vinyl,107.00,5.18,3.35,554.26,358.45,45.64,958.35
+9,Test Order Edited,CA,4.60,Vinyl,109.00,5.18,3.35,564.62,365.15,46.49,976.26

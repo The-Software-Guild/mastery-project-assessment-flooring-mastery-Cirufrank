@@ -5,7 +5,6 @@
 package com.we.flooringservices.ui;
 
 import com.we.flooringservices.model.Order;
-import com.we.flooringservices.model.Product;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -72,6 +71,7 @@ public class FlooringServicesView {
             
     
     private UserIO io;
+    
     @Autowired
     public FlooringServicesView(UserIO io) {
         this.io = io;

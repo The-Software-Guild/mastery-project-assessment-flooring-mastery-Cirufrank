@@ -130,7 +130,7 @@ public class ProductDaoFileImpl implements ProductDao {
                         new BufferedReader(
                             new FileReader(productsFileName)));
             //This skips the header line from being converted to
-            //a Product thus causing an error
+            //a Product thus avoiding the error this would cause
             if (scanner.hasNextLine())
                     scanner.nextLine();
             while (scanner.hasNextLine()) {

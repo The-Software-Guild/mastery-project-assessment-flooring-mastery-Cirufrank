@@ -25,7 +25,7 @@ public class Product {
     private String productType;
     private BigDecimal costPerSquareFoot, laborCostPerSquareFoot;
     
-    //This constructor assigns an ID to nelwy added products by passsing in
+    //This constructor assigns an ID to newly added products by passsing in
     //an argument of total products for the id to be calculated through
     public Product(String productType, BigDecimal costPerSquareFoot,
             BigDecimal laborCostPerSquareFoot, int totalProducts,

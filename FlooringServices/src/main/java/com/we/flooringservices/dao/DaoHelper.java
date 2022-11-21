@@ -86,12 +86,13 @@ public interface DaoHelper {
         final File currentDirectory = new File(directoryName);
         currentDirectory.mkdir();
     }
-    public static void createNewFile(String fileName) {
+    public static void createNewFile(String fileName) 
+        throws FlooringServicesDaoPersistenceException {
         final File currentFile = new File(fileName);
         try {
             currentFile.createNewFile();
         } catch(IOException error) {
-            System.out.println("-_- File " + fileName + " "
+            throw new FlooringServicesDaoPersistenceException("-_- File "
                     + "could not be created");
         }
     }
