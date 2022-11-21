@@ -333,3 +333,23 @@
 2022-11-20 07:10:01: All active orders saved to backup file
 2022-11-20 07:10:01: All 4 exported orders retrieved
 2022-11-20 07:10:02: All 4 active orders retrieved
+2022-11-20 07:22:28: This is a test -1585454134
+2022-11-20 07:22:31: All 8 available product types retrieved
+2022-11-20 07:22:32: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 07:22:32: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 07:22:32: All 3 active orders retrieved
+2022-11-20 07:22:32: Order added: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 07:22:32: Order number 4 retrieved
+2022-11-20 07:22:32: Order removed: Order{orderNumber=4, customerName=Test Customer, state=CA, productType=Carpet, taxRate=4.60, area=249.00, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 07:22:32: Order number 4 retrieved
+2022-11-20 07:22:32: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=4.60, area=157, costPerSquareFoot=2.25, laborCostPerSquareFoot=2.10, materialCost=560.25, laborCost=522.90, tax=54.16, total=1137.31, orderDate=2022-11-17T00:00}
+2022-11-20 07:22:32: Order number 4 retrieved
+2022-11-20 07:22:32: Order updated: Order{orderNumber=4, customerName=Test order edited, state=MO, productType=Vinyl, taxRate=5.82, area=157, costPerSquareFoot=5.18, laborCostPerSquareFoot=3.35, materialCost=813.26, laborCost=525.95, tax=80.35, total=1419.56, orderDate=2022-11-17T00:00}
+2022-11-20 07:22:32: Order number 4 retrieved
+2022-11-20 07:22:33: Request logged for services to be expanded to state: CA
+2022-11-20 07:22:33: All 4 active orders retrieved
+2022-11-20 07:22:33: Order number 4 retrieved
+2022-11-20 07:22:33: All 2  orders retrieved for date 2013-06-02T00:00
+2022-11-20 07:22:33: All active orders saved to backup file
+2022-11-20 07:22:33: All 4 exported orders retrieved
+2022-11-20 07:22:33: All 4 active orders retrieved

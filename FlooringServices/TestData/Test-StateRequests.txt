@@ -38,7 +38,7 @@ stateId,stateAbbrv,availability,totalRequests
 36,OH,Ohio,UNAVAILABLE,0
 11,GA,Georgia,AVAILABLE,0
 37,OK,Oklahoma,UNAVAILABLE,0
-5,CA,California,AVAILABLE,56
+5,CA,California,AVAILABLE,58
 49,WV,West Virginia,UNAVAILABLE,0
 51,WY,Wyoming,UNAVAILABLE,0
 38,OR,Oregon,UNAVAILABLE,0
